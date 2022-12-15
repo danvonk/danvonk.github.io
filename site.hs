@@ -1,4 +1,3 @@
---------------------------------------------------------------------------------
 {-# LANGUAGE OverloadedStrings #-}
 
 import Control.Monad (forM_)
@@ -21,6 +20,7 @@ main = hakyll $ do
       route idRoute
       compile copyFileCompiler
 
+  -- static content
       forM_
         [ "images/*",
           "fonts/*",
@@ -34,18 +34,20 @@ main = hakyll $ do
         route idRoute
         compile compressCssCompiler
 
-      match (fromList ["about.html", "readinglist.md"]) $ do
-        route $ setExtension "html"
-        compile $
-          pandocCompiler
-            >>= loadAndApplyTemplate "templates/default.html" postCtx
-            >>= relativizeUrls
-
-      match "posts/*" $ do
+  -- posts
+     match "posts/*" $ do
         route $ setExtension "html"
         compile $
           pandocCompiler
             >>= loadAndApplyTemplate "templates/post.html" postCtx
+            >>= loadAndApplyTemplate "templates/default.html" postCtx
+            >>= relativizeUrls
+
+  -- pages
+      match (fromList ["about.html", "readinglist.md"]) $ do
+        route $ setExtension "html"
+        compile $
+          pandocCompiler
             >>= loadAndApplyTemplate "templates/default.html" postCtx
             >>= relativizeUrls
 
