@@ -59,6 +59,8 @@ be known publically that I can get myself to read more.
 | The Brothers Karamazov                    |                  |      |          |
 | Gulag Archipeligo                         |                  |      |          |
 | The War with Hannibal                     |                  |      |          |
+| "Wem die Stunde Schlaegt"                 | Ernest Hemingway |      |          |
+| Der Prozess                               | F. Kafka         |      |          |
 
 
 ... and any further back, I haven't tracked or can't remember!
