@@ -42,7 +42,7 @@ Though I'm not a voracious reader by any mark, once stuck into a book, I'm alway
 | The Old Man and the Sea                                       | Ernest Hemingway                    |                |
 | "Unterwegs"                                                   | Jack Keroauc                        |                |
 | The Brothers Karamazov                                        | Fyodor Dostoevsky                   |                |
-| Gulag Archipeligo                                             | Aleksandr Solzhenitsyn              |                |
+| "Der Archipel GULAG"                                          | Aleksandr Solzhenitsyn              |                |
 | The War with Hannibal                                         | Livy                                |                |
 | "Wem die Stunde Schlaegt"                                     | Ernest Hemingway                    |                |
 | Der Prozess                                                   | F. Kafka                            |                |
