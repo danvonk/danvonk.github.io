@@ -5,6 +5,10 @@ import Control.Monad (forM_)
 import Data.Monoid (mappend)
 import Hakyll
 
+config = defaultConfiguration {
+  deployCommand = "rsync -avz _site/ ubuntu@danvonk.com:/home/user-data/www/danvonk.com/"
+}
+
 --------------------------------------------------------------------------------
 main :: IO ()
 main = hakyll $ do
