@@ -38,6 +38,14 @@ main = hakyll $ do
         route idRoute
         compile compressCssCompiler
 
+      match ("drafts/*") $ do
+        route $ setExtension "html"
+        compile $
+          pandocCompiler
+            >>= loadAndApplyTemplate "templates/post.html" postCtx
+            >>= loadAndApplyTemplate "templates/default.html" postCtx
+            >>= relativizeUrls
+
       match (fromList ["about.html", "readinglist.md"]) $ do
         route $ setExtension "html"
         compile $
