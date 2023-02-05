@@ -6,6 +6,17 @@ Though I'm not a voracious reader by any mark, once stuck into a book, I'm alway
 
 | Title                                                         | Author                              | Year Published |
 |---------------------------------------------------------------|-------------------------------------|----------------|
+| _2023_                                                        |                                     |                |
+| My Life                                                       | A. Chekov                           |                |
+| Twenty-Six Men and a Girl                                     | M. Gorky                            |                |
+| Four Days                                                     | V Garshin                           |                |
+| The Sentry                                                    | N. Lysekov                          |                |
+| The Death of Ivan Ilych                                       | L. Tolstoy                          |                |
+| Bobok                                                         | F. Dostoevsky                       |                |
+| A Quiet Backwater                                             | I. Turgenev                         |                |
+| Taman                                                         | M. Lermontov                        |                |
+| The Overcoat                                                  | N. Gogol                            |                |
+| The Queen of Spades                                           | A. Pushkin                          |                |
 | _2022_                                                        |                                     |                |
 | Berlin, Alexanderplatz                                        | Alfred Doeblin                      | 1929           |
 | The Martian Time Slip                                         | Philip K. Dick                      | 1964           |
