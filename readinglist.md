@@ -19,7 +19,7 @@ Though I'm not a voracious reader by any mark, once stuck into a book, I'm alway
 | The Hoop                                                      | F. Sologub                          |                |
 | My Life                                                       | A. Chekov                           |                |
 | Twenty-Six Men and a Girl                                     | M. Gorky                            |                |
-| Four Days                                                     | V Garshin                           |                |
+| Four Days                                                     | V. Garshin                          |                |
 | The Sentry                                                    | N. Lysekov                          |                |
 | The Death of Ivan Ilych                                       | L. Tolstoy                          |                |
 | Bobok                                                         | F. Dostoevsky                       |                |
@@ -28,8 +28,8 @@ Though I'm not a voracious reader by any mark, once stuck into a book, I'm alway
 | The Overcoat                                                  | N. Gogol                            |                |
 | The Queen of Spades                                           | A. Pushkin                          |                |
 | _2022_                                                        |                                     |                |
-| Berlin, Alexanderplatz                                        | Alfred Doeblin                      | 1929           |
-| The Martian Time Slip                                         | Philip K. Dick                      | 1964           |
+| Berlin, Alexanderplatz                                        | Alfred Doeblin                      |                |
+| The Martian Time Slip                                         | Philip K. Dick                      |                |
 | Lifespan                                                      | David Sinclair, Matthew D. LaPlante |                |
 | In the First Circle                                           | Aleksandr Solzhenitsyn              |                |
 | Thus Spoke Zarathustra                                        | Friedrich Nietzsche                 |                |
@@ -38,12 +38,12 @@ Though I'm not a voracious reader by any mark, once stuck into a book, I'm alway
 | Notes from The Underground                                    | Fyodor Dostoevsky                   |                |
 | _2021_                                                        |                                     |                |
 | Red Plenty                                                    | Francis Spufford                    |                |
-| Foundation                                                    | Arthur C Clarke                     |                |
-| Prelude to Foundation                                         | Arthur C Clarke                     |                |
-| The Stars, Like Dust                                          | Arthur C Clarke                     |                |
-| The Currents of Space                                         | Arthur C Clarke                     |                |
+| Foundation                                                    | Arthur C. Clarke                    |                |
+| Prelude to Foundation                                         | Arthur C. Clarke                    |                |
+| The Stars, Like Dust                                          | Arthur C. Clarke                    |                |
+| The Currents of Space                                         | Arthur C. Clarke                    |                |
 | The Beginning of Infinity                                     | David Deutsch                       |                |
-| The Corner: A Year in the Life of an Inner-City Neighbourhood |                                     | 2019           |
+| The Corner: A Year in the Life of an Inner-City Neighbourhood |                                     |                |
 | Under the Wave at Waimea                                      | Paul Theroux                        |                |
 | _2020_                                                        |                                     |                |
 | Lords of Finance                                              | Liaquat Ahamed                      |                |
@@ -61,11 +61,11 @@ Though I'm not a voracious reader by any mark, once stuck into a book, I'm alway
 | Green Hills of Africa                                         | Ernest Hemingway                    |                |
 | A Moveable Feast                                              | Ernest Hemingway                    |                |
 | The Old Man and the Sea                                       | Ernest Hemingway                    |                |
-| "Unterwegs"                                                   | Jack Keroauc                        |                |
-| The Brothers Karamazov                                        | Fyodor Dostoevsky                   |                |
-| "Der Archipel GULAG"                                          | Aleksandr Solzhenitsyn              |                |
+| Unterwegs                                                     | Jack Keroauc                        |                |
+| The Brothers Karamazov                                        | F. Dostoevsky                       |                |
+| Der Archipel GULAG                                            | Aleksandr Solzhenitsyn              |                |
 | The War with Hannibal                                         | Livy                                |                |
-| "Wem die Stunde Schlaegt"                                     | Ernest Hemingway                    |                |
+| Wem die Stunde Schlaegt                                       | Ernest Hemingway                    |                |
 | Der Prozess                                                   | F. Kafka                            |                |
 | Ubik                                                          | Philip K. Dick                      |                |
 | The Man in the High Castle                                    | Philip K. Dick                      |                |
