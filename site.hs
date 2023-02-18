@@ -6,12 +6,12 @@ import Data.Monoid (mappend)
 import Hakyll
 
 config = defaultConfiguration {
-  deployCommand = "rsync -avz _site/ ubuntu@danvonk.com:/home/user-data/www/danvonk.com/"
+  deployCommand = "rsync -avz _site/ ubuntu@danvonk.com:/home/user-data/www/default/"
 }
 
 --------------------------------------------------------------------------------
 main :: IO ()
-main = hakyll $ do
+main = hakyllWith config $ do
   -- et book
   forM_
     [ "css/et-book/*",

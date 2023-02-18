@@ -2,11 +2,21 @@
 title: Reading List
 ---
 
-Though I'm not a voracious reader by any mark, once stuck into a book, I'm always glad for it and it definitely has been the source of many ideas and helped developed my thinking. I'm hoping that by tracking my books read and letting it be known publicly that I can get myself to read more.
+Though I'm not a voracious reader by any mark, once stuck into a book, I'm always glad for it and it definitely has been the source of many ideas and helped developed my thinking. I'm hoping that by tracking my books read and letting it be known publicly that I can get myself to read more...
 
 | Title                                                         | Author                              | Year Published |
 |---------------------------------------------------------------|-------------------------------------|----------------|
 | _2023_                                                        |                                     |                |
+| Ivan's Misadventure                                           | L. Leonov                           |                |
+| Fellow-Countrymen                                             | V. Kataev                           |                |
+| The Child                                                     | V. Ivanov                           |                |
+| The Letter                                                    | I. Babel                            |                |
+| The Man You Couldn't Kill                                     | S. Sergeyev-Tsensky                 |                |
+| A Werewolf of the Steppe                                      | M. Prishvin                         |                |
+| On the Day of the Crucifixion                                 | L. Andreyev                         |                |
+| The Gentleman from San Francisco                              | I. Bunin                            |                |
+| A Slav Soul                                                   | A. Kurpin                           |                |
+| The Hoop                                                      | F. Sologub                          |                |
 | My Life                                                       | A. Chekov                           |                |
 | Twenty-Six Men and a Girl                                     | M. Gorky                            |                |
 | Four Days                                                     | V Garshin                           |                |
