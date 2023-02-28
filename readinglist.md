@@ -2,7 +2,7 @@
 title: Reading List
 ---
 
-Though I'm not a voracious reader by any mark, once stuck into a book, I'm always glad for it and it definitely has been the source of many ideas and helped developed my thinking. I'm hoping that by tracking my books read and letting it be known publicly that I can get myself to read more...
+Though I'm not a voracious reader by any mark, once stuck into a book, I'm always glad for it and it definitely has helped me develop my thinking. I'm hoping that by tracking my books read and letting it be known publicly that I can get myself to read more...
 
 | Title                                                         | Author                              | Year Published |
 |---------------------------------------------------------------|-------------------------------------|----------------|
@@ -47,6 +47,12 @@ Though I'm not a voracious reader by any mark, once stuck into a book, I'm alway
 | Under the Wave at Waimea                                      | Paul Theroux                        |                |
 | _2020_                                                        |                                     |                |
 | Lords of Finance                                              | Liaquat Ahamed                      |                |
+| The Smartest Guys in the Room                                 | B. McLean                           |                |
+| A Random Walk Down Wall Street                                | B. Malkiel                          |                |
+| Bailout Nation                                                | B. Ritholtz                         |                |
+| Stay the Course                                               | J. Bogle                            |                |
+| Little Book of Common Sense Investing                         | J. Bogle                            |                |
+| Algebra of Happiness                                          | S. Galloway                         |                |
 | In a Free State                                               | V.S. Naipaul                        |                |
 | A Bend in The River                                           | V.S. Naipaul                        |                |
 | On the Shortness of Life                                      | Seneca                              |                |
@@ -55,6 +61,7 @@ Though I'm not a voracious reader by any mark, once stuck into a book, I'm alway
 | Master and Margarita                                          | Mikhail Bulgakov                    |                |
 | _2019_                                                        |                                     |                |
 | Zen and The Art of Motorcycle Maintenance                     | Robert Pirsig                       |                |
+| Meditations                                                   | Emporer Aurelius                    |                |
 | A Bend in the River                                           | V.S. Naipaul                        |                |
 | The Snows of Kilimanjaro                                      | Ernest Hemingway                    |                |
 | A Farewell to Arms                                            | Ernest Hemingway                    |                |
@@ -70,6 +77,7 @@ Though I'm not a voracious reader by any mark, once stuck into a book, I'm alway
 | Ubik                                                          | Philip K. Dick                      |                |
 | The Man in the High Castle                                    | Philip K. Dick                      |                |
 | Do Androids Dream of Electric Sheep?                          | Philip K. Dick                      |                |
+| Unlimited Horizons: Design and Development of the U-2         | P. Merlin                           |                |
 
 
 ... and any further back, I haven't tracked or can't remember!
