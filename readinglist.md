@@ -61,7 +61,7 @@ Though I'm not a voracious reader by any mark, once stuck into a book, I'm alway
 | Master and Margarita                                          | Mikhail Bulgakov                    |                |
 | _2019_                                                        |                                     |                |
 | Zen and The Art of Motorcycle Maintenance                     | Robert Pirsig                       |                |
-| Meditations                                                   | Emporer Aurelius                    |                |
+| Meditations                                                   | Emperor Aurelius                    |                |
 | A Bend in the River                                           | V.S. Naipaul                        |                |
 | The Snows of Kilimanjaro                                      | Ernest Hemingway                    |                |
 | A Farewell to Arms                                            | Ernest Hemingway                    |                |
