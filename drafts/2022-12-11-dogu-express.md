@@ -19,15 +19,14 @@ author: Dan Vonk
 In November of 2022, I headed to Ankara for a two-week adventure through Turkey and the 
 Caucuses with a friend that I have known for many years. It had been a trip many 
 months in the making, though it started with a humble suggestion during a Discord chat 
-one evening. Both being relatively early into our careers, we did not have the luxury of spending
+one evening a few months before. Both being relatively early into our careers, we did not have the luxury of spending
 money on long-haul flights to the U.S., a week's worth of hotels in an expensive state as well
 as the petrol needed to get us around. Nor did the idea of staying in Europe and going to museums
 sound all that excited to us adventure-seekers. So instead, it was more a question of how far
-we could go for the least money and luckily short-haul flights to Ankara were very cheap.
+we could go for the least money and luckily we found short-haul flights to Ankara that fit the bill.
 
 So our destination had now become Ankara. But ask any Turk and they will tell you there isn't
-much to see in this city. To complement our holiday to this 'boring city', we found, through research on the 
-internet in the months preceding the trip, the _Dogu Express_. This passenger train runs every
+much to see in this city. To complement our holiday to this 'boring city', we found, through research on the internet in the months preceding the trip, the _Dogu Express_. This passenger train runs every
 night from Istanbul in the west of the country, to Kars, which is in the far east, in the Armenian
 highlands. Despite its name, the train takes around thirty hours to reach its destination from
 Ankara, which is already roughly in the middle of the country.
@@ -35,6 +34,8 @@ Ankara, which is already roughly in the middle of the country.
 However, not only is this train a visa-free, miniture Trans-Siberian, but it also crosses through
 some of  Turkey's most scenic terrain: starting in Cappadocia, through gentle hills, then through
 impressive canyons in Erzincan Province and following the path of the Tigris and Euphrates.
+
+The train itself was clean and modern. Our cabin was air-conditioned, with a  
 
 - It was cheap
 - 15 euros equivalent to book one side of a cabin (2 beds).
