@@ -2,19 +2,18 @@
 title: On the Dogu Express
 author: Dan Vonk
 ---
-<div class="epigraph">
-  <blockquote>
-  <p>Static sites are fast, secure, easy to deploy, and manageable using version control.</p>
-    <footer>George Orwell, “Politics and the English Language”</footer>
-  </blockquote>
-  <blockquote>
-</div>
+<!-- <div class="epigraph"> -->
+<!--   <blockquote> -->
+<!--   <p>Static sites are fast, secure, easy to deploy, and manageable using version control.</p> -->
+<!--     <footer>George Orwell, “Politics and the English Language”</footer> -->
+<!--   </blockquote> -->
+<!--   <blockquote> -->
+<!-- </div> -->
 
 <figure>
     <label for="outside-ankara" class="margin-toggle">&#8853;</label><input type="checkbox" id="outside-ankara" class="margin-toggle"/><span class="marginnote">The train reaches its penultimate stop, leaving enough time to buy and drink a quick turkish coffee on the platform.</span>
-    <img src="/images/DSCF7010.JPG" alt="Exports and Imports to and from Denmark & Norway from 1700 to 1780" />
+    <img src="/images/DSCF7010.JPG" alt="Train stopped beside platform." />
 </figure>
-
 
 In November of 2022, I headed to Ankara for a two-week adventure through Turkey and the 
 Caucuses with a friend that I have known for many years. It had been a trip many 
@@ -23,13 +22,33 @@ one evening a few months before. Both being relatively early into our careers, w
 money on long-haul flights to the U.S., a week's worth of hotels in an expensive state as well
 as the petrol needed to get us around. Nor did the idea of staying in Europe and going to museums
 sound all that excited to us adventure-seekers. So instead, it was more a question of how far
-we could go for the least money and luckily we found short-haul flights to Ankara that fit the bill.
+we could go for the least money and luckily we found short-haul flights to Ankara that fit the
+description well.
 
 So our destination had now become Ankara. But ask any Turk and they will tell you there isn't
-much to see in this city. To complement our holiday to this 'boring city', we found, through research on the internet in the months preceding the trip, the _Dogu Express_. This passenger train runs every
-night from Istanbul in the west of the country, to Kars, which is in the far east, in the Armenian
+much to see in this city. For us, the city was exciting to be in at first: Even for someone
+who had grown up around London, it seemed huge. I think this was due to the hilly geography of the
+city, where the horizon was filled with craggy hills in all directions, which were densely packed
+with grey, concrete tenament blocks, all identically dishevelled. Our hotel was perched upon the hill 
+in the old town area of Ankara and the during the night, the views from it looked like someone had taken 
+the city scape of Los Angeles, as seen from the hills around the Hollywood sign, scrunched it up into a ball 
+and it all creased, unfurled it as a skybox around our hotel room.
+
+The streets themselves were packed with people running their errands. On street corners, men would setup
+shop with a picnic table and chair, flogging lottery tickets while people waited for the pedestrian traffic light to turn green.
+
+But what we found interesting is the that this attitude did not encompass everything. 
+
+So to complement our holiday to this 'boring city', we stumbled upon, through research on the internet in the months preceding the trip, 
+the _Dogu Express_. This passenger train runs every night from Ankara in the centre of the country, to Kars, which is in the far east, in the Armenian
 highlands. Despite its name, the train takes around thirty hours to reach its destination from
-Ankara, which is already roughly in the middle of the country.
+Ankara. You may think this means it traverses some collosal distance, but in fact it would only take
+13 hours to drive. However, the slow
+
+<figure>
+    <label for="outside-ankara" class="margin-toggle">&#8853;</label><input type="checkbox" id="outside-ankara" class="margin-toggle"/><span class="marginnote">First views of the countryside, after our departure from Ankara Station.</span>
+    <img src="/images/DSCF6948.JPG" alt="View through the window of our cabin on the Dogu Express." />
+</figure>
 
 However, not only is this train a visa-free, miniture Trans-Siberian, but it also crosses through
 some of  Turkey's most scenic terrain: starting in Cappadocia, through gentle hills, then through
@@ -58,20 +77,16 @@ The train itself was clean and modern. Our cabin was air-conditioned, with a
 
 <!-- This freneticisism was exciting to be in for a couple of days, but thankfully the day soon came for us to board the Dogu Express. The train leaves Ankara Station in the evening daily, so  -->
 
+
+
 <figure>
-    <label for="outside-ankara" class="margin-toggle">&#8853;</label><input type="checkbox" id="outside-ankara" class="margin-toggle"/><span class="marginnote">First views of the countryside, after our departure from Ankara Station.</span>
-    <img src="/images/DSCF6948.JPG" alt="View through the window of our cabin on the Dogu Express." />
+    <label for="outside-ankara" class="margin-toggle">&#8853;</label><input type="checkbox" id="outside-ankara" class="margin-toggle"/><span class="marginnote">The vibrant colours of the trees lining the streams that we traced were an especially beautiful contrast to the brown and grey mountains of the journey.</span>
+    <img src="/images/DSCF6979.JPG" alt="Following stream" />
 </figure>
 
 
 <figure>
-    <label for="outside-ankara" class="margin-toggle">&#8853;</label><input type="checkbox" id="outside-ankara" class="margin-toggle"/><span class="marginnote">First views of the countryside, the evening of leaving from Ankara Station.</span>
-    <img src="/images/DSCF6979.JPG" alt="Exports and Imports to and from Denmark & Norway from 1700 to 1780" />
-</figure>
-
-
-<figure>
-    <label for="outside-ankara" class="margin-toggle">&#8853;</label><input type="checkbox" id="outside-ankara" class="margin-toggle"/><span class="marginnote">Views of the track from the back of the train.</span>
+    <label for="outside-ankara" class="margin-toggle">&#8853;</label><input type="checkbox" id="outside-ankara" class="margin-toggle"/><span class="marginnote">Views of the track from the back of the train. Photos were easy to take here because you could just open the door of the moving train and peek right out.</span>
     <img src="/images/IMG_20221106_102439.jpg" alt="Dogu Express" />
 </figure>
 
