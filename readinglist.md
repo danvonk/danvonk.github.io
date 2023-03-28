@@ -7,6 +7,8 @@ Though I'm not a voracious reader by any mark, once stuck into a book, I'm alway
 | Title                                                         | Author                              |
 |---------------------------------------------------------------|-------------------------------------|
 | _2023_                                                        |                                     |
+| The Three Stigmata of Palmer Eldritch                         | P.K. Dick                           |
+| Siddhartha                                                    | H. Hesse                            |
 | The Name of the Rose                                          | U. Eco                              |
 | Ivan's Misadventure                                           | L. Leonov                           |
 | Fellow-Countrymen                                             | V. Kataev                           |
@@ -55,7 +57,7 @@ Though I'm not a voracious reader by any mark, once stuck into a book, I'm alway
 | Little Book of Common Sense Investing                         | J. Bogle                            |
 | Algebra of Happiness                                          | S. Galloway                         |
 | In a Free State                                               | V.S. Naipaul                        |
-| A Bend in The River                                           | V.S. Naipaul                        |
+| A Bend in the River                                           | V.S. Naipaul                        |
 | On the Shortness of Life                                      | Seneca                              |
 | The Prince                                                    | N. Machiavelli                      |
 | Crime and Punishment                                          | Fyodor Dostoevsky                   |
