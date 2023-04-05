@@ -39,6 +39,14 @@
     font-display: swap;
 }
 
+@font-face {
+    font-family: "reynold";
+    src: url("reynold/ReynoldArtDeco.woff") format("woff"), url("reynold/ReynoldArtDeco.ttf") format("truetype")
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
 /* Tufte CSS styles */
 html {
     font-size: 15px;

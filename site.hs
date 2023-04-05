@@ -12,14 +12,15 @@ config = defaultConfiguration {
 --------------------------------------------------------------------------------
 main :: IO ()
 main = hakyllWith config $ do
-  -- et book
+  -- et book, reynold
   forM_
     [ "css/et-book/*",
       "css/et-book/et-book-bold-line-figures/*",
       "css/et-book/et-book-display-italic-old-style-figures/*",
       "css/et-book/et-book-roman-line-figures/*",
       "css/et-book/et-book-roman-old-style-figures/*",
-      "css/et-book/et-book-semi-bold-old-style-figures/*"
+      "css/et-book/et-book-semi-bold-old-style-figures/*",
+      "css/reynold/*"
     ]
     $ \f -> match f $ do
       route idRoute
