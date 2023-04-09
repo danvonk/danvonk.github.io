@@ -1,5 +1,6 @@
 ---
 title: Sunrise over Mono Lake
+author: Dan Vonk
 ---
 
 <figure>

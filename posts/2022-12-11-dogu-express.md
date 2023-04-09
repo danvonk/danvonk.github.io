@@ -27,7 +27,7 @@ description well. So our destination had now become Ankara. But ask any Turk and
 much to see in this city. Therefore, we decided to take the night train across the country and continue
 this journey into the Caucuses, which I'll probably describe in a further blog post.
 
-When we arrived in Ankara, far form being boring, the city was initially very exciting to be in: Even for someone
+When we arrived in Ankara, far from being boring, the city was initially very exciting to be in: Even for someone
 who had grown up around London, it seemed huge. I think this was due to the hilly geography of the
 city, where the horizon was filled with craggy hills in all directions, which were densely packed
 with grey, concrete tenement blocks, all identically dishevelled, with their walls reflecting the yellow sodium-vapour lighting that
@@ -41,7 +41,7 @@ shop with a picnic table and chair, flogging lottery tickets while people waited
 light to turn green. Likewise, just in case you were starting to feel hungry, you were never far from someone
 selling (perhaps not so) freshly baked Simit bread, which cost 5 or so lira per piece. There were also many
 alleyways that turned into bazaars, where one could buy the usual counterfeit junk but also a huge variety of spices
-and kitchenware such as teapots, indensable in Turkey.
+and kitchenware such as teapots, indispensible in Turkey.
 
 But what we found interesting is that this freneticism was not all-encompassing. Around almost every corner,
 there were kebab restaurants which were exactly like the ones back in Germany (not comparable to those grotty 
@@ -111,19 +111,20 @@ were telegraph poles and that there were bandits hiding just over yonder.
 </figure>
 
 We had finished the snacks we brought with us on the train the night before, which meant it was time for breakfast.
-Unfortunately, the restaurant car was not much to behold. The only food on offer were cup-a-soup, 
+Unfortunately, the restaurant car was not much to behold. The only food on offer was cup-a-soup, 
 chocolate bars and packaged cheese-and-factory-bread sandwiches. However, I'm not above eating junk food so we did scoff
-on those in the morning. There was one packaged cake called 8Kek that tasted like banoffee pie which was particularly
+on those in the morning. There was one packaged cake called 8Kek that tasted like banoffee pie, which was particularly
 delicious. The packaged bread-roll with cheese tasted exactly like something served on an aeroplane, so not great.
 But it was a good detox to the constant kebab and _baklava_ that we had been eating in Ankara the days before.
 I was slightly disappointed by the tea and coffee though. It was just Lipton tea bags and the coffee Nescafe!
 
 _Your correspondent_ did also meet another correspondent in the restaurant carriage, who was a freelance writer for _Al Jazeera_.
-He was travelling from Istanbul to Trabzon with his polish girlfriend, who also dabbled in a bit of film photography, like us,
-during the train journey. Luckily also spoke Turkish, which helped as it gave us some more backstory and allowed us to chat with some of the locals
+He was travelling from Istanbul to Trabzon with his Polish girlfriend, who also dabbled in a bit of film photography, like us,
+during the train journey. Luckily the guy also spoke Turkish, as although he was Egyptian, he had lived in Istanbul for quite some
+time. This helped as it gave us some more backstory to the country and allowed us to chat with some of the locals
 who were also on the train. For example, it turned out that our conductor was also a minor celebrity on the railways:
 He was a seasoned veteran who had been conducting the Dogu Express for many years and is even the subject of a short-film
-made by students; it is called _The Conductor_, which you can find on YouTube (no subtitles!). There were some other travellers 
+made by students; it is called _Kondüktör (2018)_, which you can find on YouTube (no subtitles!). There were some other travellers 
 on the journey, but they seemed more interested in covering hot-topics such making sure we understood their version of the events
 of the Armenian Genocide.
 
@@ -139,7 +140,7 @@ there were no murders or transgressions committed on this express though.
 </figure>
 
 Before long, it was late evening again. Only in the last few hours of the trip, did we start to become bored and we spent the
-time by watching films in the cabin as we watched the evening set in over the planes in the Armenian Highlands, were no trees grew and the scenery
+time by watching films in the cabin as we watched the evening set in over the planes in the Armenian Highlands, were no trees grew but the scenery, which
 grew monotonous. We arrived a few hours late in Kars, at around 10PM. It was already dark and about -5C. We had prepared our bags long in advance and when
-the train stopped, we hopped out, into the sooty, mountain air of Kars, ready to continue on the next leg of the journey...
+the train stopped, we hopped out, into the sooty, high-altitude, mountain air of Kars, ready to continue on the next leg of the journey...
 
