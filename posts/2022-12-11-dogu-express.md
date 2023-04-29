@@ -140,7 +140,7 @@ there were no murders or transgressions committed on this express though.
 </figure>
 
 Before long, it was late evening again. Only in the last few hours of the trip, did we start to become bored and we spent the
-time by watching films in the cabin as we watched the evening set in over the planes in the Armenian Highlands, were no trees grew but the scenery, which
-grew monotonous. We arrived a few hours late in Kars, at around 10PM. It was already dark and about -5C. We had prepared our bags long in advance and when
-the train stopped, we hopped out, into the sooty, high-altitude, mountain air of Kars, ready to continue on the next leg of the journey...
+time by watching films in the cabin as we watched the evening set in over the plains in the Armenian Highlands, were no trees grew but was instead
+just monotonous and slightly undulating, grey terrain. We arrived a few hours late in Kars, at around 10PM. It was already dark and 
+about -5C. We had prepared our bags long in advance and when the train stopped, we hopped out, into the sooty, high-altitude, mountain air of Kars, ready to continue on the next leg of the journey...
 

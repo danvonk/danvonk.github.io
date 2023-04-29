@@ -66,7 +66,7 @@ Though I'm not a voracious reader by any mark, once stuck into a book, I'm alway
 | Class: A Guide Through the American Status System             | P. Fussell                          |
 | _2019_                                                        |                                     |
 | Zen and The Art of Motorcycle Maintenance                     | Robert Pirsig                       |
-| Meditations                                                   | Emperor Aurelius                    |
+| Meditations                                                   | Marcus Aurelius                     |
 | A Bend in the River                                           | V.S. Naipaul                        |
 | The Snows of Kilimanjaro                                      | Ernest Hemingway                    |
 | A Farewell to Arms                                            | Ernest Hemingway                    |
