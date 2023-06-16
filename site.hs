@@ -2,9 +2,9 @@
 {-# LANGUAGE OverloadedStrings #-}
 
 import Control.Monad (forM_)
-import Data.Monoid (mappend)
 import Hakyll
 
+config :: Configuration
 config = defaultConfiguration {
   deployCommand = "rsync -avz _site/ ubuntu@danvonk.com:/home/user-data/www/default/"
 }
@@ -55,11 +55,12 @@ main = hakyllWith config $ do
             >>= relativizeUrls
 
       match "posts/*" $ do
+        tags <- buildTags "posts/*" (fromCapture "tags/*.html")
         route $ setExtension "html"
         compile $
           pandocCompiler
-            >>= loadAndApplyTemplate "templates/post.html" postCtx
-            >>= loadAndApplyTemplate "templates/default.html" postCtx
+            >>= loadAndApplyTemplate "templates/post.html" (postCtxWithTags tags)
+            >>= loadAndApplyTemplate "templates/default.html" (postCtxWithTags tags)
             >>= relativizeUrls
 
       create ["archive.html"] $ do
@@ -68,8 +69,8 @@ main = hakyllWith config $ do
           posts <- recentFirst =<< loadAll "posts/*"
           let archiveCtx =
                 listField "posts" postCtx (return posts)
-                  `mappend` constField "title" "Archives"
-                  `mappend` defaultContext
+                  <> constField "title" "Archives"
+                  <> defaultContext
 
           makeItem ""
             >>= loadAndApplyTemplate "templates/archive.html" archiveCtx
@@ -82,7 +83,7 @@ main = hakyllWith config $ do
           posts <- recentFirst =<< loadAll "posts/*"
           let indexCtx =
                 listField "posts" postCtx (return posts)
-                  `mappend` defaultContext
+                  <> defaultContext
 
           getResourceBody
             >>= applyAsTemplate indexCtx
@@ -93,13 +94,11 @@ main = hakyllWith config $ do
 
 --------------------------------------------------------------------------------
 
-mainCtx :: Context String
-mainCtx =
-  dateField "year" "%Y"
-  `mappend` defaultContext
-
 postCtx :: Context String
 postCtx =
   dateField "date" "%e %B, %Y"
-    `mappend` defaultContext
+  <> dateField "year" "%Y"
+  <> defaultContext
 
+postCtxWithTags :: Tags -> Context String
+postCtxWithTags tags = tagsField "tags" tags <> postCtx
