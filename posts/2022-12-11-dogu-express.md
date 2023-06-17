@@ -1,6 +1,7 @@
 ---
 title: On the Dogu Express
 author: Dan Vonk
+tags: personal, travel
 ---
 <!-- <div class="epigraph"> -->
 <!--   <blockquote> -->

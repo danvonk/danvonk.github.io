@@ -1,5 +1,6 @@
 ---
 title: Luxury in Yerevan
+tags: draft
 ---
 
 <figure>

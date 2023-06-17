@@ -12,7 +12,6 @@ config = defaultConfiguration {
 --------------------------------------------------------------------------------
 main :: IO ()
 main = hakyllWith config $ do
-  -- et book, reynold
   forM_
     [ "css/et-book/*",
       "css/et-book/et-book-bold-line-figures/*",
@@ -20,71 +19,66 @@ main = hakyllWith config $ do
       "css/et-book/et-book-roman-line-figures/*",
       "css/et-book/et-book-roman-old-style-figures/*",
       "css/et-book/et-book-semi-bold-old-style-figures/*",
-      "css/reynold/*"
+      "css/reynold/*",
+      "images/*",
+      "fonts/*",
+      "static/*"
     ]
     $ \f -> match f $ do
       route idRoute
       compile copyFileCompiler
 
-      forM_
-        [ "images/*",
-          "fonts/*",
-          "static/*"
-        ]
-        $ \f -> match f $ do
-          route idRoute
-          compile copyFileCompiler
-
       match "css/*" $ do
         route idRoute
         compile compressCssCompiler
 
-      match ("drafts/*") $ do
+      match "drafts/*" $ do
+        tags <- buildTags "drafts/*" (fromCapture "tags/*.html")
         route $ setExtension "html"
-        compile $
+        compile $ do
+          let tagsCtx = tagsField "tags" tags <> postCtx
           pandocCompiler
-            >>= loadAndApplyTemplate "templates/post.html" postCtx
-            >>= loadAndApplyTemplate "templates/default.html" postCtx
+            >>= loadAndApplyTemplate "templates/post.html" tagsCtx
+            >>= loadAndApplyTemplate "templates/default.html" pageCtx
             >>= relativizeUrls
 
-      match (fromList ["about.html", "readinglist.md"]) $ do
-        route $ setExtension "html"
+      create ["pages/about.html", "pages/readinglist.md"] $ do
+        route $ gsubRoute "pages/" (const "") `composeRoutes` setExtension "html"
         compile $
           pandocCompiler
-            >>= loadAndApplyTemplate "templates/default.html" postCtx
+            >>= loadAndApplyTemplate "templates/default.html" pageCtx
             >>= relativizeUrls
 
       match "posts/*" $ do
         tags <- buildTags "posts/*" (fromCapture "tags/*.html")
         route $ setExtension "html"
-        compile $
+        compile $ do
+          let tagsCtx = tagsField "tags" tags <> postCtx
           pandocCompiler
-            >>= loadAndApplyTemplate "templates/post.html" (postCtxWithTags tags)
-            >>= loadAndApplyTemplate "templates/default.html" (postCtxWithTags tags)
+            >>= loadAndApplyTemplate "templates/post.html" tagsCtx
+            >>= loadAndApplyTemplate "templates/default.html" tagsCtx
             >>= relativizeUrls
 
-      create ["archive.html"] $ do
-        route idRoute
+      create ["pages/archive.html"] $ do
+        route $ gsubRoute "pages/" (const "")
         compile $ do
           posts <- recentFirst =<< loadAll "posts/*"
           let archiveCtx =
                 listField "posts" postCtx (return posts)
                   <> constField "title" "Archives"
-                  <> defaultContext
-
+                  <> pageCtx
           makeItem ""
             >>= loadAndApplyTemplate "templates/archive.html" archiveCtx
             >>= loadAndApplyTemplate "templates/default.html" archiveCtx
             >>= relativizeUrls
 
-      match "index.html" $ do
-        route idRoute
+      match "pages/index.html" $ do
+        route $ gsubRoute "pages/" (const "")
         compile $ do
           posts <- recentFirst =<< loadAll "posts/*"
           let indexCtx =
                 listField "posts" postCtx (return posts)
-                  <> defaultContext
-
+                  <> pageCtx
           getResourceBody
             >>= applyAsTemplate indexCtx
             >>= loadAndApplyTemplate "templates/default.html" indexCtx
@@ -94,11 +88,11 @@ main = hakyllWith config $ do
 
 --------------------------------------------------------------------------------
 
+pageCtx :: Context String
+pageCtx = dateField "year" "%Y"
+  <> defaultContext
+
 postCtx :: Context String
 postCtx =
   dateField "date" "%e %B, %Y"
-  <> dateField "year" "%Y"
-  <> defaultContext
-
-postCtxWithTags :: Tags -> Context String
-postCtxWithTags tags = tagsField "tags" tags <> postCtx
+  `mappend` pageCtx

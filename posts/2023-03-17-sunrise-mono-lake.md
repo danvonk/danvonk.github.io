@@ -1,6 +1,7 @@
 ---
 title: Sunrise over Mono Lake
 author: Dan Vonk
+tags: personal, travel
 ---
 
 <figure>
@@ -10,7 +11,7 @@ author: Dan Vonk
 
 The best photo I have taken has to be the one shown above, which I took in September 2019. I was travelling with a friend
 from San Francisco, down to L.A. and then back up again. We had rented a Nissan pick-up truck, or really I should, as a self-respecting
-Aussie, say Ute, which was of course quite a novelty for us compared to the "euro shitboxes" you mostly see back at home. We were around
+Aussie, say Ute, which was of course a novelty for us compared to the "euro shitboxes" one mostly sees back at home. We were around
 the Yosemite / Death Valley area and had found a lay-by off a forest road which was in an isolated spot, perched up on the gentle
 gradient leading down to Mono Lake in the distance.
 

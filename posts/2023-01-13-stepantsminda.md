@@ -1,6 +1,7 @@
 ---
 title: The Snows of Stepantsminda
 author: Dan Vonk
+tags: personal, travel
 ---
 
 <figure>

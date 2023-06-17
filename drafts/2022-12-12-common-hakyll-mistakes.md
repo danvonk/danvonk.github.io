@@ -1,6 +1,7 @@
 ---
 title: Mistakes I Made Learning Hakyll
 author: Dan Vonk
+tags: draft
 ---
 
 I've compiled a list of mistakes and frustrations I encountered

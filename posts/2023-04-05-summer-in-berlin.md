@@ -1,12 +1,13 @@
 ---
 title: A Summer in Berlin on Film
 author: Dan Vonk
+tags: personal, travel
 ---
 
 In August 2022, I spent a couple of weeks visiting the office in Berlin and decided
 to take my Zorki-4K camera with me. I found a couple of rolls of Kodak _ColorPlus_ in _DM_, so 
 decided to use that to capture my explorations of the city in my free-time. 
-Although ColorPlus is known as a cheap film, I was quite pleased with the results and although
+Although ColorPlus is known as a cheap film, I was pleased with the results and although
 it doesn't have the fine detail of Kodak _Portra_, I think the colour reproduction is very near
 as good. The following blog entry describes a bit of the back-story behind these photos.
 
@@ -14,14 +15,14 @@ For the duration of my time in Berlin, I was staying in Pankow-Sued, just moment
 away from the U-Bahn station of _Vinetastrasse_. For Berliners, this is considered to be in Narnia
 as it's outside of the _Ringbahn_, the S-Bahn that encircles the core of the city. However, it was
 easy enough to walk to one of the stations on the ring and being so close to a metro station, with
-which I could reach the city centre in under 20 mins, was quite a contrast to where I live currently,
+which I could reach the city centre in under 20 mins, was a contrast to where I live currently,
 in the real boonies on the very fringes of the greater London area.
 
 The AirBnb that I was staying in was an _Altbau_. These are apartment buildings constructed during the _Gruenderzeit_,
 which began in 1873, with the unification of Germany and lasted till WW1. This was a time when industrialisation
 came into full swing in Germany, where it overtook Britain as the foremost power in Europe in this regard, as well
-as in science and culture. Predictably then, the buildings of this time are very ornate, with almost 4m high ceilings,
-beautiful facades and very large rooms. They are a joy to be in, especially during Summer, when natural light streams
+as in science and culture. Predictably then, the buildings of this time are ornate, with almost 4M high ceilings,
+beautiful facades and large rooms. They are a joy to be in, especially during Summer, when natural light streams
 in through their large windows and one can sit on their spacious balconies and observe the goings-on in the city from above.
 
 But back to the pictures... Due to it being a major hub for the U-Bahn, the first place I visited was _Alexanderplatz_, this is a large open plaza in the former eastern zone of Berlin. It was completely reconstructed after the second world war by the communist authorities and as such it's surrounded by large, blocky

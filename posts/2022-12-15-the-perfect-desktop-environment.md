@@ -1,6 +1,7 @@
 ---
 title: The Perfect Desktop Environment (for me)
 author: Dan Vonk
+tags: tech
 ---
 
 Many Linux users settle on whatever their desktop environment their distro provides. Then there are others are endlessly tinkering--that was me. However, for the last couple of years, I've settled on what I think is a happy middle-ground between the flexibility of a tiling WM like `sway` and the usability of `GNOME` or `KDE`.
