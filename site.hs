@@ -51,9 +51,23 @@ main = hakyllWith config $ do
 
       match "posts/*" $ do
         tags <- buildTags "posts/*" (fromCapture "tags/*.html")
+        let tagsCtx = tagsField "tags" tags <> postCtx
+        -- Create a /tags/* page for each tag
+        tagsRules tags $ \tag pattern -> do
+          let title = "Posts tagged \'" ++ tag ++ "\'"
+          route idRoute
+          compile $ do
+            posts <- recentFirst =<< loadAll pattern
+            let ctx = constField "title" title
+                      `mappend` listField "posts" tagsCtx (return posts)
+                      `mappend` defaultContext
+            makeItem ""
+              >>= loadAndApplyTemplate "templates/tag.html" ctx
+              >>= loadAndApplyTemplate "templates/default.html" ctx
+              >>= relativizeUrls
+        -- Create a page for each blog post
         route $ setExtension "html"
         compile $ do
-          let tagsCtx = tagsField "tags" tags <> postCtx
           pandocCompiler
             >>= loadAndApplyTemplate "templates/post.html" tagsCtx
             >>= loadAndApplyTemplate "templates/default.html" tagsCtx
