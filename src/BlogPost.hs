@@ -3,7 +3,8 @@
 {-# LANGUAGE OverloadedStrings #-}
 
 module BlogPost (
-  usingVenoBox )
+  usingVenoBox,
+  defaultVenoBoxOptions )
 where
 
 import qualified Data.Text as T
@@ -18,15 +19,24 @@ import Text.Pandoc.Walk
 
 data VenoBoxOptions = VenoBoxOptions
   {
-    -- The CSS class to be used for the HTML <a> tag wrapping the image for VenoBox
+    -- The CSS class to be used for the HTML <a> tag wrapping the image for VenoBox. It needs to be equal to the
+    -- option set in the JS instantiation of the VenoBox object.
     galleryClass :: T.Text,
-    -- The VenoBox gallery to be used. Whcih sets data-gallery attribute in the <a> tag
+    -- The VenoBox gallery to be used. This sets data-gallery attribute in the <a> tag. If images have the same
+    -- gallery, they can be scrolled through the lightbox gallery modal.
     defaultGallery :: T.Text
+  }
+
+defaultVenoBoxOptions :: VenoBoxOptions
+defaultVenoBoxOptions = VenoBoxOptions
+  {
+    galleryClass = "image-gallery",
+    defaultGallery = "gallery01"
   }
 
 veno :: Inline -> Inline
 veno (Image attrs@(ids, cls, kvs) inls target) = Link
-  (ids, "image-gallery" : cls, ("gall", "gallery01") : kvs)
+  (ids, "image-gallery" : cls, [("data-gall", "gallery01"), ("title", snd target)] ++ kvs)
   [Image attrs [] target]
   target
 veno x = x
