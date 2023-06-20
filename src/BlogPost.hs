@@ -16,7 +16,13 @@ import Text.Pandoc.Walk
 -- <a class="image-gallery" data-gall="gallery01" title="a view of the sahara" href="/images/DSCF7664.JPG">
 --  <img src="/images/DSCF7664.JPG"></a>
 
-
+data VenoBoxOptions = VenoBoxOptions
+  {
+    -- The CSS class to be used for the HTML <a> tag wrapping the image for VenoBox
+    galleryClass :: Text,
+    -- The VenoBox gallery to be used. Whcih sets data-gallery attribute in the <a> tag
+    defaultGallery :: Text
+  }
 
 veno :: Inline -> Inline
 veno (Image attrs@(ids, cls, kvs) inls target) = Link
