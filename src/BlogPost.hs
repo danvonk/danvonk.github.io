@@ -19,9 +19,9 @@ import Text.Pandoc.Walk
 data VenoBoxOptions = VenoBoxOptions
   {
     -- The CSS class to be used for the HTML <a> tag wrapping the image for VenoBox
-    galleryClass :: Text,
+    galleryClass :: T.Text,
     -- The VenoBox gallery to be used. Whcih sets data-gallery attribute in the <a> tag
-    defaultGallery :: Text
+    defaultGallery :: T.Text
   }
 
 veno :: Inline -> Inline

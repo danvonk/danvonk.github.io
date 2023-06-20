@@ -40,7 +40,7 @@ main = hakyllWith config $ do
         route $ setExtension "html"
         compile $ do
           let tagsCtx = tagsField "tags" tags <> postCtx
-          pandocCompilerWithTransform defaultHakyllReaderOptions defaultHakyllWriterOptions usingVenoBox
+          pandocCompilerWithTransform defaultHakyllReaderOptions defaultHakyllWriterOptions (usingSideNotes . usingVenoBox)
             >>= loadAndApplyTemplate "templates/post.html" tagsCtx
             >>= loadAndApplyTemplate "templates/default.html" pageCtx
             >>= relativizeUrls
