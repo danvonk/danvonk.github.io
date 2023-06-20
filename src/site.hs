@@ -5,7 +5,7 @@ import Control.Monad (forM_)
 import Hakyll
 import Text.Pandoc.SideNote
 
-import BlogPost
+import BlogPost (usingVenoBox)
 
 config :: Configuration
 config = defaultConfiguration {
@@ -40,7 +40,7 @@ main = hakyllWith config $ do
         route $ setExtension "html"
         compile $ do
           let tagsCtx = tagsField "tags" tags <> postCtx
-          pandocCompilerWithTransform defaultHakyllReaderOptions defaultHakyllWriterOptions usingSideNotes
+          pandocCompilerWithTransform defaultHakyllReaderOptions defaultHakyllWriterOptions usingVenoBox
             >>= loadAndApplyTemplate "templates/post.html" tagsCtx
             >>= loadAndApplyTemplate "templates/default.html" pageCtx
             >>= relativizeUrls
@@ -71,7 +71,7 @@ main = hakyllWith config $ do
         -- Create a page for each blog post
         route $ setExtension "html"
         compile $ do
-          pandocCompilerWithTransform defaultHakyllReaderOptions defaultHakyllWriterOptions usingSideNotes
+          pandocCompilerWithTransform defaultHakyllReaderOptions defaultHakyllWriterOptions usingVenoBox
             >>= loadAndApplyTemplate "templates/post.html" tagsCtx
             >>= loadAndApplyTemplate "templates/default.html" tagsCtx
             >>= relativizeUrls
