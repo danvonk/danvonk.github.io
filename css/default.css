@@ -29,7 +29,6 @@ article .header {
 }
 
 .logo a {
-  /* font-family: reynold; */
   font-weight: bold;
   color: #000;
   text-decoration: none;
@@ -164,4 +163,10 @@ td:nth-child(3) {
 }
 td:nth-child(4) {
     width: 25%;
+}
+
+a .image-gallery {
+  background-size: 0rem;
+  webkit-background-size: 0rem;
+  background-repeat: no-repeat;
 }
