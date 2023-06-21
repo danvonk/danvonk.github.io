@@ -9,15 +9,44 @@ tags: personal, travel
     <a class="image-gallery" data-gall="gallery01" style="background-repeat: no-repeat" href="/images/20310025.JPG"><img src="/images/20310025.JPG"></a>
 </figure>
 
-This was one of my more touristy holidays but sometimes the tourist track isn't so bad.[^1]
+This was one of my more touristy holidays but sometimes the tourist track isn't so bad. Here's a footnote with a number.[^1]
 
-This is a next paragraph. this is a side note[^-] 
+This is a next paragraph. But this is a margin note without a number?[^-] 
 
 Next try^[content].
 
+
+[^1]: This is a footnote about how much I hate tourists.
+
 [^-]: this is a margin note.
 
-[^1]: This is a footnote.
+The HTML equivalent from the Tufte CSS github page is after this paragraph.
+
+<label for="mn-demo" class="margin-toggle">&#8853;</label>
+<input type="checkbox" id="mn-demo" class="margin-toggle"/>
+<span class="marginnote">
+  This is a margin note. Notice there isn’t a number preceding the note.
+</span>
+
+Now some other unrelated paragpraph goes after.
+
+```cpp
+
+#include <iostream>
+
+int main() {
+    std::cout << "hi";
+}
+
+```
+
+or hs
+```haskell
+
+main :: IO ()
+main = putStrLn "hi"
+
+```
 
 <!-- <figure> -->
 <!--     <label for="sahara-view" class="margin-toggle">&#8853;</label><input type="checkbox" id="sahara-view" class="margin-toggle"/><span class="marginnote">A fun double exposure.</span> -->
