@@ -3,18 +3,8 @@ title: On the Dogu Express
 author: Dan Vonk
 tags: personal, travel
 ---
-<!-- <div class="epigraph"> -->
-<!--   <blockquote> -->
-<!--   <p>Static sites are fast, secure, easy to deploy, and manageable using version control.</p> -->
-<!--     <footer>George Orwell, “Politics and the English Language”</footer> -->
-<!--   </blockquote> -->
-<!--   <blockquote> -->
-<!-- </div> -->
 
-<figure>
-    <label for="outside-ankara" class="margin-toggle">&#8853;</label><input type="checkbox" id="outside-ankara" class="margin-toggle"/><span class="marginnote">The train reaches its penultimate stop, leaving enough time to buy and drink a quick Turkish coffee on the platform.</span>
-    <img src="/images/DSCF7010.JPG" alt="Train stopped beside platform." />
-</figure>
+![Turkish railways train stopped beside the platform](/images/DSCF7010.JPG "The Dogu Express reaches its penultimate stop, leaving enough time to buy and drink a quick Turkish coffee on the platform.")
 
 In November of 2022, I headed to Ankara for a two-week adventure through Turkey and the 
 Caucuses with a friend that I have known for many years. It had been a trip many 
@@ -42,7 +32,7 @@ shop with a picnic table and chair, flogging lottery tickets while people waited
 light to turn green. Likewise, just in case you were starting to feel hungry, you were never far from someone
 selling (perhaps not so) freshly baked Simit bread, which cost 5 or so lira per piece. There were also many
 alleyways that turned into bazaars, where one could buy the usual counterfeit junk but also a huge variety of spices
-and kitchenware such as teapots, indispensible in Turkey.
+and kitchenware such as teapots, indispensable in Turkey.
 
 But what we found interesting is that this freneticism was not all-encompassing. Around almost every corner,
 there were kebab restaurants which were exactly like the ones back in Germany (not comparable to those grotty 
@@ -55,17 +45,14 @@ Ankara. You may think this means it traverses some colossal distance, but in fac
 13 hours to drive. However, the slowness of the train did not deter us as we had plenty of time and I was rather
 looking forward to sleeping on a night train, which I had never done before.
 
-<figure>
-    <label for="outside-ankara" class="margin-toggle">&#8853;</label><input type="checkbox" id="outside-ankara" class="margin-toggle"/><span class="marginnote">First views of the countryside, after our departure from Ankara Station.</span>
-    <img src="/images/DSCF6948.JPG" alt="View through the window of our cabin on the Dogu Express." />
-</figure>
+![Roling golden hills in the twilight sun](/images/DSCF6948.JPG "Fist views of the countryside after departing from Ankara Station")
 
-Although the website for the Turkish railway company was quite clunky, it wasn't too difficult to book tickets a week
+Although the website for the Turkish railway company was clunky, it wasn't too difficult to book tickets a week
 or so before we left for the trip. We decided to be cheeky and book two extra fake guests in the same cabin as us
 so that we didn't have worry about being cramped in the cabin with two strangers. We didn't feel too bad as this
 was the off-season and there were plenty of other berths available. In all, it cost us about £15 each, making this
 a very cheap way to get across the country. If you wanted it even cheaper, you could also get couchettes. However,
-we walked through that carriage and found it very musty, hot and humid.
+we walked through that carriage and found it musty, hot and humid.
 
 It is also considered sinful in Islam for an unmarried man and woman (including strangers) to sit next to each other,
 or sleep in the same cabin, for more than a few hours. This was an annoyance several times on coaches and aeroplanes,
@@ -142,6 +129,6 @@ there were no murders or transgressions committed on this express though.
 
 Before long, it was late evening again. Only in the last few hours of the trip, did we start to become bored and we spent the
 time by watching films in the cabin as we watched the evening set in over the plains in the Armenian Highlands, were no trees grew but was instead
-just monotonous and slightly undulating, grey terrain. We arrived a few hours late in Kars, at around 10PM. It was already dark and 
+just monotonous and slightly undulating, grey terrain. We arrived a couple of hours late in Kars, at around 10PM. It was already dark and 
 about -5C. We had prepared our bags long in advance and when the train stopped, we hopped out, into the sooty, high-altitude, mountain air of Kars, ready to continue on the next leg of the journey...
 

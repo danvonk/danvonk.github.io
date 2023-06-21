@@ -4,10 +4,7 @@ author: Dan Vonk
 tags: personal, travel
 ---
 
-<figure>
-    <label for="horses" class="margin-toggle">&#8853;</label><input type="checkbox" id="horses" class="margin-toggle"/><span class="marginnote">Some horses hanging out.</span>
-    <img src="/images/DSCF7233.JPG" alt="Horses" />
-</figure>
+![Horses, near the cliff of the side of a valley](/images/DSCF7233.JPG "Some horses hanging out")
 
 Georgia is a land of stunning geography but one of the highlights for me was our
 tour starting in the capital and driving the _Military Highway_ through the
@@ -21,7 +18,7 @@ farewell as we ventured into the mountains. The visibility became poor as
 we climbed altitude and light snow continued to fall, painting the alpine fields
 white, a high contrast to the black tarmac, the only other visible thing for
 certain periods of the drive. We were in a long wheel-base minibus, with racing-style bucket seats
-(surprisingly popular in the region) and bright blue LED strip lights running
+(suprisingly popular in the region) and bright blue LED strip lights running
 the length of the roof in the aisle. Our driver was keen and drove rapidly
 through the twisting corners, often in the middle of the road, with the oncoming
 traffic occluded by the horizon or mountain-side. In the case that he had to
@@ -30,10 +27,8 @@ good view of the valley floor from our window. I don't usually
 get any kind of motion sickness but for this journey, I strapped in as tight as
 I could, held onto the handle bars and looked straight ahead.
 
-<figure>
-    <label for="stepant" class="margin-toggle">&#8853;</label><input type="checkbox" id="stepant" class="margin-toggle"/><span class="marginnote">A View of the _Devil's Valley_ in the Caucuses.</span>
-    <img src="/images/DSCF7217.JPG" alt="dramatic view of the valley" />
-</figure>
+
+![A dramatic view of the valley](/images/DSCF7217.JPG)
 
 These two photos are taken from a tourist stop along the highway, namely the
 _Russian-Georgian Friendship Monument_, built in 1983 to celebrate the ongoing
