@@ -165,8 +165,11 @@ td:nth-child(4) {
     width: 25%;
 }
 
-a .image-gallery {
+a.image-gallery {
   background-size: 0rem;
+  background: none;
   webkit-background-size: 0rem;
+  background-repeat-x: no-repeat;
+  background-repeat-y: no-repeat;
   background-repeat: no-repeat;
 }
