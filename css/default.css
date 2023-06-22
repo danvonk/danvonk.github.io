@@ -168,3 +168,7 @@ a.image-gallery {
   background-repeat-y: no-repeat;
   background-repeat: no-repeat;
 }
+
+#disqus_thread {
+  padding-top: 2rem;
+}
