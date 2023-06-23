@@ -34,12 +34,20 @@ defaultVenoBoxOptions = VenoBoxOptions
     defaultGallery = "gallery01"
   }
 
-veno :: Inline -> Inline
-veno (Image attrs@(ids, cls, kvs) inls target) = Link
+-- Replace image tags with a link wrapping the image + a caption
+veno :: Inline -> Block
+veno (Image attrs@(ids, cls, kvs) inls target) = Figure
   (ids, "image-gallery" : cls, [("data-gall", "gallery01"), ("title", snd target)] ++ kvs)
-  [Image attrs inls target]
-  target
-veno x = x
+  Caption Nothing captionDiv
+  [
+    Image attrs inls target
+  ]
+  where
+    -- <div class="marginnote">content</div>
+    captionDiv = Div captionAttr [Plain [Str (snd target)]]
+    captionAttr = (T.empty, ["marginnote"], [])
+
+veno x = Plain [x]
 
 usingVenoBox :: Pandoc -> Pandoc
 usingVenoBox (Pandoc meta blocks) = Pandoc meta (walk veno blocks)

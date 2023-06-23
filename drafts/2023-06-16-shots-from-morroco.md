@@ -49,14 +49,15 @@ main = putStrLn "hi"
 ```
 
 <!-- <figure> -->
-<!--     <label for="sahara-view" class="margin-toggle">&#8853;</label><input type="checkbox" id="sahara-view" class="margin-toggle"/><span class="marginnote">A fun double exposure.</span> -->
-<!--     <\!-- <img src="/images/DSCF7664.JPG" alt="Train stopped beside platform." /> -\-> -->
-<!--         <a class="image-gallery" data-gall="gallery01" data-title="a view of the sahara" href="/images/DSCF7664.JPG"><img src="/images/DSCF7664.JPG"></a> -->
+<!--     <label for="sahara-view" class="margin-toggle">&#8853;</label>
+<!--     <input type="checkbox" id="sahara-view" class="margin-toggle"/> -->
+<!--     <span class="marginnote">A fun double exposure.</span> -\-> -->
+<!--     <img src="/images/DSCF7664.JPG" alt="Train stopped beside platform." /> -\-> -->
+<!--     <a class="image-gallery" data-gall="gallery01" data-title="a view of the sahara" href="/images/DSCF7664.JPG"><img src="/images/DSCF7664.JPG"></a> -->
 <!-- </figure> -->
 
-In the middle of
+
 ![A view of the sahara](/images/DSCF7664.JPG "The Sahara")
-a paragraph.
 
 <!-- The following image should be the result of the pandoc transformation... -->
 <!-- <a class="image-gallery" data-gall="gallery01" title="a view of the sahara" style="background-size:0rem" href="/images/DSCF7664.JPG"><img src="/images/DSCF7664.JPG"></a> -->
