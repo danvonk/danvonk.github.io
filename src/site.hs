@@ -22,6 +22,7 @@ main = hakyllWith config $ do
       "css/et-book/et-book-roman-line-figures/*",
       "css/et-book/et-book-roman-old-style-figures/*",
       "css/et-book/et-book-semi-bold-old-style-figures/*",
+      "js/*",
       "css/reynold/*",
       "images/*",
       "fonts/*",
@@ -71,7 +72,7 @@ main = hakyllWith config $ do
         -- Create a page for each blog post
         route $ setExtension "html"
         compile $ do
-          pandocCompilerWithTransform defaultHakyllReaderOptions defaultHakyllWriterOptions usingVenoBox
+          pandocCompilerWithTransform defaultHakyllReaderOptions defaultHakyllWriterOptions (usingSideNotes . usingVenoBox)
             >>= loadAndApplyTemplate "templates/post.html" tagsCtx
             >>= loadAndApplyTemplate "templates/default.html" tagsCtx
             >>= relativizeUrls
