@@ -37,7 +37,7 @@ defaultVenoBoxOptions = VenoBoxOptions
 veno :: Inline -> Inline
 veno (Image attrs@(ids, cls, kvs) inls target) = Link
   (ids, "image-gallery" : cls, [("data-gall", "gallery01"), ("title", snd target)] ++ kvs)
-  [Image attrs [] target]
+  [Image attrs inls target]
   target
 veno x = x
 
