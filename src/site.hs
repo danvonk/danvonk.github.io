@@ -45,7 +45,7 @@ main = hakyllWith config $ do
             >>= loadAndApplyTemplate "templates/default.html" pageCtx
             >>= relativizeUrls
 
-      create ["pages/about.html", "pages/readinglist.md"] $ do
+      create ["pages/about.md", "pages/readinglist.md"] $ do
         route $ gsubRoute "pages/" (const "") `composeRoutes` setExtension "html"
         compile $
           pandocCompiler
@@ -76,8 +76,8 @@ main = hakyllWith config $ do
             >>= loadAndApplyTemplate "templates/default.html" tagsCtx
             >>= relativizeUrls
 
-      create ["pages/archive.html"] $ do
-        route $ gsubRoute "pages/" (const "")
+      create ["pages/archive.md"] $ do
+        route $ gsubRoute "pages/" (const "") `composeRoutes` setExtension "html"
         compile $ do
           posts <- recentFirst =<< loadAll "posts/*"
           let archiveCtx =
@@ -89,8 +89,8 @@ main = hakyllWith config $ do
             >>= loadAndApplyTemplate "templates/default.html" archiveCtx
             >>= relativizeUrls
 
-      match "pages/index.html" $ do
-        route $ gsubRoute "pages/" (const "")
+      match "pages/index.md" $ do
+        route $ gsubRoute "pages/" (const "") `composeRoutes` setExtension "html"
         compile $ do
           posts <- recentFirst =<< loadAll "posts/*"
           let indexCtx =
