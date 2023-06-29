@@ -1,6 +1,5 @@
 -- |
-{-# LANGUAGE FlexibleContexts #-}
-{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE FlexibleContexts, OverloadedStrings, PatternSynonyms #-}
 
 module BlogPost (
   usingVenoBox,
@@ -11,6 +10,7 @@ import qualified Data.Text as T
 
 import Text.Pandoc.JSON
 import Text.Pandoc.Walk
+import Text.Pandoc.Definition (Block(..))
 
 -- ![A view of the sahara](/images/DSCF7664.JPG)
 -- ............ results in ...............................
@@ -34,12 +34,23 @@ defaultVenoBoxOptions = VenoBoxOptions
     defaultGallery = "gallery01"
   }
 
-veno :: Inline -> Inline
-veno (Image attrs@(ids, cls, kvs) inls target) = Link
-  (ids, "image-gallery" : cls, [("data-gall", "gallery01"), ("title", snd target)] ++ kvs)
-  [Image attrs inls target]
-  target
-veno x = x
-
 usingVenoBox :: Pandoc -> Pandoc
-usingVenoBox (Pandoc meta blocks) = Pandoc meta (walk veno blocks)
+usingVenoBox (Pandoc meta blocks) = Pandoc meta (walk mkFigure blocks)
+
+-- <label for="outside-ankara" class="margin-toggle">&#8853;</label><input type="checkbox" id="outside-ankara" class="margin-toggle"/>
+
+mkFigure :: Block -> Block
+mkFigure (Plain [Image attrs@(ids, cls, kvs) inls target]) = Figure
+  nullAttr
+  (Caption Nothing [])
+  [checkBoxLabel, checkBox, Plain [Link (ids, "image-gallery" : cls, [("data-gall", "gallery01"), ("title", snd target)] ++ kvs)
+          [Image attrs inls target] target], captionDiv]
+  where
+    -- make the margin note: <div class="marginnote">content</div>
+    captionDiv = Div captionAttr [Plain [Str (snd target)]]
+    captionAttr = (T.empty, ["marginnote"], [])
+    checkBoxLabel = RawBlock "html" "<label for=\"xyz\" class=\"margin-toggle\">&#8853;</label>"
+    checkBox = RawBlock "html" "<input type=\"checkbox\" id=\"xyz\" class=\"margin-toggle\"/>"
+
+mkFigure (Figure _ _ [Figure a c bs]) = Figure a c bs
+mkFigure x = x
