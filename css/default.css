@@ -165,3 +165,7 @@ a.image-gallery {
   background-repeat-y: no-repeat;
   background-repeat: no-repeat;
 }
+
+.vbox-title {
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, sans-serif;
+}
