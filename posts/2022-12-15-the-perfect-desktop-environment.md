@@ -8,31 +8,21 @@ Many Linux users settle on whatever their desktop environment their distro provi
 
 In case you didn't know already, tiling window managers differ from 'floating' window managers like GNOME in that they subdivide the screen into smaller rectangles and place windows side-by-side in these smaller rectanlges. That is, windows cannot float on top of each other. I find this much easier to work with as one does not have to go hunting to find their text editor behind six open file browsers.
 
-<figure>
-    <label for="de1-split" class="margin-toggle">&#8853;</label><input type="checkbox" id="de1-split" class="margin-toggle"/><span class="marginnote">Typical split-screen configuration of my WM.</span>
-    <img src="/images/de2.png" alt="Two windows side-by-side in the WM." />
-</figure>
+![Two windows side-by-side in the WM.](/images/de2.png "Typical split-screen configuration of my WM.")
 
 However, in my experience, there always comes a point when running one of these lightweight WMs, where one wishes for the traditional heavyweight GUI approach. For me this is usually configuring network connections or VPNs, where there are many options and switches, but I use them so infrequently that I never really learn the command line workflow to configure them.
 
 Luckily, I have discovered that you can have the best of both worlds. This is because if you run Xfce, you can disable its window management gizmos and instead run an `i3` session inside it.
 
-<figure>
-    <label for="de2" class="margin-toggle">&#8853;</label><input type="checkbox" id="de2" class="margin-toggle"/><span class="marginnote">Example of a GUI dialog which I wouldn't bother learning the command-line workflow for.</span>
-    <img src="/images/de4.png" alt="Appearance dialog in Xfce" />
-</figure>
+![Appearance dialog in Xfce](/images/de4.png "Example of a GUI dialog which I wouldn't bother learning the command-line workflow for.<")
 
 All one needs to do is go to _Session and Startup_ and remove the Xfce desktop process from startup in the current session (as shown above). Then add `i3` as a startup command under the _Application Autostart_ tab. Also don't forget to remove all Xfce keyboard shortcuts under _Application Shortcuts_ of the _Keyboard_ settings menu, as these conflict with i3.
 
-<figure>
-    <label for="de5" class="margin-toggle">&#8853;</label><input type="checkbox" id="de5" class="margin-toggle"/><span class="marginnote">Startup entry for i3.</span>
-    <img src="/images/de5.png" alt="Appearance dialog in Xfce" />
-</figure>
+![Appearance dialog in Xfce](/images/de5.png "Startup entry for i3.")
 
 You can then customise your i3 config (which lives in `~/.config/i3/config`) to your heart's content. Here's mine for reference, which is slightly adapted from the default file:
 
-<pre>
-<code>
+```shell
 # set modifier
 set $super Mod4
 set $alt Mod1
@@ -173,7 +163,4 @@ bindsym $super+minus scratchpad show
 workspace_layout tabbed
 
 bindsym $super+w layout tabbed
-
-
-</code>
-</pre>
+```

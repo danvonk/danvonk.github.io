@@ -45,7 +45,7 @@ Ankara. You may think this means it traverses some colossal distance, but in fac
 13 hours to drive. However, the slowness of the train did not deter us as we had plenty of time and I was rather
 looking forward to sleeping on a night train, which I had never done before.
 
-![Roling golden hills in the twilight sun](/images/DSCF6948.JPG "Fist views of the countryside after departing from Ankara Station")
+![Rolling golden hills in the twilight sun](/images/DSCF6948.JPG "Fist views of the countryside after departing from Ankara Station")
 
 Although the website for the Turkish railway company was clunky, it wasn't too difficult to book tickets a week
 or so before we left for the trip. We decided to be cheeky and book two extra fake guests in the same cabin as us
@@ -59,14 +59,12 @@ or sleep in the same cabin, for more than a few hours. This was an annoyance sev
 where we were assigned random seats and the attendant had to play _Towers of Hanoi_ to get us into the proper configuration,
 but also may pose a problem if you are travelling with someone of the opposite gender.
 
-<figure>
-    <label for="outside-ankara" class="margin-toggle">&#8853;</label><input type="checkbox" id="outside-ankara" class="margin-toggle"/><span class="marginnote">The vibrant colours of the trees lining the streams that we traced were an especially beautiful contrast to the brown and grey mountains of most of the rest of the journey. This was taken from the restaurant carriage.</span>
-    <img src="/images/DSCF6979.JPG" alt="Following stream" />
-</figure>
+
+![The train follows the path of a river](/images/DSCF6979.JPG "The vibrant colours of the trees lining the streams that we traced were an especially beautiful contrast to the brown and grey mountains of most of the rest of the journey. This photo was taken from the restaurant carriage.")
 
 Our train was one of the newer models and the cabin had air-conditioning and was quite comfy. This was welcome for me
 as the night before we had gone out to explore the city, gotten a little drunk and stupidly decided to go for the cheapest
-Doener we saw. Needless to say I got food poisoning, vomited quite a lot in the hotel and was green and feverish for the first
+Doener we saw. Needless to say I got food poisoning, vomited a lot in the hotel and was green and feverish for the first
 night of the train journey. One let-down for me in this unfortunate state, were the toilets. At one end of the carriage, one
 could find the squat toilet and at the other end, the western-style toilet. However, the toilet also had a bidet function which could
 be turned on via a tap. Naturally someone had left this running, so after a few hours there was no more water in the tank.
@@ -74,17 +72,15 @@ This also meant that the flush functionality of the toilet did not work. Luckily
 brush was already supplied to shove the waste down through the hole at the bottom of the aeroplane-style, aluminium bowl. This was all a 
 little grim but we had come prepared with wet-wipes, hand sanitiser and Turkish _cologne_, which is citrus-flavoured cleaning alcohol, rather than perfume.
 
-The carriage with our cabin was otherwise pretty good. The beds were about 2m long and spongy enough. The quite loud
+The carriage with our cabin was otherwise pretty good. The beds were about 2m long and spongy enough. The loud
 _c-clank-a-clank_ of the wheels going over the joins in the rails took a bit of getting used to but otherwise
 became comforting after a while. The carriages did get noisy with those bumps and screeches if we got up to speed, 
 but in practice this wasn't really a problem as we barely went over 30mph for most of the trip. Overall the night's sleep was restful.
 
-<figure>
-    <label for="outside-ankara" class="margin-toggle">&#8853;</label><input type="checkbox" id="outside-ankara" class="margin-toggle"/><span class="marginnote">Views of the track from the back of the train. Photos were easy to take here because you could just open the door of the moving train and peek right out.</span>
-    <img src="/images/IMG_20221106_102439.jpg" alt="Dogu Express" />
-</figure>
+![View of railway tracks from the back of the last carriage](/images/IMG_20221106_102439.jpg "Views of the track from the back of the train. Photos were easy to take here because you could just open the door of the moving train and peek right out.")
 
-I woke up the next morning with a beautiful view just beyond my feet. The blinds in the cabin were not quite
+
+I woke up the next morning with a beautiful view just beyond my feet. The blinds in the cabin were not completely
 opaque so the daylight came seeping in. With it, we saw the deep canyons that we had been traversing the night before.
 They were the canyons formed by tributaries to the Tigris river and our train weaved through deep cuts in the sides
 of the canyon walls, often through switch-backs where the rest of the train would greet us as we stared out through the windows.
@@ -93,10 +89,7 @@ The scenery had a wild-west feel to it. The sandstone rocks were rich in iron an
 a stark contrast to the deep blue, clear sky above. Along the train, there were also telephone poles, which I liked to imagine,
 were telegraph poles and that there were bandits hiding just over yonder.
 
-<figure>
-    <label for="canyons" class="margin-toggle">&#8853;</label><input type="checkbox" id="canyons" class="margin-toggle"/><span class="marginnote">Canyons seen from the back of the train. Taken by my travelling companion with a Holga camera on Porta 400.</span>
-    <img src="/images/14460014.JPG " alt="Canyons" />
-</figure>
+![View of canyons from the last carriage](/images/14460014.JPG "Canyons seen from the back of the train. Taken by my travelling companion with a Holga camera on Porta 400.")
 
 We had finished the snacks we brought with us on the train the night before, which meant it was time for breakfast.
 Unfortunately, the restaurant car was not much to behold. The only food on offer was cup-a-soup, 
@@ -108,7 +101,7 @@ I was slightly disappointed by the tea and coffee though. It was just Lipton tea
 
 _Your correspondent_ did also meet another correspondent in the restaurant carriage, who was a freelance writer for _Al Jazeera_.
 He was travelling from Istanbul to Trabzon with his Polish girlfriend, who also dabbled in a bit of film photography, like us,
-during the train journey. Luckily the guy also spoke Turkish, as although he was Egyptian, he had lived in Istanbul for quite some
+during the train journey. Luckily the guy also spoke Turkish, as although he was Egyptian, he had lived in Istanbul for some
 time. This helped as it gave us some more backstory to the country and allowed us to chat with some of the locals
 who were also on the train. For example, it turned out that our conductor was also a minor celebrity on the railways:
 He was a seasoned veteran who had been conducting the Dogu Express for many years and is even the subject of a short-film
@@ -122,10 +115,7 @@ perception than reality. And he wasn't going to get in trouble with his superior
 the train later on. They were about 20 years younger and dressed sharply in suits, as if they were crime-scene detectives. As far as we know,
 there were no murders or transgressions committed on this express though.
 
-<figure>
-    <label for="outside-ankara" class="margin-toggle">&#8853;</label><input type="checkbox" id="outside-ankara" class="margin-toggle"/><span class="marginnote">In the final few hours of the journey, we started to see the mountains in the Armenian Highlands in the east of Turkey.</span>
-    <img src="/images/DSCF7009.JPG" alt="Exports and Imports to and from Denmark & Norway from 1700 to 1780" />
-</figure>
+![View onto the blue and grey plains of the Armenian highlands](/images/DSCF7009.JPG "In the final few hours of the journey, we started to see the mountains in the Armenian Highlands in the east of Turkey.")
 
 Before long, it was late evening again. Only in the last few hours of the trip, did we start to become bored and we spent the
 time by watching films in the cabin as we watched the evening set in over the plains in the Armenian Highlands, were no trees grew but was instead

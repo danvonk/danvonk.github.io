@@ -30,11 +30,8 @@ brutalist buildings, which have now become department stores like _Galeria Kaufh
 famous TV tower is not actually on the _Alex_, it is one of the major attractions here. I usually think TV towers are a bit
 ugly, but I have to admit, I do quite like this one!
 
-<figure>
-    <label for="alexanderplatz" class="margin-toggle">&#8853;</label><input type="checkbox" id="alexanderplatz" class="margin-toggle"/><span class="marginnote">A view of the _Fernsehturm_
-    near Alexanderplatz with a nice DDR mural on one of the buildings situated on Karl-Marx Allee in the foreground.</span>
-    <img src="/images/000005.JPG" alt="Fernsehturm bei Alexanderplatz" />
-</figure>
+![The famous Fernsehturm by Alexanderplatz](/images/000005.JPG "A view of the Fernsehturm
+    near Alexanderplatz with a nice DDR mural on one of the buildings situated on Karl-Marx Allee in the foreground.")
 
 I continued my walk here on the Karl-Marx Allee. This was one of the preeminent streets of the eastern zone. It is a wide
 boulevard lined with large apartment buildings in the _Stalinist Architecture_ style. This isn't to be confused with the
@@ -51,10 +48,7 @@ get that trash-chic vibe that Berlin is known for. The assortment was a lot
 better for women's clothes, the prices were high and I reckon you could do a lot
 better at a charity shop anywhere in London.
 
-<figure>
-    <label for="kmallee" class="margin-toggle">&#8853;</label><input type="checkbox" id="kmallee" class="margin-toggle"/><span class="marginnote">Retiree walking on Karl-Marx Allee</span>
-    <img src="/images/000006.JPG" alt="Retiree on KM-Allee" />
-</figure>
+![Reflections on a shop window on the Karl-Marx Allee](/images/000006.JPG "Retiree walking on Karl-Marx Allee")
 
 In this area, on the banks of the Spree is the _Mauer Gallerie_, which shows a
 preserved section of the Berlin wall (there are several other less touristy
@@ -63,10 +57,7 @@ _Oberbaumbrücke_ around here, which is a beautiful draw-bridge connecting
 Friedrichshain and Kreuzberg (they were previously on opposing sides of the
 Berlin wall).
 
-<figure>
-    <label for="mauer" class="margin-toggle">&#8853;</label><input type="checkbox" id="mauer" class="margin-toggle"/><span class="marginnote">Tourists at the _Mauer-Gallerie_</span>
-    <img src="/images/000032.JPG" alt="Tourists at the famous kissing mural on the berlin wall." />
-</figure>
+![Tourists at the famous kissing mural on the berlin wall.](/images/000032.JPG "Tourists at the Mauer-Gallerie")
 
 The day after, I headed over to Potsdam, which is just outside of Berlin (sort
 of a Windsor/Versailles/Pushkin situation). The landscape is very beautiful here
@@ -77,10 +68,5 @@ so-called "areas of outstanding natural beauty" that exist around London.
 Frederick the Great had his palace here and the grounds provide a nice escape on
 the weekends, with manicured gardens and multiple palaces!
 
-<figure>
-    <label for="sanssouci" class="margin-toggle">&#8853;</label><input type="checkbox" id="sanssouci" class="margin-toggle"/><span class="marginnote">Family walking under the tree-lined paths on the _Sanssouci_ grounds.</span>
-    <img src="/images/000040.JPG" alt="Tree-lined path in Sanssouci" />
-</figure>
-
-
+![Tree-lined path in Sanssouci](/images/000040.JPG "Family walking under the tree-lined paths on the Sanssouci grounds.")
 

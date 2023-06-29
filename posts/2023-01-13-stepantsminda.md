@@ -4,7 +4,7 @@ author: Dan Vonk
 tags: personal, travel
 ---
 
-![Horses, near the cliff of the side of a valley](/images/DSCF7233.JPG "Some horses hanging out")
+![Horses, near the cliff of the side of a valley](/images/DSCF7233.JPG "Horses hanging out while it snows in the wintry valley.")
 
 Georgia is a land of stunning geography but one of the highlights for me was our
 tour starting in the capital and driving the _Military Highway_ through the
@@ -28,7 +28,7 @@ get any kind of motion sickness but for this journey, I strapped in as tight as
 I could, held onto the handle bars and looked straight ahead.
 
 
-![A dramatic view of the valley](/images/DSCF7217.JPG)
+![A dramatic view of the valley](/images/DSCF7217.JPG "A dramatic view of the valley taken from the precipice of the monument.")
 
 These two photos are taken from a tourist stop along the highway, namely the
 _Russian-Georgian Friendship Monument_, built in 1983 to celebrate the ongoing

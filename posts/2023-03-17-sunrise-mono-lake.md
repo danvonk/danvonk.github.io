@@ -4,10 +4,7 @@ author: Dan Vonk
 tags: personal, travel
 ---
 
-<figure>
-    <label for="outside-ankara" class="margin-toggle">&#8853;</label><input type="checkbox" id="outside-ankara" class="margin-toggle"/><span class="marginnote">At about 5:30, half-asleep and ermerging from a tent smelling of maple-bacon, I caught this view.</span>
-    <img src="/images/DSCF5365.jpg" alt="" />
-</figure>
+![Sunrise over Mono Lake](/images/DSCF5365.jpg "At about 5:30, half-asleep and emerging from a tent smelling of maple-bacon, I caught this view.")
 
 The best photo I have taken has to be the one shown above, which I took in September 2019. I was travelling with a friend
 from San Francisco, down to L.A. and then back up again. We had rented a Nissan pick-up truck, or really I should, as a self-respecting
