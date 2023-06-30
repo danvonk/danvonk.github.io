@@ -50,7 +50,7 @@ main = hakyllWith config $ do
             >>= loadAndApplyTemplate "templates/default.html" pageCtx
             >>= relativizeUrls
 
-      create ["pages/about.md", "pages/readinglist.md"] $ do
+      create ["pages/about.md", "pages/readinglist.md", "pages/gallery.md"] $ do
         route $ gsubRoute "pages/" (const "") `composeRoutes` setExtension "html"
         compile $
           pandocCompiler
