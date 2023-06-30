@@ -3,11 +3,14 @@
 
 module BlogPost (
   usingVenoBox,
-  defaultVenoBoxOptions )
+  defaultVenoBoxOptions,
+  blogPostCompiler )
 where
 
 import qualified Data.Text as T
 
+import Hakyll
+import Text.Pandoc.SideNote
 import Text.Pandoc.JSON
 import Text.Pandoc.Walk
 import Text.Pandoc.Definition (Block(..))
@@ -54,3 +57,10 @@ mkFigure (Plain [Image attrs@(ids, cls, kvs) inls target]) = Figure
 
 mkFigure (Figure _ _ [Figure a c bs]) = Figure a c bs
 mkFigure x = x
+
+
+blogPostCompiler :: Compiler (Item String)
+blogPostCompiler = pandocCompilerWithTransform
+  defaultHakyllReaderOptions
+  defaultHakyllWriterOptions
+  (usingSideNotes . usingVenoBox)
