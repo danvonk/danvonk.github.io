@@ -8,6 +8,7 @@ executable site
   build-depends:    base == 4.*,
                     text >= 1.2.5.0,
                     hakyll == 4.16.0.0,
+                    hakyll-images >= 1.2.0,
                     pandoc-sidenote >= 0.23.0.0,
                     pandoc-types >= 1.23
   hs-source-dirs:   src

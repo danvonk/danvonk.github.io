@@ -12,6 +12,13 @@ packages:
   original:
     hackage: hakyll-4.16.0.0
 - completed:
+    hackage: hakyll-images-1.2.0@sha256:0c61b3e6fa7b7a954697bc271496f3afb15b9b77e5bd3ac933e381c9602082a1,2411
+    pantry-tree:
+      sha256: ca5e75ca5d24e0044bac499d335c9da83532444dff0ac89e95ddd51e81bc1ec4
+      size: 1122
+  original:
+    hackage: hakyll-images-1.2.0
+- completed:
     hackage: pandoc-types-1.23@sha256:bf5eac74d6b805520bd57a7be12af09370edde1a86ebffa9ff83eb9c9d860041,4140
     pantry-tree:
       sha256: 26e9cbed29980acc5fe0dcf5c427d9eb414c044f87d2447c36f588fd73b02dca

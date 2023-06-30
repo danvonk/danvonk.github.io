@@ -3,6 +3,7 @@
 
 import Control.Monad (forM_)
 import Hakyll
+import Hakyll.Images
 import Text.Pandoc.SideNote
 
 import BlogPost (usingVenoBox)
@@ -23,14 +24,18 @@ main = hakyllWith config $ do
       "css/et-book/et-book-roman-old-style-figures/*",
       "css/et-book/et-book-semi-bold-old-style-figures/*",
       "js/*",
+      "images/**.png",
       "css/reynold/*",
-      "images/*",
       "fonts/*",
       "static/*"
     ]
     $ \f -> match f $ do
       route idRoute
       compile copyFileCompiler
+
+      forM_ ["images/**.JPG", "images/**.jpg"] $ \f -> match f $ do
+        route idRoute
+        compile $ loadImage >>= compressJpgCompiler 50
 
       match "css/*" $ do
         route idRoute
