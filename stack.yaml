@@ -42,7 +42,7 @@ packages:
 #
 extra-deps:
   - hakyll-4.16.0.0
-  - hakyll-images-1.2.0
+  - hakyll-images-1.2.1
   - pandoc-types-1.23
   - pandoc-sidenote-0.23.0.0
 
