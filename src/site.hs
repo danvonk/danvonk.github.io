@@ -34,7 +34,15 @@ main = hakyllWith config $ do
 
       forM_ ["images/**.JPG", "images/**.jpg"] $ \f -> match f $ do
         route idRoute
-        compile $ loadImage >>= compressJpgCompiler 50
+        compile $ loadImage >>= compressJpgCompiler 70
+
+
+      match "gallery/*" $ do
+        route idRoute
+        compile $ do
+          im <- loadImage
+          meta <- imageMetadata im
+          return im
 
       match "css/*" $ do
         route idRoute

@@ -1,5 +1,5 @@
--- |
-{-# LANGUAGE FlexibleContexts, OverloadedStrings, PatternSynonyms #-}
+-- | Filters for blog post compiler
+{-# LANGUAGE FlexibleContexts, OverloadedStrings #-}
 
 module BlogPost (
   usingVenoBox,
@@ -8,17 +8,16 @@ module BlogPost (
 where
 
 import qualified Data.Text as T
+import Control.Monad.State (State, get, put, evalState)
 
 import Hakyll
-import Text.Pandoc.SideNote
+import Text.Pandoc.SideNote (usingSideNotes)
 import Text.Pandoc.JSON
-import Text.Pandoc.Walk
+import Text.Pandoc.Walk (walkM)
+import Text.Pandoc.Builder (emptyCaption)
 import Text.Pandoc.Definition (Block(..))
 
--- ![A view of the sahara](/images/DSCF7664.JPG)
--- ............ results in ...............................
--- <a class="image-gallery" data-gall="gallery01" title="a view of the sahara" href="/images/DSCF7664.JPG">
---  <img src="/images/DSCF7664.JPG"></a>
+type MarginNote = State Int
 
 data VenoBoxOptions = VenoBoxOptions
   {
@@ -37,30 +36,36 @@ defaultVenoBoxOptions = VenoBoxOptions
     defaultGallery = "gallery01"
   }
 
-usingVenoBox :: Pandoc -> Pandoc
-usingVenoBox (Pandoc meta blocks) = Pandoc meta (walk mkFigure blocks)
+usingVenoBox :: VenoBoxOptions -> Pandoc -> Pandoc
+usingVenoBox opts (Pandoc meta blocks) = Pandoc meta $ evalState (walkM (mkFigure opts) blocks) 0
 
--- <label for="outside-ankara" class="margin-toggle">&#8853;</label><input type="checkbox" id="outside-ankara" class="margin-toggle"/>
-
-mkFigure :: Block -> Block
-mkFigure (Plain [Image attrs@(ids, cls, kvs) inls target]) = Figure
-  nullAttr
-  (Caption Nothing [])
-  [checkBoxLabel, checkBox, Plain [Link (ids, "image-gallery" : cls, [("data-gall", "gallery01"), ("title", snd target)] ++ kvs)
-          [Image attrs inls target] target], captionDiv]
+mkFigure :: VenoBoxOptions -> Block -> MarginNote Block
+mkFigure opts (Plain [Image attrs@(ids, cls, kvs) inls target]) = do
+  num <- get
+  put (num + 1)
+  let checkBoxLabel = RawBlock "html" (T.pack $ "<label for=\"mn" ++ show num ++ "\" class=\"margin-toggle\">&#8853;</label>")
+  let checkBox = RawBlock "html" (T.pack $ "<input type=\"checkbox\" id=\"mn" ++ show num ++ "\" class=\"margin-toggle\"/>")
+  pure $ Figure nullAttr
+                emptyCaption
+                -- blocks contained in the figure:
+                -- label and checkbox are for margin note toggle
+                [checkBoxLabel,
+                 checkBox,
+                 captionDiv,
+                 -- wrap the image in a link for the lightbox. Use the image alt text as a title for the lightbox
+                 Plain [Link (ids, galleryClass opts : cls, [("data-gall", defaultGallery opts), ("title", snd target)] ++ kvs)
+                          [Image attrs inls target] target]]
   where
-    -- make the margin note: <div class="marginnote">content</div>
-    captionDiv = Div captionAttr [Plain [Str (snd target)]]
+    -- make the div tag for the margin note
     captionAttr = (T.empty, ["marginnote"], [])
-    checkBoxLabel = RawBlock "html" "<label for=\"xyz\" class=\"margin-toggle\">&#8853;</label>"
-    checkBox = RawBlock "html" "<input type=\"checkbox\" id=\"xyz\" class=\"margin-toggle\"/>"
+    captionDiv = Div captionAttr [Plain [Str (snd target)]]
 
-mkFigure (Figure _ _ [Figure a c bs]) = Figure a c bs
-mkFigure x = x
-
+-- otherwise the figure will be double-wrapped?
+mkFigure _ (Figure _ _ [Figure a c bs]) = pure $ Figure a c bs
+mkFigure _ x = pure x
 
 blogPostCompiler :: Compiler (Item String)
 blogPostCompiler = pandocCompilerWithTransform
   defaultHakyllReaderOptions
   defaultHakyllWriterOptions
-  (usingSideNotes . usingVenoBox)
+  (usingSideNotes . usingVenoBox defaultVenoBoxOptions)
