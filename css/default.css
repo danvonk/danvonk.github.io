@@ -1,15 +1,12 @@
 /* Use pandoc's dark theme but reset the backg color to tufte.css'. */
 @import url("/css/code-style-dark.css") (prefers-color-scheme: dark);
+@import url("/css/code-style-light.css") (prefers-color-scheme: light);
 @media (prefers-color-scheme: dark) {
     div.sourceCode {
         background-color: #151515;
     }
 }
-@import url("/css/code-style-light.css") (prefers-color-scheme: light);
 
-header {
-  /* border-bottom: 0.2rem solid #000; */
-}
 
 nav {
   text-align: right;
