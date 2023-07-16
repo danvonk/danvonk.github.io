@@ -1,4 +1,4 @@
-// Use pandoc's dark theme but reset the backg color to tufte.css'.
+/* Use pandoc's dark theme but reset the backg color to tufte.css'. */
 @import url("/css/code-style-dark.css") (prefers-color-scheme: dark);
 @media (prefers-color-scheme: dark) {
     div.sourceCode {
