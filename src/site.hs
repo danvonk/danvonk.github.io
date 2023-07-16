@@ -5,6 +5,8 @@ import Control.Monad (forM_)
 import Hakyll
 import Hakyll.Images
 
+import Text.Pandoc.Highlighting
+
 import BlogPost (usingVenoBox, blogPostCompiler)
 
 config :: Configuration
@@ -24,7 +26,6 @@ main = hakyllWith config $ do
       "css/et-book/et-book-semi-bold-old-style-figures/*",
       "js/*",
       "images/**.png",
-      "css/reynold/*",
       "fonts/*",
       "static/*"
     ]
@@ -36,6 +37,14 @@ main = hakyllWith config $ do
         route idRoute
         compile $ loadImage >>= compressJpgCompiler 70
 
+      create ["css/code-style-light.css"] $ do
+        route idRoute
+        compile $ do
+          makeItem $ styleToCss haddock
+      create ["css/code-style-dark.css"] $ do
+        route idRoute
+        compile $ do
+          makeItem $ styleToCss breezeDark
 
       match "gallery/*" $ do
         route idRoute

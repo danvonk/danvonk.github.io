@@ -16,6 +16,8 @@ import Text.Pandoc.JSON
 import Text.Pandoc.Walk (walkM)
 import Text.Pandoc.Builder (emptyCaption)
 import Text.Pandoc.Definition (Block(..))
+import Text.Pandoc.Highlighting
+import Text.Pandoc.Options
 
 type MarginNote = State Int
 
@@ -67,5 +69,7 @@ mkFigure _ x = pure x
 blogPostCompiler :: Compiler (Item String)
 blogPostCompiler = pandocCompilerWithTransform
   defaultHakyllReaderOptions
-  defaultHakyllWriterOptions
+  defaultHakyllWriterOptions {
+    writerHighlightStyle = Just haddock
+  }
   (usingSideNotes . usingVenoBox defaultVenoBoxOptions)

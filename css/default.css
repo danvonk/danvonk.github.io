@@ -1,3 +1,6 @@
+@import url("/css/code-style-dark.css") (prefers-color-scheme: dark);
+@import url("/css/code-style-light.css") (prefers-color-scheme: light);
+
 header {
   /* border-bottom: 0.2rem solid #000; */
 }
@@ -172,3 +175,4 @@ a.image-gallery {
 .vbox-num {
   font-family: "Gill Sans", "Gill Sans MT", Calibri, sans-serif;
 }
+

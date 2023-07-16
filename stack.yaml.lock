@@ -39,6 +39,13 @@ packages:
       size: 322
   original:
     hackage: pandoc-sidenote-0.23.0.0
+- completed:
+    hackage: pandoc-3.1@sha256:259e8a95f1bcdba3878fde800b864ffdcd05c047eab4d0c583f4ea6ff42d0075,37765
+    pantry-tree:
+      sha256: 76d6e1660e3e717b095037c2f34ace5d49a6d37b87669f22fe2362efab46e93d
+      size: 141518
+  original:
+    hackage: pandoc-3.1
 snapshots:
 - completed:
     sha256: 1867d84255dff8c87373f5dd03e5a5cb1c10a99587e26c8793e750c54e83ffdc

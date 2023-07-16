@@ -11,7 +11,8 @@ executable site
                     hakyll == 4.16.0.0,
                     hakyll-images >= 1.2.1,
                     pandoc-sidenote >= 0.23.0.0,
-                    pandoc-types >= 1.23
+                    pandoc-types >= 1.23,
+                    pandoc >= 3.1
   hs-source-dirs:   src
   other-modules:    BlogPost
   ghc-options:      -threaded -rtsopts -with-rtsopts=-N
