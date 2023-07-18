@@ -22,7 +22,7 @@ All one needs to do is go to _Session and Startup_ and remove the Xfce desktop p
 
 You can then customise your i3 config (which lives in `~/.config/i3/config`) to your heart's content. Here's mine for reference, which is slightly adapted from the default file:
 
-```shell
+```ini
 # set modifier
 set $super Mod4
 set $alt Mod1

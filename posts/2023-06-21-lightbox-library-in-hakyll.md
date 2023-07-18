@@ -24,11 +24,10 @@ embedded into the markdown document, like this:
 </figure>
 ```
 It is inconvenient to keep this snippet around to paste each time an image is
-required and it is also error-prone because one has to remember to give each image a new unique id.
-
-Furthermore, this just provides me the ability to have a caption next to the
+required and it is also error-prone because one has to remember to give each
+image a new unique id. Furthermore, this just provides me the ability to have a caption next to the
 image. If the image is particularly nice, I want the ability to click on it
-and enlarge it. This is probably not too difficult to program yourself in
+and _enlarge_ it. This is probably not too difficult to program yourself in
 JavaScript. But  through a little bit of research on the internet, I found that there were
 hundreds of libraries that already provide this. The one I settled one is called
 **VenoBox**; not for any particular reason, though it seemed capable enough. Now
