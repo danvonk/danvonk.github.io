@@ -3,7 +3,7 @@ title: About
 ---
 
 <img src="/images/DSCF7223.JPG" style="float: right; margin: 100px;" width=400px height=600px />
-<article>
+<article class="sans">
 <section>
 <p>I'm Dan Vonk.</p>
 
@@ -16,10 +16,9 @@ an interest in Rust as well as various functional languages! To be even more pre
 graphics-related programming and maintain a bit of an interest in programming language
 and proof theory.</p>
 
-<p>
 You can contact me via <a href="https://www.linkedin.com/in/daniel-vonk/">LinkedIn</a>,
 view my <a href="https://github.com/danvonk">GitHub</a> or see my
 <a href="/static/danielvonk.pdf">CV</a>.
-</p>
 
+</section>
 </article>

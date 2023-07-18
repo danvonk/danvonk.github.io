@@ -2,6 +2,8 @@
 title: Reading List
 ---
 
+<article class="sans">
+
 Though I'm not a voracious reader by any mark, once stuck into a book, I'm always glad for it and it definitely has helped me develop my thinking. I'm hoping that by tracking my books read and letting it be known publicly that I can get myself to read more...
 
 | Title                                                         | Author                              |
@@ -89,3 +91,5 @@ Though I'm not a voracious reader by any mark, once stuck into a book, I'm alway
 
 
 ... and any further back, I haven't tracked or can't remember!
+
+</article>
