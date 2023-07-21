@@ -1,6 +1,6 @@
 {
   description = "my project description";
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.05";
   inputs.flake-utils.url = "github:numtide/flake-utils";
 
   outputs = { self, nixpkgs, flake-utils }:
@@ -9,7 +9,7 @@
         pkgs = nixpkgs.legacyPackages.${system};
 
         hPkgs =
-          pkgs.haskell.packages."ghc944"; # need to match Stackage LTS version
+          pkgs.haskell.packages."ghc945"; # need to match Stackage LTS version
                                            # from stack.yaml resolver
 
         myDevTools = [
@@ -23,6 +23,7 @@
           hPkgs.cabal-install
           stack-wrapped
           pkgs.zlib # External C library needed by some Haskell packages
+          pkgs.pkg-config
         ];
 
         # Wrap Stack to work with our Nix integration. We don't want to modify
