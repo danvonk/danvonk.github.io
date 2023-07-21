@@ -47,6 +47,12 @@ liked a little more variety towards the end of the holiday.
 Atlas mountains faintly visible in the background. Down below the streets are
 narrow, labyrinthine and stink but are nevertheless welcome respite from the hot sun.")
 
+Apart from surfing, which we tried one day, there is not so much to keep you in this
+town for long. Therefore, we continued our journey east and took a bus to Marakech,
+which is only about three hours by road.
+
+In my opinion, as a dumb tourist, Marakech is a truly awful place.
+
 
 ![A view of the sahara](/images/DSCF7664.JPG "The dunes of the pre-sahara in
 Merzouga. Past here it's just inland sand-sea and rocky plateau for over a thousand kilometres.")
