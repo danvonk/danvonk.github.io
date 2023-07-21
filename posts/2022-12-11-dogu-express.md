@@ -7,9 +7,9 @@ tags: personal, travel
 ![Turkish railways train stopped beside the platform](/images/DSCF7010.JPG "The Dogu Express reaches its penultimate stop, leaving enough time to buy and drink a quick Turkish coffee on the platform.")
 
 In November of 2022, I headed to Ankara for a two-week adventure through Turkey and the 
-Caucuses with a friend that I have known for many years. It had been a trip many 
-months in the making, though it started with a humble suggestion during a Discord chat 
-one evening a few months before. Both being relatively early into our careers, we did not have the luxury of spending
+Caucuses with a friend that I have known for many years. It had been a trip 
+months in the making, where it started with a humble suggestion during a Discord chat 
+one evening. Both being relatively early into our careers, we did not have the luxury of spending
 money on long-haul flights to the U.S., a week's worth of hotels in an expensive state as well
 as the petrol needed to get us around. Nor did the idea of staying in Europe and going to museums
 sound all that excited to us adventure-seekers. So instead, it was more a question of how far
@@ -22,7 +22,7 @@ When we arrived in Ankara, far from being boring, the city was initially very ex
 who had grown up around London, it seemed huge. I think this was due to the hilly geography of the
 city, where the horizon was filled with craggy hills in all directions, which were densely packed
 with grey, concrete tenement blocks, all identically dishevelled, with their walls reflecting the yellow sodium-vapour lighting that
-is steadily becoming antique elsewhere. Our hotel was perched midday up the hill 
+is steadily becoming antique elsewhere. Our hotel was perched midway up the hill 
 in the old town area of Ankara and the during the night, the views from it looked like someone had taken 
 the city-scape of Los Angeles, as seen from the hills around the Hollywood sign, scrunched it up into a ball 
 and it all creased, unfurled it as a sky-box around our hotel room.
@@ -32,7 +32,7 @@ shop with a picnic table and chair, flogging lottery tickets while people waited
 light to turn green. Likewise, just in case you were starting to feel hungry, you were never far from someone
 selling (perhaps not so) freshly baked Simit bread, which cost 5 or so lira per piece. There were also many
 alleyways that turned into bazaars, where one could buy the usual counterfeit junk but also a huge variety of spices
-and kitchenware such as teapots, indispensable in Turkey.
+and kitchenware such as teapots, so indispensable in Turkey.
 
 But what we found interesting is that this freneticism was not all-encompassing. Around almost every corner,
 there were kebab restaurants which were exactly like the ones back in Germany (not comparable to those grotty 
