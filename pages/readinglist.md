@@ -14,6 +14,7 @@ Though I'm not a voracious reader by any mark, once stuck into a book, I'm alway
 | The Metamorphisis                                             | F. Kafka                            |
 | The Silk Roads                                                | P. Frankopan                        |
 | Jude the Obscure                                              | T. Hardy                            |
+| Post-Soviet Armenia                                           | I. Ghaplanyan                       |
 | Inherent Vice                                                 | T. Pynchon                          |
 | Slouching Towards Utopia                                      | J.B. DeLong                         |
 | The Crying of Lot 49                                          | T. Pynchon                          |
