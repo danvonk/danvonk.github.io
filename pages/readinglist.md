@@ -9,6 +9,10 @@ Though I'm not a voracious reader by any mark, once stuck into a book, I'm alway
 | Title                                                         | Author                              |
 |---------------------------------------------------------------|-------------------------------------|
 | _2023_                                                        |                                     |
+| Treasure Island                                               | R.L. Stephenson                     |
+| The Metamorphisis                                             | F. Kafka                            |
+| Silk Roads                                                    | P. Frankopan                        |
+| Jude the Obscure                                              | T. Hardy                            |
 | Inherent Vice                                                 | T. Pynchon                          |
 | Slouching Towards Utopia                                      | J.B. DeLong                         |
 | The Crying of Lot 49                                          | T. Pynchon                          |
