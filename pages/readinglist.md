@@ -51,10 +51,11 @@ Though I'm not a voracious reader by any mark, once stuck into a book, I'm alway
 | Notes from The Underground                                    | Fyodor Dostoevsky                   |
 | _2021_                                                        |                                     |
 | Red Plenty                                                    | Francis Spufford                    |
-| Foundation                                                    | Arthur C. Clarke                    |
-| Prelude to Foundation                                         | Arthur C. Clarke                    |
-| The Stars, Like Dust                                          | Arthur C. Clarke                    |
-| The Currents of Space                                         | Arthur C. Clarke                    |
+| Forward the Foundation                                        | I. Asimov                           |
+| Foundation                                                    | I. Asimov                           |
+| Prelude to Foundation                                         | I. Asimov                           |
+| The Stars, Like Dust                                          | I. Asimov                           |
+| The Currents of Space                                         | I. Asimov                           |
 | The Beginning of Infinity                                     | David Deutsch                       |
 | The Corner: A Year in the Life of an Inner-City Neighbourhood | D. Simon                            |
 | Under the Wave at Waimea                                      | Paul Theroux                        |
@@ -71,7 +72,7 @@ Though I'm not a voracious reader by any mark, once stuck into a book, I'm alway
 | On the Shortness of Life                                      | Seneca                              |
 | The Prince                                                    | N. Machiavelli                      |
 | Crime and Punishment                                          | Fyodor Dostoevsky                   |
-| Master and Margarita                                          | Mikhail Bulgakov                    |
+| Heart of a Dog                                                | Mikhail Bulgakov                    |
 | Class: A Guide Through the American Status System             | P. Fussell                          |
 | _2019_                                                        |                                     |
 | Zen and The Art of Motorcycle Maintenance                     | Robert Pirsig                       |
