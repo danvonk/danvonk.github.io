@@ -9,9 +9,10 @@ Though I'm not a voracious reader by any mark, once stuck into a book, I'm alway
 | Title                                                         | Author                              |
 |---------------------------------------------------------------|-------------------------------------|
 | _2023_                                                        |                                     |
-| Treasure Island                                               | R.L. Stephenson                     |
+| A Scanner Darkly                                              | P.K. Dick                           |
+| Treasure Island                                               | R.L. Stevenson                      |
 | The Metamorphisis                                             | F. Kafka                            |
-| Silk Roads                                                    | P. Frankopan                        |
+| The Silk Roads                                                | P. Frankopan                        |
 | Jude the Obscure                                              | T. Hardy                            |
 | Inherent Vice                                                 | T. Pynchon                          |
 | Slouching Towards Utopia                                      | J.B. DeLong                         |
