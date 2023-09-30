@@ -4,7 +4,7 @@ title: Reading List
 
 <article class="sans">
 
-Though I'm not a voracious reader by any mark, once stuck into a book, I'm always glad for it and it definitely has helped me develop my thinking. I'm hoping that by tracking my books read and letting it be known publicly that I can get myself to read more...
+Though I'm not a voracious reader by any means, once stuck into a book, I'm always glad for it and it definitely has helped me develop my thinking. I'm hoping that by tracking my books read and letting it be known publicly that I can get myself to read more...
 
 | Title                                                         | Author                              |
 |---------------------------------------------------------------|-------------------------------------|
@@ -14,6 +14,7 @@ Though I'm not a voracious reader by any mark, once stuck into a book, I'm alway
 | The Metamorphisis                                             | F. Kafka                            |
 | The Silk Roads                                                | P. Frankopan                        |
 | Jude the Obscure                                              | T. Hardy                            |
+| Why Zebras Don't Get Ulcers                                   | R. Sapolsky                         |
 | Post-Soviet Armenia                                           | I. Ghaplanyan                       |
 | Inherent Vice                                                 | T. Pynchon                          |
 | Slouching Towards Utopia                                      | J.B. DeLong                         |
@@ -69,7 +70,6 @@ Though I'm not a voracious reader by any mark, once stuck into a book, I'm alway
 | Little Book of Common Sense Investing                         | J. Bogle                            |
 | Algebra of Happiness                                          | S. Galloway                         |
 | In a Free State                                               | V.S. Naipaul                        |
-| A Bend in the River                                           | V.S. Naipaul                        |
 | On the Shortness of Life                                      | Seneca                              |
 | The Prince                                                    | N. Machiavelli                      |
 | Crime and Punishment                                          | Fyodor Dostoevsky                   |

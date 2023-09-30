@@ -1,18 +1,18 @@
 --------------------------------------------------------------------------------
 {-# LANGUAGE OverloadedStrings #-}
 
+import BlogPost (blogPostCompiler, usingVenoBox)
 import Control.Monad (forM_)
+import Gallery (galleryCompiler)
 import Hakyll
 import Hakyll.Images
-
 import Text.Pandoc.Highlighting
 
-import BlogPost (usingVenoBox, blogPostCompiler)
-
 config :: Configuration
-config = defaultConfiguration {
-  deployCommand = "rsync -avz _site/ ubuntu@danvonk.com:/home/user-data/www/default/"
-}
+config =
+  defaultConfiguration
+    { deployCommand = "rsync -avz _site/ ubuntu@danvonk.com:/home/user-data/www/default/"
+    }
 
 --------------------------------------------------------------------------------
 main :: IO ()
@@ -49,9 +49,16 @@ main = hakyllWith config $ do
       match "gallery/*" $ do
         route idRoute
         compile $ do
-          im <- loadImage
-          meta <- imageMetadata im
-          return im
+          loadImage
+
+      create ["pages/gallery.md"] $ do
+        route $ gsubRoute "pages/" (const "") `composeRoutes` setExtension "html"
+        compile $ do
+          images <- loadAll "gallery/*"
+          let galleryCtx = listField "images" (return images) <> pageCtx
+          galleryCompiler
+          >>= loadAndApplyTemplate "templates/default.html" galleryCtx
+          >>= relativizeUrls
 
       match "css/*" $ do
         route idRoute
@@ -67,7 +74,7 @@ main = hakyllWith config $ do
             >>= loadAndApplyTemplate "templates/default.html" pageCtx
             >>= relativizeUrls
 
-      create ["pages/about.md", "pages/readinglist.md", "pages/gallery.md"] $ do
+      create ["pages/about.md", "pages/readinglist.md"] $ do
         route $ gsubRoute "pages/" (const "") `composeRoutes` setExtension "html"
         compile $
           pandocCompiler
@@ -83,9 +90,10 @@ main = hakyllWith config $ do
           route idRoute
           compile $ do
             posts <- recentFirst =<< loadAll pattern
-            let ctx = constField "title" title
-                      `mappend` listField "posts" tagsCtx (return posts)
-                      `mappend` defaultContext
+            let ctx =
+                  constField "title" title
+                    `mappend` listField "posts" tagsCtx (return posts)
+                    `mappend` defaultContext
             makeItem ""
               >>= loadAndApplyTemplate "templates/tag.html" ctx
               >>= loadAndApplyTemplate "templates/default.html" ctx
@@ -128,10 +136,11 @@ main = hakyllWith config $ do
 --------------------------------------------------------------------------------
 
 pageCtx :: Context String
-pageCtx = dateField "year" "%Y"
-  <> defaultContext
+pageCtx =
+  dateField "year" "%Y"
+    <> defaultContext
 
 postCtx :: Context String
 postCtx =
   dateField "date" "%e %B, %Y"
-  `mappend` pageCtx
+    <> pageCtx
