@@ -41,10 +41,11 @@ Persians. It was home to cathedrals, churches of both the Armenian and Georgian
 kind, mosques and public squares; all contained in imposing city walls. However,
 already in the 11th century, it was sacked by the Seljuk Turks and in the
 following centuries also the Mongols. Today just a few of its buildings survive,
-standing amongst a whole lot of rubble. Instead the greatest present
-landmark here is the skyscraper-sized Turkish flag erected just beside the site. Right on the border, it produly displays the extent of the Turkish
-landmass^[We also saw huge flags from Azerbaijan on the trip.] and the territory
-conquered from Armenia.
+standing amongst a whole lot of rubble. Instead the greatest present landmark
+here is the skyscraper-sized Turkish flag erected just beside the site. Right on
+the border, it proudly displays the extent of the Turkish landmass^[We also saw
+huge flags from Azerbaijan on the trip.] and the territory conquered from
+Armenia.
 
 A few days later, we took the night-train to the capital _Yerevan_ from Georgia.
 This was quite a strange contrast to our experiences in Georgia. In that
@@ -88,9 +89,9 @@ flag by the side of the road.
 
 These Russian troops are the security guarantors of the country: as soon as
 Armenia gained its independence in 1991, it started a war with neighbouring
-Azerbijan to recapture Ngorno-Karabach, a region in Azerbaijan consisting mainly
+Azerbaijan to recapture Ngorno-Karabach, a region in Azerbaijan consisting mainly
 of Armenians and with a strong historical link to the country. This caused
-Turkey and Azerbijan to embargo the country, which still persists to this day.
+Turkey and Azerbaijan to embargo the country, which still persists to this day.
 As Azerbaijan's military has become stronger, due mostly to the country's vast
 oil wealth, Armenia's position has become precarious and has required Russia to
 step in. This isolates it from their natural ally Georgia, whose recent history
