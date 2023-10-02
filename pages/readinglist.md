@@ -11,7 +11,7 @@ Though I'm not a voracious reader by any means, once stuck into a book, I'm alwa
 | _2023_                                                        |                                     |
 | A Scanner Darkly                                              | P.K. Dick                           |
 | Treasure Island                                               | R.L. Stevenson                      |
-| The Metamorphisis                                             | F. Kafka                            |
+| The Metamorphosis                                             | F. Kafka                            |
 | The Silk Roads                                                | P. Frankopan                        |
 | Jude the Obscure                                              | T. Hardy                            |
 | Why Zebras Don't Get Ulcers                                   | R. Sapolsky                         |
