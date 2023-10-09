@@ -4,9 +4,8 @@ author: Dan Vonk
 tags: personal, travel
 ---
 
-
 ![The dirt road of Barskoon Valley](/images/DSCF7947.JPG "The smooth and fast
-road leading into Barskoon Valley")
+road leading into Barskoon Valley.")
 
 On my recent trip to Kyrgyzstan, one of the highlights was the beautiful
 Barskoon Valley. On the south shore of Lake Issyk-Kul, sits the town of Barskoon
