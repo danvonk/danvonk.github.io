@@ -6,22 +6,11 @@ tags: personal, travel
 
 A post
 
-![The Tien-Shan mountains](/images/DSCF7883.JPG "tien shan")
+![The river down from Kel-Suu](/images/DSCF7947.JPG "fording required")
 
 ss
 
-![The river down from Kel-Suu](/images/DSCF7888.JPG "fording required")
+![The Tien-Shan mountains](/images/DSCF7975.JPG "tien shan")
 
 fff
-
-![Kel-Suu](/images/DSCF7902.JPG "Kel-Suu")
-
-content
-
-![Kel-Suu](/images/DSCF7868.JPG "horses drinking")
-
-content
-
-![Kel-Suu](/images/DSCF7880.JPG "Kel-Suu")
-
 

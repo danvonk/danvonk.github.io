@@ -74,7 +74,7 @@ including places like Kars, which haven't been Armenian for over a hundred
 years.
 
 ![View of lake sevan](/images/DSCF7405.JPG "A View of Lake Sevan, the largest in
-the country. The flags of Armenia, Artkash and Russia fly in the foreground.")
+the country. The flags of Armenia, Artkash Republic (Ngorno-Karabach) and Russia fly in the foreground.")
 
 The city also has a large _victory park_, just as can be found in almost every
 major city in the former Soviet Union. In this one, there is a 50m tall statue of
