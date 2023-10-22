@@ -28,7 +28,7 @@ district of Mutrah. Next to it was the Sale Of Beef shop and the Sale of Fish sh
 
 I suppose this is because the lack of large supermarkets here^[There were large
 supermarket chains, such as Carrefour, but they seemed to be on the edge of town
-and usually catered to the premium segment.] and affordable rent prices alows
+and usually catered to the premium segment.] and affordable rent prices allows
 such shops to exist but it also seemed nice that people can drive or walk around
 their neighbourhood and shop at places more integrated into the local community. 
 
