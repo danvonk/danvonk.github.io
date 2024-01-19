@@ -8,6 +8,8 @@ Though I'm not a voracious reader by any means, once stuck into a book, I'm alwa
 
 | Title                                                         | Author                              |
 |---------------------------------------------------------------|-------------------------------------|
+| _2024_                                                        |                                     |
+| Gulliver's Travels                                            | J. Swift                            |
 | _2023_                                                        |                                     |
 | The Idiot                                                     | F. Dostoevsky                       |
 | A Scanner Darkly                                              | P.K. Dick                           |
