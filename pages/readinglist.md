@@ -47,13 +47,13 @@ Though I'm not a voracious reader by any means, once stuck into a book, I'm alwa
 | The Queen of Spades                                           | A. Pushkin                          |
 | _2022_                                                        |                                     |
 | Berlin, Alexanderplatz                                        | Alfred Doeblin                      |
-| The Martian Time Slip                                         | Philip K. Dick                      |
+| The Martian Time-Slip                                         | Philip K. Dick                      |
 | Lifespan                                                      | David Sinclair, Matthew D. LaPlante |
 | In the First Circle                                           | Aleksandr Solzhenitsyn              |
 | Thus Spoke Zarathustra                                        | Friedrich Nietzsche                 |
-| I Am a Strange Loop                                           | Douglas Hofstadter                  |
+| I am a Strange Loop                                           | Douglas Hofstadter                  |
 | The Sound of Waves                                            | Yukio Mishima                       |
-| Notes from The Underground                                    | Fyodor Dostoevsky                   |
+| Notes from the Underground                                    | Fyodor Dostoevsky                   |
 | _2021_                                                        |                                     |
 | Red Plenty                                                    | Francis Spufford                    |
 | Forward the Foundation                                        | I. Asimov                           |
@@ -61,7 +61,7 @@ Though I'm not a voracious reader by any means, once stuck into a book, I'm alwa
 | Prelude to Foundation                                         | I. Asimov                           |
 | The Stars, Like Dust                                          | I. Asimov                           |
 | The Currents of Space                                         | I. Asimov                           |
-| The Beginning of Infinity                                     | David Deutsch                       |
+| The Beginning of Infinity                                     | D. Deutsch                          |
 | The Corner: A Year in the Life of an Inner-City Neighbourhood | D. Simon                            |
 | Under the Wave at Waimea                                      | Paul Theroux                        |
 | _2020_                                                        |                                     |
@@ -91,13 +91,16 @@ Though I'm not a voracious reader by any means, once stuck into a book, I'm alwa
 | The Brothers Karamazov                                        | F. Dostoevsky                       |
 | Der Archipel GULAG                                            | Aleksandr Solzhenitsyn              |
 | The War with Hannibal                                         | Livy                                |
-| Wem die Stunde Schlaegt                                       | Ernest Hemingway                    |
+| Wem die Stunde Schlägt                                       | Ernest Hemingway                    |
 | Der Prozess                                                   | F. Kafka                            |
 | Ubik                                                          | Philip K. Dick                      |
 | The Man in the High Castle                                    | Philip K. Dick                      |
 | Do Androids Dream of Electric Sheep?                          | Philip K. Dick                      |
 | Unlimited Horizons: Design and Development of the U-2         | P. Merlin                           |
 | NASA's Contributions to Aeronautics                           | R. Hallion                          |
+| Ask The Dust                                                  | J. Fante                            |
+| Women                                                         | H. Bukowski                         |
+| Post Office                                                   | H. Bukowski                         |
 
 
 ... and any further back, I haven't tracked or can't remember!
