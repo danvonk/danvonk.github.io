@@ -4,7 +4,7 @@ title: Reading List
 
 <article class="sans">
 
-Though I'm not a voracious reader by any means, once stuck into a book, I'm always glad for it and it definitely has helped me develop my thinking. I'm hoping that by tracking my books read and letting it be known publicly that I can get myself to read more...
+Though I'm not a voracious reader by any means, once stuck into a book, I'm always glad for it and it definitely has helped me develop my thinking. I'm hoping that by tracking my books read and posting my progress publicly that I can get myself to read more...
 
 | Title                                                         | Author                              |
 |---------------------------------------------------------------|-------------------------------------|
@@ -91,7 +91,7 @@ Though I'm not a voracious reader by any means, once stuck into a book, I'm alwa
 | The Brothers Karamazov                                        | F. Dostoevsky                       |
 | Der Archipel GULAG                                            | Aleksandr Solzhenitsyn              |
 | The War with Hannibal                                         | Livy                                |
-| Wem die Stunde Schlägt                                       | Ernest Hemingway                    |
+| Wem die Stunde Schlägt                                        | Ernest Hemingway                    |
 | Der Prozess                                                   | F. Kafka                            |
 | Ubik                                                          | Philip K. Dick                      |
 | The Man in the High Castle                                    | Philip K. Dick                      |
