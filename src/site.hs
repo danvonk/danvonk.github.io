@@ -11,7 +11,7 @@ import Text.Pandoc.Highlighting
 config :: Configuration
 config =
   defaultConfiguration
-    { deployCommand = "rsync -avz _site/ ubuntu@danvonk.com:/home/user-data/www/default/"
+    { deployCommand = "rsync -avzO _site/ ubuntu@danvonk.com:/home/user-data/www/default/"
     }
 
 --------------------------------------------------------------------------------
@@ -51,14 +51,14 @@ main = hakyllWith config $ do
         compile $ do
           loadImage
 
-      create ["pages/gallery.md"] $ do
-        route $ gsubRoute "pages/" (const "") `composeRoutes` setExtension "html"
-        compile $ do
-          images <- loadAll "gallery/*"
-          let galleryCtx = listField "images" (return images) <> pageCtx
-          galleryCompiler
-          >>= loadAndApplyTemplate "templates/default.html" galleryCtx
-          >>= relativizeUrls
+      -- create ["pages/gallery.md"] $ do
+      --   route $ gsubRoute "pages/" (const "") `composeRoutes` setExtension "html"
+      --   compile $ do
+      --     images <- loadAll "gallery/*"
+      --     let galleryCtx = listField "images" (return images) <> pageCtx
+      --     galleryCompiler
+      --     >>= loadAndApplyTemplate "templates/default.html" galleryCtx
+      --     >>= relativizeUrls
 
       match "css/*" $ do
         route idRoute

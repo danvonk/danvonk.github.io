@@ -1,6 +1,6 @@
 {
-  description = "my project description";
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.05";
+  description = "My personal website";
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
   inputs.flake-utils.url = "github:numtide/flake-utils";
 
   outputs = { self, nixpkgs, flake-utils }:
@@ -9,8 +9,8 @@
         pkgs = nixpkgs.legacyPackages.${system};
 
         hPkgs =
-          pkgs.haskell.packages."ghc945"; # need to match Stackage LTS version
-                                           # from stack.yaml resolver
+          pkgs.haskell.packages."ghc963"; # need to match Stackage LTS version
+        # from stack.yaml resolver
 
         myDevTools = [
           hPkgs.ghc # GHC compiler in the desired version (will be available on PATH)
@@ -19,7 +19,7 @@
           hPkgs.hlint # Haskell codestyle checker
           hPkgs.haskell-language-server # LSP server for editor
           hPkgs.implicit-hie # auto generate LSP hie.yaml file from cabal
-          hPkgs.retrie # Haskell refactoring tool
+          # hPkgs.retrie # Haskell refactoring tool
           hPkgs.cabal-install
           stack-wrapped
           pkgs.zlib # External C library needed by some Haskell packages
@@ -48,7 +48,7 @@
         devShells.default = pkgs.mkShell {
           buildInputs = myDevTools;
 
-          LOCALE_ARCHIVE = "${pkgs.glibcLocales}/lib/locale/locale-archive";
+          # LOCALE_ARCHIVE = "${pkgs.glibcLocales}/lib/locale/locale-archive";
           # Make external Nix c libraries like zlib known to GHC, like
           # pkgs.haskell.lib.buildStackProject does
           # https://github.com/NixOS/nixpkgs/blob/d64780ea0e22b5f61cd6012a456869c702a72f20/pkgs/development/haskell-modules/generic-stack-builder.nix#L38
