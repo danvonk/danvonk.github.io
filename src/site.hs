@@ -11,7 +11,7 @@ import Text.Pandoc.Highlighting
 config :: Configuration
 config =
   defaultConfiguration
-    { deployCommand = "rsync -avzO _site/ ubuntu@danvonk.com:/home/user-data/www/default/"
+    { deployCommand = "rsync -rltvz _site/ ubuntu@danvonk.com:/home/user-data/www/default/"
     }
 
 --------------------------------------------------------------------------------
