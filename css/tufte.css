@@ -39,25 +39,16 @@
     font-display: swap;
 }
 
-@font-face {
-    font-family: "reynold";
-    src: url("reynold/ReynoldArtDeco.woff") format("woff"), url("reynold/ReynoldArtDeco.ttf") format("truetype")
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-}
-
 /* Tufte CSS styles */
 html {
     font-size: 15px;
 }
 
 body {
-    width: 75%;
+    width: 87.5%;
     margin-left: auto;
     margin-right: auto;
     padding-left: 12.5%;
-    padding-right: 12.5%;
     font-family: et-book, Palatino, "Palatino Linotype", "Palatino LT STD", "Book Antiqua", Georgia, serif;
     background-color: #fffff8;
     color: #111;
@@ -118,15 +109,6 @@ p.subtitle {
     line-height: 1;
 }
 
-p.taglist {
-    font-style: italic;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    font-size: 1.2rem;
-    display: block;
-    line-height: 1;
-}
-
 .numeral {
     font-family: et-book-roman-old-style;
 }
@@ -135,19 +117,28 @@ p.taglist {
     color: red;
 }
 
+article {
+    padding: 0.5rem 0rem;
+}
+
 section {
     padding-top: 1rem;
     padding-bottom: 1rem;
 }
 
+
 p,
 dl,
 ol,
-ul,
-td {
-    font-size: 1.2rem;
-    line-height: 1.6rem;
+ul {
+    font-size: 1.4rem;
+    line-height: 2rem;
 }
+
+.sans > p {
+    font-size: 1.1rem;
+}
+
 
 p {
     margin-top: 1.4rem;
@@ -223,7 +214,7 @@ figure {
     max-width: 55%;
     -webkit-margin-start: 0;
     -webkit-margin-end: 0;
-    margin: 0 0 2em 0;
+    margin: 0 0 3em 0;
 }
 
 figcaption {
