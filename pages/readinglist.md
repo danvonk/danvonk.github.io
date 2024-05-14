@@ -9,6 +9,7 @@ Though I'm not a voracious reader by any means, once stuck into a book, I'm alwa
 | Title                                                         | Author                              |
 |---------------------------------------------------------------|-------------------------------------|
 | _2024_                                                        |                                     |
+| Bleak House                                                   | C. Dickens                          |
 | Gulliver's Travels                                            | J. Swift                            |
 | _2023_                                                        |                                     |
 | The Idiot                                                     | F. Dostoevsky                       |
@@ -47,7 +48,7 @@ Though I'm not a voracious reader by any means, once stuck into a book, I'm alwa
 | The Queen of Spades                                           | A. Pushkin                          |
 | _2022_                                                        |                                     |
 | Berlin, Alexanderplatz                                        | Alfred Doeblin                      |
-| The Martian Time-Slip                                         | Philip K. Dick                      |
+| The Martian Time-Slip                                         | P.K. Dick                           |
 | Lifespan                                                      | David Sinclair, Matthew D. LaPlante |
 | In the First Circle                                           | Aleksandr Solzhenitsyn              |
 | Thus Spoke Zarathustra                                        | Friedrich Nietzsche                 |
@@ -93,9 +94,9 @@ Though I'm not a voracious reader by any means, once stuck into a book, I'm alwa
 | The War with Hannibal                                         | Livy                                |
 | Wem die Stunde Schlägt                                        | Ernest Hemingway                    |
 | Der Prozess                                                   | F. Kafka                            |
-| Ubik                                                          | Philip K. Dick                      |
-| The Man in the High Castle                                    | Philip K. Dick                      |
-| Do Androids Dream of Electric Sheep?                          | Philip K. Dick                      |
+| Ubik                                                          | P.K. Dick                           |
+| The Man in the High Castle                                    | P.K. Dick                           |
+| Do Androids Dream of Electric Sheep?                          | P.K. Dick                           |
 | Unlimited Horizons: Design and Development of the U-2         | P. Merlin                           |
 | NASA's Contributions to Aeronautics                           | R. Hallion                          |
 | Ask The Dust                                                  | J. Fante                            |
