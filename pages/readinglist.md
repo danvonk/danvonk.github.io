@@ -2,6 +2,8 @@
 title: Reading List
 ---
 
+# Reading List
+
 <article class="sans">
 
 Though I'm not a voracious reader by any means, once stuck into a book, I'm always glad for it and it definitely has helped me develop my thinking. I'm hoping that by tracking my books read and posting my progress publicly that I can get myself to read more...
