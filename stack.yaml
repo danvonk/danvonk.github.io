@@ -50,6 +50,7 @@ extra-deps:
   - pandoc-types-1.23.1
   - pandoc-sidenote-0.23.0.0
   - pandoc-3.1.11
+  - time-1.12.2
 
 # Override default flag values for local packages and extra-deps
 # flags: {}

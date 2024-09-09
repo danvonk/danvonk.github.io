@@ -12,7 +12,8 @@ executable site
                     hakyll-images >= 1.2.1,
                     pandoc-sidenote >= 0.23.0.0,
                     pandoc-types >= 1.23,
-                    pandoc >= 3.1
+                    pandoc >= 3.1,
+                    time >= 1.12
   hs-source-dirs:   src
   other-modules:    BlogPost
                     , Gallery
