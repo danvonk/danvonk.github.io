@@ -11,7 +11,7 @@ Although ColorPlus is known as a cheap film, I was pleased with the results and 
 it doesn't have the fine detail of Kodak _Portra_, I think the colour reproduction is very near
 as good. The following blog entry describes a bit of the back-story behind these photos.
 
-For the duration of my time in Berlin, I was staying in Pankow-Sued, just moments
+For the duration of my time in Berlin, I was staying in Pankow-Süd, just moments
 away from the U-Bahn station of _Vinetastraße_. For Berliners, this is considered to be in Narnia
 as it's outside of the _Ringbahn_, the S-Bahn that encircles the core of the city. However, it was
 easy enough to walk to one of the stations on the ring and being so close to a metro station, with

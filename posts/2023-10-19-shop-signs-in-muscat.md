@@ -35,6 +35,6 @@ their neighbourhood and shop at places more integrated into the local community.
 ![Sale of Corn and Ice Cream Shop Sign](/images/IMG_20231008_202727.jpg "This
 shop is bold enough to sell more than one thing!")
 
-Most places also accepted cards so it was already more convenient than
-Germany ;)
+Most places also accepted cards so it was already more convenient and in some ways more than
+Germany.
 
