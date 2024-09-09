@@ -7,6 +7,9 @@ import Gallery (galleryCompiler)
 import Hakyll
 import Hakyll.Images
 import Text.Pandoc.Highlighting
+import Data.Time.Clock
+import Data.Time.Calendar
+import Data.Functor ((<&>))
 
 config :: Configuration
 config =
@@ -92,8 +95,8 @@ main = hakyllWith config $ do
             posts <- recentFirst =<< loadAll pattern
             let ctx =
                   constField "title" title
-                    `mappend` listField "posts" tagsCtx (return posts)
-                    `mappend` defaultContext
+                    <> listField "posts" tagsCtx (return posts)
+                    <> pageCtx
             makeItem ""
               >>= loadAndApplyTemplate "templates/tag.html" ctx
               >>= loadAndApplyTemplate "templates/default.html" ctx
@@ -135,9 +138,15 @@ main = hakyllWith config $ do
 
 --------------------------------------------------------------------------------
 
+-- date :: IO (Integer, Int, Int) -- :: (year, month, day)
+-- date = getCurrentTime <&> toGregorian . utctDay
+
+-- year :: IO String
+-- year = fromInt . (\(y, _, _) -> y) <$> date
+
 pageCtx :: Context String
 pageCtx =
-  dateField "year" "%Y"
+  constField "copyright" "© 2024 Dan Vonk"
     <> defaultContext
 
 postCtx :: Context String
