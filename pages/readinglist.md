@@ -6,11 +6,16 @@ title: Reading List
 
 <article class="sans">
 
-Though I'm not a voracious reader by any means, once stuck into a book, I'm always glad for it and it definitely has helped me develop my thinking. I'm hoping that by tracking my books read and posting my progress publicly that I can get myself to read more...
+Though I'm not a voracious reader by any means, once stuck into a book, I'm
+always glad for it and it definitely has helped me develop my thinking. I'm
+hoping that by tracking my books read and posting my progress publicly that I
+can get myself to read more...
 
 | Title                                                         | Author                              |
 |---------------------------------------------------------------|-------------------------------------|
 | _2024_                                                        |                                     |
+| Swann's Way                                                   | M. Proust                           |
+| Zero to One                                                   | P. Thiel, B. Masters                |
 | The Electric Kool-Aid Acid Test                               | T. Wolfe                            |
 | Bleak House                                                   | C. Dickens                          |
 | Gulliver's Travels                                            | J. Swift                            |

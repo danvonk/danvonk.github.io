@@ -1,0 +1,4 @@
+---
+title: Stratocaster Weekend Project
+---
+
