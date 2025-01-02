@@ -25,7 +25,7 @@ jobs:
     - name: Build Site
       run: |
         cd ${{ github.workspace }}
-        stack exec build
+        stack exec site build
 
     - name: Deploy to Github Pages
       uses: JamesIves/github-pages-deploy-action@v4
