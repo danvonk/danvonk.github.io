@@ -14,6 +14,10 @@ can get myself to read more...
 | Title                                                         | Author                              |
 |---------------------------------------------------------------|-------------------------------------|
 | _2024_                                                        |                                     |
+| A Tale of Two Cities                                          | C. Dickens                          |
+| Kaput                                                         | W. Münchau                          |
+| Around the World in Eighty Days                               | J. Verne                            |
+| The Count of Monte Cristo                                     | A. Dumas                            |
 | Swann's Way                                                   | M. Proust                           |
 | Zero to One                                                   | P. Thiel, B. Masters                |
 | The Electric Kool-Aid Acid Test                               | T. Wolfe                            |
