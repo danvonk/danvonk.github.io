@@ -24,6 +24,7 @@ jobs:
 
     - name: Build Site
       run: |
+        stack --no-nix --system-ghc build
         stack --no-nix --system-ghc exec site build
 
     - name: Deploy to Github Pages
