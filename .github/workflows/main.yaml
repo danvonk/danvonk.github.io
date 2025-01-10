@@ -24,7 +24,6 @@ jobs:
 
     - name: Build Site
       run: |
-        cd ${{ github.workspace }}
         stack exec site build
 
     - name: Deploy to Github Pages
