@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Adding a Lightbox Library to Hakyll - Dan Vonk</title>
+        <link rel="stylesheet" href="../css/tufte.css" />
+        <link rel="stylesheet" href="../css/venobox.min.css" type="text/css" media="screen" />
+        <link rel="stylesheet" href="../css/default.css" />
+    </head>
+    <body>
+        <header>
+            <div class="logo">
+                <a href="../">Dan Vonk</a>
+            </div>
+            <nav>
+                <a href="../about.html">About</a>
+                <a href="../archive.html">Archive</a>
+                <a href="../readinglist.html">Reading List</a>
+                <!-- <a href="/gallery.html">Gallery</a> -->
+            </nav>
+        </header>
+
+        <main role="main">
+            <article>
+    <h1>Adding a Lightbox Library to Hakyll</h1>
+    <p class="subtitle">
+        Posted on 21 June, 2023
+        
+            by Dan Vonk
+        
+    </p>
+    <div>
+    <p class="taglist">
+    <a title="All pages tagged 'haskell'." href="../tags/haskell.html" rel="tag">haskell</a>, <a title="All pages tagged 'tech'." href="../tags/tech.html" rel="tag">tech</a>
+    </p>
+    </div>
+    <section class="sans">
+        <p>Often when I am blogging, I am describing past events such as holidays and one of
+my hobbies during those times is to take some snaps. Hakyll, my static site
+generator, lets you write these articles in markdown format, insert image tags and have them rendered by <code>pandoc</code>
+into HTML. Writing in markdown also lets you mix HTML tags and by extension even LaTeX freely into the
+document, which all works perfectly well. However, for my blog, I like to have
+side-notes to accompany the main text of my articles in order to describe
+nuances but not to break the flow of the text (as brackets would!). This
+functionality is provided by <em>tufte.css</em> in my case, which is nice in part because
+it doesn’t require any additional JavaScript. In order to create these
+side-notes, one has to use custom HTML
+embedded into the markdown document, like this:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">figure</span><span class="dt">&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">label</span><span class="ot"> for</span><span class="op">=</span><span class="st">&quot;mn-exports-imports&quot;</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;margin-toggle&quot;</span><span class="dt">&gt;</span><span class="dv">&amp;#8853;</span><span class="dt">&lt;/</span><span class="kw">label</span><span class="dt">&gt;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">input</span><span class="ot"> type</span><span class="op">=</span><span class="st">&quot;checkbox&quot;</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;mn-exports-imports&quot;</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;margin-toggle&quot;</span><span class="dt">/&gt;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">span</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;marginnote&quot;</span><span class="dt">&gt;</span>From Edward Tufte, <span class="dt">&lt;</span><span class="kw">em</span><span class="dt">&gt;</span>Visual Display of Quantitative Information<span class="dt">&lt;/</span><span class="kw">em</span><span class="dt">&gt;</span>, page 92.<span class="dt">&lt;/</span><span class="kw">span</span><span class="dt">&gt;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">img</span><span class="ot"> src</span><span class="op">=</span><span class="st">&quot;img/exports-imports.png&quot;</span><span class="ot"> alt</span><span class="op">=</span><span class="st">&quot;Exports and Imports to and from Denmark </span><span class="er">&amp;</span><span class="st"> Norway from 1700 to 1780&quot;</span><span class="ot"> </span><span class="dt">/&gt;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">figure</span><span class="dt">&gt;</span></span></code></pre></div>
+<p>It is inconvenient to keep this snippet around to paste each time an image is
+required and it is also error-prone because one has to remember to give each
+image a new unique id. Furthermore, this just provides me the ability to have a caption next to the
+image. If the image is particularly nice, I want the ability to click on it
+and <em>enlarge</em> it. This is probably not too difficult to program yourself in
+JavaScript. But through a little bit of research on the internet, I found that there were
+hundreds of libraries that already provide this. The one I settled one is called
+<strong>VenoBox</strong>; not for any particular reason, though it seemed capable enough. Now
+I am able to have an image with a margin note and click on it to open up a modal
+window for higher-res viewing:</p>
+<figure>
+<label for="mn0" class="margin-toggle">⊕</label>
+<input type="checkbox" id="mn0" class="margin-toggle" />
+<div class="marginnote">
+An example of an image with a caption that opens up a modal window for higher-res viewing. Taken through the open door of a cafe on Brick Lane, London, on Fomapan 100 film through a Zorki-4K.
+</div>
+<a href="../images/84530007.JPG" class="image-gallery" data-gall="gallery01" title="An example of an image with a caption that opens up a modal window for higher-res viewing. Taken through the open door of a cafe on Brick Lane, London, on Fomapan 100 film through a Zorki-4K." title="An example of an image with a caption that opens up a modal window for higher-res viewing. Taken through the open door of a cafe on Brick Lane, London, on Fomapan 100 film through a Zorki-4K."><img src="../images/84530007.JPG" title="An example of an image with a caption that opens up a modal window for higher-res viewing. Taken through the open door of a cafe on Brick Lane, London, on Fomapan 100 film through a Zorki-4K." alt="Bears smoking hookah in a cafe in Brick Lane, London" /></a>
+</figure>
+<p>This is done by wrapping the image in <code>&lt;a&gt;</code> tags, which are given a special class
+name known to the VenoBox JavaScript object, initialised at the bottom
+of the page.</p>
+<h3 id="automatisation">Automatisation</h3>
+<p>But all this manual labour is disappointing and something a static site
+generator should take care of! The simplest way that I could see to automate my
+insertion of margin notes and the lightbox library hooks was to write a pandoc filter
+to transform a regular image tag in markdown to HTML with my extra tags during
+the page compilation. Fortunately this wasn’t a difficult task and I’ll share my
+approach below.</p>
+<p>Pandoc filters let you transform the document AST, which consists of <code>Block</code>s
+and <code>Inline</code>s. Blocks correspond to HTML container tags like <code>&lt;div&gt;</code> and
+<code>&lt;figure&gt;</code> whereas Inlines can be things like <code>&lt;image&gt;</code>. Therefore, what I
+needed was to transform an image type to a figure block which contains the
+additional <code>&lt;input&gt;</code> and <code>&lt;label&gt;</code> required for <code>tufte.css</code> as well as an the
+image, now wrapped in an <code>&lt;a&gt;</code> tag and marked with the additional attributes to
+make VenoBox work.</p>
+<p>This is done in the <code>mkFigure</code> function, which pattern matches on a <code>Image</code>
+inside a <code>Plain</code><span class="sidenote-wrapper"><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle" /><span class="sidenote">Plain corresponds to <code>&lt;p&gt;</code> in HTML.<br />
+<br />
+</span></span> type. We simply construct
+a new <code>Figure</code> with all of the new elements inside it. I needed to construct the
+label and check box manually using <code>RawBlock</code> types as pandoc does not support
+these at the AST level. Another issue I encountered was that this would lead to
+my images being doubly wrapped in <code>&lt;figure&gt;</code> tags. I solved this by simply
+unwrapping them in a second pattern-match but there may be better ways to do this.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ot">mkFigure ::</span> <span class="dt">VenoBoxOptions</span> <span class="ot">-&gt;</span> <span class="dt">Block</span> <span class="ot">-&gt;</span> <span class="dt">MarginNote</span> <span class="dt">Block</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>mkFigure opts (<span class="dt">Plain</span> [<span class="dt">Image</span> attrs<span class="op">@</span>(ids, cls, kvs) inls target]) <span class="ot">=</span> <span class="kw">do</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  num <span class="ot">&lt;-</span> get</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  put (num <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> checkBoxLabel <span class="ot">=</span> <span class="dt">RawBlock</span> <span class="st">&quot;html&quot;</span> (T.pack <span class="op">$</span> <span class="st">&quot;&lt;label for=\&quot;mn&quot;</span> <span class="op">++</span> <span class="fu">show</span> num <span class="op">++</span> <span class="st">&quot;\&quot; class=\&quot;margin-toggle\&quot;&gt;&amp;#8853;&lt;/label&gt;&quot;</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> checkBox <span class="ot">=</span> <span class="dt">RawBlock</span> <span class="st">&quot;html&quot;</span> (T.pack <span class="op">$</span> <span class="st">&quot;&lt;input type=\&quot;checkbox\&quot; id=\&quot;mn&quot;</span> <span class="op">++</span> <span class="fu">show</span> num <span class="op">++</span> <span class="st">&quot;\&quot; class=\&quot;margin-toggle\&quot;/&gt;&quot;</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pure</span> <span class="op">$</span> <span class="dt">Figure</span> nullAttr</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>                emptyCaption</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>                <span class="co">-- blocks contained in the figure:</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>                <span class="co">-- label and checkbox are for margin note toggle</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>                [checkBoxLabel,</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>                 checkBox,</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>                 captionDiv,</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>                 <span class="co">-- wrap the image in a link for the lightbox. Use the image alt text as a title for the lightbox</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>                 <span class="dt">Plain</span> [<span class="dt">Link</span> (ids, galleryClass opts <span class="op">:</span> cls, [(<span class="st">&quot;data-gall&quot;</span>, defaultGallery opts), (<span class="st">&quot;title&quot;</span>, <span class="fu">snd</span> target)] <span class="op">++</span> kvs)</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>                          [<span class="dt">Image</span> attrs inls target] target]]</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  <span class="kw">where</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    <span class="co">-- make the div tag for the margin note</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    captionAttr <span class="ot">=</span> (T.empty, [<span class="st">&quot;marginnote&quot;</span>], [])</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    captionDiv <span class="ot">=</span> <span class="dt">Div</span> captionAttr [<span class="dt">Plain</span> [<span class="dt">Str</span> (<span class="fu">snd</span> target)]]</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="co">-- otherwise the figure will be double-wrapped?</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>mkFigure _ (<span class="dt">Figure</span> _ _ [<span class="dt">Figure</span> a c bs]) <span class="ot">=</span> <span class="fu">pure</span> <span class="op">$</span> <span class="dt">Figure</span> a c bs</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>mkFigure _ x <span class="ot">=</span> <span class="fu">pure</span> x</span></code></pre></div>
+<p>There are a couple of other things worth mentioning. Firstly, I created a
+<code>VenoBoxOptions</code> record to allow the customisation of the VenoBox options in the
+future. Secondly, each image still needs a unique id. For this, I simply created
+a <code>State Int</code> type which keeps a counter running for every invokation of the function.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">VenoBoxOptions</span> <span class="ot">=</span> <span class="dt">VenoBoxOptions</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">-- The CSS class to be used for the HTML &lt;a&gt; tag wrapping the image for VenoBox. It needs to be equal to the</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">-- option set in the JS instantiation of the VenoBox object.</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="ot">    galleryClass ::</span> <span class="dt">T.Text</span>,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">-- The VenoBox gallery to be used. This sets data-gallery attribute in the &lt;a&gt; tag. If images have the same</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">-- gallery, they can be scrolled through the lightbox gallery modal.</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="ot">    defaultGallery ::</span> <span class="dt">T.Text</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> <span class="dt">MarginNote</span> <span class="ot">=</span> <span class="dt">State</span> <span class="dt">Int</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="ot">usingVenoBox ::</span> <span class="dt">VenoBoxOptions</span> <span class="ot">-&gt;</span> <span class="dt">Pandoc</span> <span class="ot">-&gt;</span> <span class="dt">Pandoc</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>usingVenoBox opts (<span class="dt">Pandoc</span> meta blocks) <span class="ot">=</span> <span class="dt">Pandoc</span> meta <span class="op">$</span> evalState (walkM (mkFigure opts) blocks) <span class="dv">0</span></span></code></pre></div>
+<p>Now this filter can be used in your Hakyll blog compiler function:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ot">blogPostCompiler ::</span> <span class="dt">Compiler</span> (<span class="dt">Item</span> <span class="dt">String</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>blogPostCompiler <span class="ot">=</span> pandocCompilerWithTransform</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  defaultHakyllReaderOptions</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  defaultHakyllWriterOptions</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  usingVenoBox defaultVenoBoxOptions</span></code></pre></div>
+<p>Which can then be used in the route section of your <code>site.hs</code>…</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>route <span class="op">$</span> setExtension <span class="st">&quot;html&quot;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>        compile <span class="op">$</span> <span class="kw">do</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>          blogPostCompiler</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>            <span class="op">&gt;&gt;=</span> loadAndApplyTemplate <span class="st">&quot;templates/post.html&quot;</span> tagsCtx</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>            <span class="op">&gt;&gt;=</span> loadAndApplyTemplate <span class="st">&quot;templates/default.html&quot;</span> tagsCtx</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>            <span class="op">&gt;&gt;=</span> relativizeUrls</span></code></pre></div>
+<p>… and you should now have margin notes with a lightbox library!</p>
+
+    </section>
+    <section>
+    <div id="disqus_thread"></div>
+
+    <script>
+        /**
+         *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+         *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+        /*
+          var disqus_config = function () {
+          this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+          this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+          };
+        */
+        (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = 'https://danvonk.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+    </section>
+        <script type="text/javascript" src="../js/venobox.min.js"></script>
+        <script>
+            new VenoBox({
+                selector: '.image-gallery',
+                numeration: true,
+                infinigall: true,
+                share: true,
+                spinner: 'rotating-plane'
+            });
+        </script>
+
+</article>
+
+        </main>
+
+        <footer>
+           © 2024 Dan Vonk. All Rights Reserved. Site proudly generated by
+            <a href="http://jaspervdj.be/hakyll">Hakyll</a>
+        </footer>
+    </body>
+</html>
