@@ -3,13 +3,13 @@
 
 import BlogPost (blogPostCompiler, usingVenoBox)
 import Control.Monad (forM_)
+import Data.Functor ((<&>))
+import Data.Time.Calendar
+import Data.Time.Clock
 import Gallery (galleryCompiler)
 import Hakyll
 import Hakyll.Images
 import Text.Pandoc.Highlighting
-import Data.Time.Clock
-import Data.Time.Calendar
-import Data.Functor ((<&>))
 
 config :: Configuration
 config =
@@ -146,7 +146,7 @@ main = hakyllWith config $ do
 
 pageCtx :: Context String
 pageCtx =
-  constField "copyright" "© 2024 Dan Vonk"
+  constField "copyright" "© 2025 Dan Vonk"
     <> defaultContext
 
 postCtx :: Context String
