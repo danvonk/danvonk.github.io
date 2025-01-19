@@ -13,6 +13,8 @@ can get myself to read more...
 
 | Title                                                         | Author                              |
 |---------------------------------------------------------------|-------------------------------------|
+| _2025_                                                        |                                     |
+| Caledonian Road                                               | A. O'Hagan                          |
 | _2024_                                                        |                                     |
 | A Tale of Two Cities                                          | C. Dickens                          |
 | Kaput                                                         | W. Münchau                          |
