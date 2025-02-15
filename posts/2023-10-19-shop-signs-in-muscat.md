@@ -15,6 +15,9 @@ in the shade as much as possible and that meant keeping close to the shop
 fronts. However, the more I walked around, the more amusing I found the names of
 the shops!
 
+
+<!--more-->
+
 In Oman, it seems there is a template for shop signage. It has the shop's brand name in
 Arabic in the middle, followed by an English translation below. On the top-left
 corner, is the registered company name in English and likewise in the right

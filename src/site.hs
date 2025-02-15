@@ -4,12 +4,17 @@
 import BlogPost (blogPostCompiler, usingVenoBox)
 import Control.Monad (forM_)
 import Data.Functor ((<&>))
+import Data.Text as T
 import Data.Time.Calendar
 import Data.Time.Clock
 import Gallery (galleryCompiler)
 import Hakyll
 import Hakyll.Images
+import Text.Pandoc.Class (runPure)
 import Text.Pandoc.Highlighting
+import Text.Pandoc.Options
+import Text.Pandoc.Readers
+import Text.Pandoc.Writers.HTML
 
 config :: Configuration
 config =
@@ -105,16 +110,18 @@ main = hakyllWith config $ do
         route $ setExtension "html"
         compile $ do
           blogPostCompiler
+            >>= saveSnapshot "content"
             >>= loadAndApplyTemplate "templates/post.html" tagsCtx
             >>= loadAndApplyTemplate "templates/default.html" tagsCtx
             >>= relativizeUrls
 
       create ["pages/archive.md"] $ do
+        tags <- buildTags "posts/*" (fromCapture "tags/*.html")
         route $ gsubRoute "pages/" (const "") `composeRoutes` setExtension "html"
         compile $ do
           posts <- recentFirst =<< loadAll "posts/*"
           let archiveCtx =
-                listField "posts" postCtx (return posts)
+                listField "posts" (tagsField "tags" tags <> postCtx) (return posts)
                   <> constField "title" "Archives"
                   <> pageCtx
           makeItem ""
@@ -123,11 +130,12 @@ main = hakyllWith config $ do
             >>= relativizeUrls
 
       match "pages/index.md" $ do
+        tags <- buildTags "posts/*" (fromCapture "tags/*.html")
         route $ gsubRoute "pages/" (const "") `composeRoutes` setExtension "html"
         compile $ do
           posts <- recentFirst =<< loadAll "posts/*"
           let indexCtx =
-                listField "posts" postCtx (return posts)
+                listField "posts" (tagsField "tags" tags <> postCtx) (return posts)
                   <> pageCtx
           getResourceBody
             >>= applyAsTemplate indexCtx
@@ -152,4 +160,5 @@ pageCtx =
 postCtx :: Context String
 postCtx =
   dateField "date" "%e %B, %Y"
+    <> teaserField "teaser" "content"
     <> pageCtx

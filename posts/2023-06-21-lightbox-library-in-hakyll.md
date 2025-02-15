@@ -7,7 +7,7 @@ tags: haskell, tech
 Often when I am blogging, I am describing past events such as holidays and one of
 my hobbies during those times is to take some snaps. Hakyll, my static site
 generator, lets you write these articles in markdown format, insert image tags and have them rendered by `pandoc`
-into HTML. Writing in markdown also lets you mix HTML tags and by extension even LaTeX freely into the
+into HTML. <!--more--> Writing in markdown also lets you mix HTML tags and by extension even LaTeX freely into the
 document, which all works perfectly well. However, for my blog, I like to have
 side-notes to accompany the main text of my articles in order to describe
 nuances but not to break the flow of the text (as brackets would!). This

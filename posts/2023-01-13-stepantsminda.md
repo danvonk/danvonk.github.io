@@ -12,6 +12,9 @@ Caucuses mountains up to Gudauri, which is a ski resort town. This road is
 steeped in the history of the region, having been used by invaders and merchants since at
 least the first century BC.
 
+
+<!--more-->
+
 It is a treacherous road that twists and turns as it climbs to about 2,100m. When
 we visited in November, the beautiful sub-tropical weather of the capital bid us
 farewell as we ventured into the mountains. The visibility became poor as 

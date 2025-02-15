@@ -14,6 +14,9 @@ where you are and your station in life. Therefore, in search of some history, I
 took a coach out to Nizwa, a major city and oasis town in the desert interior of
 the country.
 
+
+<!--more-->
+
 Booking the coach on a mobile phone was a bit quirky but worked out alright.
 However, when I turned up at Muscat central bus station, there was nobody there,
 so my coach ride was serene for the first few miles. It was only when we stopped

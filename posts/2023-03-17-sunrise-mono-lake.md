@@ -12,6 +12,9 @@ Aussie, say Ute, which was of course a novelty for us compared to the "euro shit
 the Yosemite / Death Valley area and had found a lay-by off a forest road which was in an isolated spot, perched up on the gentle
 gradient leading down to Mono Lake in the distance.
 
+
+<!--more-->
+
 We spent the evening there setting up the tent and cooking steaks, which we managed to cover in sand from moving placing plates
 around on the ground. A camping table would have been a good bet. To fight the wind, we thought it would be a good idea to bring the
 cooking stove into the tent and place it near the door, with it unzipped and open. However, to cook, we had bought some cheap maple-flavoured

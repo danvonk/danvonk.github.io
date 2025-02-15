@@ -21,6 +21,9 @@ that there isn't much to see in this city. Therefore, we decided to take the
 night train across the country and continue this journey into the Caucuses,
 which I'll probably describe in a further blog post.
 
+
+<!--more-->
+
 When we arrived in Ankara, far from being boring, the city was initially
 exciting to be in: Even for someone who had grown up around London, it seemed
 huge. I think this was due to the hilly geography of the city, where the horizon

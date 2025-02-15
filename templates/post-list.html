@@ -1,7 +1,15 @@
-<ul>
+<ul class="post-list">
     $for(posts)$
-        <li>
-            <a href="$url$">$title$</a> - $date$
+        <li class="post-list-item">
+            <h2 class="post-list-title">$title$</h2>
+            <div><i>posted on $date$ in</i> $tags$</div>
+            <div class="sans post-list-teaser">
+            $if(teaser)$
+            $teaser$
+            $endif$
+            </div>
+            <a href="$url$">Read more</a>
+            <hr/>
         </li>
     $endfor$
 </ul>

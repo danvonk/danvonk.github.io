@@ -18,6 +18,9 @@ all, the Ottoman Empire was a powerful entity, he stressed to us, surely if they
 wanted to exterminate the Armenian people, they would have done so thoroughly
 and without any half-measures? 
 
+
+<!--more-->
+
 In the typical English way, I did not demur at this obviously false and highly
 inflammatory statement and instead let him continue his rant, though it did cause
 me to realise the complicated nature of national and race relations in this part

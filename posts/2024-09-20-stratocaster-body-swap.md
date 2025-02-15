@@ -14,6 +14,9 @@ where not much of the original guitar remained. The bridge was replaced by a MiM
 Fender one, the tuners are now retro-style Washburn tuners, and similarly the pickups have
 also been long since replaced by some nice "Warman" pickups made by a bloke in Wales.
 
+
+<!--more-->
+
 ![Palm trees amongst a castle](/images/guitar/IMG_20240911_152040.jpg "The old
 Tanglewood guitar in baby blue.")
 

@@ -18,6 +18,9 @@ can't be argued with! Amongst those options, my friend and I chose to fly to
 Essaouira, a small fishing town on the Atlantic coast, about midway down the
 length of the country.
 
+
+<!--more-->
+
 I found the town charming and in retrospect, a perfect introduction to the
 country. It had a small but pretty _casbah_^[Casbahs also exist in other
 countries such as Algeria.],  which are the historic centres of Moroccan towns,

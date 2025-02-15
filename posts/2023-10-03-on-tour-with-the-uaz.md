@@ -10,6 +10,9 @@ coastal highway. What could be better? How about trundling along in a UAZ!
 ![Side view of the UAZ-452](/images/DSCF7923.JPG "Our UAZ parked in front of
 some laundry.")
 
+
+<!--more-->
+
 During my holiday to the central Asian countries of Kyrgyzstan and Kazakhstan,
 we rented a UAZ-452 from a guy named Vlad in Bishkek. The UAZ is the natural
 choice for this region. It is the kind of place that requires a go-anywhere vehicle.

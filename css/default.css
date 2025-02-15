@@ -156,3 +156,18 @@ a.image-gallery {
   font-family: "Gill Sans", "Gill Sans MT", Calibri, sans-serif;
 }
 
+ul.post-list {
+  padding-left: 0;
+}
+
+li.post-list-item {
+    list-style:none;
+}
+
+h2.post-list-title {
+  font-style: normal;
+}
+
+div.post-list-teaser {
+  padding-top: 1rem;
+}

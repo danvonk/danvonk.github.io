@@ -14,6 +14,9 @@ unusual for Kyrgyzstan, is that this road doesn't totally suck! We managed to do
 about 90 km/h in our UAZ on this dirt track, while we could only manage about 20
 km/h when we were travelling in the south of the country around Naryn.
 
+
+<!--more-->
+
 The reason for this, is that it is maintained by the company responsible for
 operating the open-pit _Kumtor Gold Mine_ on the other side of the mountains.
 Keeping to the touristy area around in the valley, we saw no other signs of it.
