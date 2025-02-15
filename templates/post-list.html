@@ -3,9 +3,13 @@
         <li class="post-list-item">
             <h2 class="post-list-title">$title$</h2>
             <div><i>posted on $date$ in</i> $tags$</div>
-            <div class="sans post-list-teaser">
+            <div class="post-list-teaser">
             $if(teaser)$
+            <article>
+            <section class="sans">
             $teaser$
+            </section>
+            </article>
             $endif$
             </div>
             <a href="$url$">Read more</a>
