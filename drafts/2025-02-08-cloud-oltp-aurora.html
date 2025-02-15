@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Notes on Cloud OLTP - Dan Vonk</title>
+        <link rel="stylesheet" href="../css/tufte.css" />
+        <link rel="stylesheet" href="../css/venobox.min.css" type="text/css" media="screen" />
+        <link rel="stylesheet" href="../css/default.css" />
+        <!-- KATEX stuff: TODO switch to server-side? -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css" integrity="sha384-zh0CIslj+VczCZtlzBcjt5ppRcsAmDnRem7ESsYwWwg3m/OaJ2l4x7YBZl9Kxxib" crossorigin="anonymous">
+    <!-- The loading of KaTeX is deferred to speed up page rendering -->
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.js" integrity="sha384-Rma6DA2IPUwhNxmrB/7S3Tno0YY7sFu9WSYMCuulLhIqYSGZ2gKCJWIqhBWqMQfh" crossorigin="anonymous"></script>
+    <!-- To automatically render math in text elements, include the auto-render extension: -->
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/contrib/auto-render.min.js" integrity="sha384-hCXGrW6PitJEwbkoStFjeJxv+fSOOQKOPbJxSfM6G5sWZjAyWhXiTIIAmQqnlLlh" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+  </head>
+    </head>
+    <body>
+        <header>
+            <div class="logo">
+                <a href="../">Dan Vonk</a>
+            </div>
+            <nav>
+                <a href="../about.html">About</a>
+                <a href="../archive.html">Archive</a>
+                <a href="../readinglist.html">Reading List</a>
+                <!-- <a href="/gallery.html">Gallery</a> -->
+            </nav>
+        </header>
+
+        <main role="main">
+            <article>
+    <h1>Notes on Cloud OLTP</h1>
+    <p class="subtitle">
+        Posted on  8 February, 2025
+        
+            by Dan Vonk
+        
+    </p>
+    <div>
+    <p class="taglist">
+    <a title="All pages tagged 'tech'." href="../tags/tech.html" rel="tag">tech</a>
+    </p>
+    </div>
+    <section class="sans">
+        <p>I previously (probably like C++ devs) thought of cloud computing
+primarily as renting other peoples’ machines at a high mark-up. However, I’ve
+been reading up on papers in the databases research
+field and so thought I would share some of my findings. The use-case I will be talking about here is how
+modern OLTP databases are designed for the cloud and their corresponding
+advantages.</p>
+<!--more-->
+<p>OLTP stands for <em>online transaction processing</em> and constrats with OLAP or
+<em>online analytical processing</em>. The former is a more classical type of database,
+which is optimised primarily for queries that are short but frequent. For
+example, modelling payments between bank accounts is a classic OLTP workload.
+These are simple queries, such as updating a few rows in a table, but should be
+done quickly and always leave the database in a consistent state, whether they
+fail or succeed (adhering to ACID standards). On the other hand, OLAP queries
+are usually far more complex and slower to run, for example, it could query the
+DB for the <em>year-on-year percentage growth in average sales per customer for
+each product category in Europe over the last 10 years</em>. Here the consistency
+properties are less important: <em>eventual</em> consistency is probably acceptable.</p>
+<p>Although this e-mail is primarily about OLTP, users of both database types want
+the same thing. Ideally, they want a database service with high-availability and
+the ability to scale the service up and down depending on the workload. It
+should also have high-performance and it should also be cost-effective, which
+could also include only paying only for what you use.</p>
+<h2 id="traditional-oltp-systems">Traditional OLTP Systems</h2>
+<p>Traditional, monolithic OLTP systems, like MySQL or PostgreSQL have an
+architecture which has not changed much in the last 30-40 years.</p>
+<figure>
+<label for="mn0" class="margin-toggle">⊕</label>
+<input type="checkbox" id="mn0" class="margin-toggle" />
+<div class="marginnote">
+
+</div>
+<a href="%22/home/dan/Documents/KDAB/monolithic.png%22" class="image-gallery" data-gall="gallery01" title><img src="%22/home/dan/Documents/KDAB/monolithic.png%22" alt="Monolithic DB stack" /></a>
+</figure>
+<p>Here, the SQL layer compiles and optimises the query, then sends it to the
+transaction layer, which provides locking and undo management. It uses data
+provided by a cache, which gets its data from the logging layer. This layer
+provides <em>redo logging</em> and <em>crash recovery</em> by maintaining a record of every
+change made to the database, before they are applied to the storage. When the
+data is committed to disk, the log is cleared. An example log could be:</p>
+<table>
+<colgroup>
+<col style="width: 22%" />
+<col style="width: 18%" />
+<col style="width: 13%" />
+<col style="width: 12%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>LogStorageNumber</th>
+<th>TransactionID</th>
+<th>Operation</th>
+<th>Table</th>
+<th>Row</th>
+<th>ID</th>
+<th>Before</th>
+<th>After</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>000001</td>
+<td>101</td>
+<td>UPDATE</td>
+<td>accounts</td>
+<td>1</td>
+<td>500</td>
+<td>400.00</td>
+<td>500.00</td>
+</tr>
+</tbody>
+</table>
+<p>Finally, the storage layer handles storing the data in pages (perhaps using a
+B-Tree) on a durable storage medium such as an SSD+RAID setup.</p>
+<h3 id="verdict">Verdict</h3>
+<p>Positives:
+- Simple
+- High performance (low latency) as the data all resides on a single node.
+- Strong ACID consistency.</p>
+<p>Negatives:
+- Single node of failure. If this node crashes or fails, e.g. due to a power or
+hardware failure, the service becomes unavailable until it is fixed. By
+contrast, many cloud DBs as a service gaurantee (DBaaS) a 99.99%
+(“four-nines”) level of availability in their contracts. That is about max. 5
+minutes of downtime per month.
+- Limited scaling. The only way to handle more queries/second would be to
+upgrade the CPU or RAM etc. of this node, which has inherent limits.</p>
+<h2 id="scaling-traditional-oltp-systems-on-the-cloud">Scaling Traditional OLTP Systems on the Cloud</h2>
+<p>Of course, these limitations have been known for a long time and there are
+various approaches to try to overcome them by turning this monolithic DB model
+into a distributed system. Distributed systems are commonly assessed based on
+consistency (as in ACID consistency), availability (incoming requests are always
+processed) and partition-tolerance (if some of the cluster gets separated from
+the rest, the overall system still works). Theoretically, a distributed system
+can only have 2 of these 3 qualities. Scalability is also often assessed, as
+it’s one of the primary reasons for a distributed system.</p>
+<p><strong>Sharding</strong> or horizontal partitioning, separates the data into smaller
+disjoint subsets (shards), where each shard is a self-contained node. Each shard
+runs its own instance of the database and the application sitting on top will
+route its query to the appropriate instance.</p>
+<h3 id="verdict-1">Verdict</h3>
+<ul>
+<li>Scalability: Reads and writes are now distributed across multiple instances,
+improving throughput ✅.</li>
+<li>Availability: One or more shards could still fail, so only part of the
+database becomes available ❌.</li>
+<li>Consistency: Cross-shard queries need techniques like two-phase commit (2PC)
+to ensure consistency ⚠️. 2PC ensures either all nodes agree on the write
+otherwise it gets rolled back. This adds latency and complexity.</li>
+</ul>
+<p>Examples of real databases are MySQL with Vitess or MongoDB. Cloud provides
+several advantages here:
+- Elasticity: Shards can be created or destroyed depending on workload.
+- Global Distribution: This is perhaps the biggest benefit. Shards can be
+strategically spread across multiple data centres, sitting in different regions
+(availability zones or AZs) to improve query latency.
+- Pay as you go pricing</p>
+<p><strong>Shared Nothing</strong> again separates data across independent nodes, each with
+their own disk and CPU, but here the subsets can overlap, which provides some
+replication. A shared query layer routes queries to the correct node based on
+the partitioning key. This can overburden nodes if some parts of the data are
+accessed more frequently than other parts.</p>
+<h3 id="verdict-2">Verdict</h3>
+<ul>
+<li>Scalability: Each node has its own workload, so it’s easy to scale, but users
+still need to pay attention to load balancing the partitions. ✅</li>
+<li>Availability: If there is enough replication, then a node outage will not
+affect other nodes ✅.</li>
+<li>Consistency: All of the problems of the sharding approach. ⚠️</li>
+</ul>
+<p>A real example is CockroachDB.</p>
+<p><strong>Shared Disk</strong> databases, as the name suggests, have a shared disk layer at the
+bottom of the stack. You could do this yourself by using something like PolarFS
+with MySQL, or use a cloud service like Amazon S3, or even an old-school DB like
+Oracle RAC. If using S3, one benefits from “infinite” storage with strong
+consistency (i.e. after every write, the latest value is always read back) as
+well as an impressive 99.999999999% uptime, as S3 is replicated across multiple
+data-centres and across multiple regions. Even if one or more AZs fails, such as
+in the case of a natural disaster, the data will still be readable.</p>
+<h3 id="verdict-3">Verdict</h3>
+<ul>
+<li>Scalability: Compute nodes and storage are separate, so each can be scaled
+independently ✅. Of course this has downsides too: fetching data to/from S3
+can quickly become expensive and S3’s latency is also quite high.</li>
+<li>Availability: If a compute node fails, a new node can take over without any
+data loss ✅.</li>
+<li>Consistency: The centralised storage on S3 means that data remain strongly
+consistent (ACID), just as the single-node traditional DBs ✅. Two
+phased-commit is still needed in case one of the compute nodes crashes
+mid-transaction, for example, so this adds additional latency.</li>
+</ul>
+<h2 id="mixing-and-matching">Mixing and Matching</h2>
+<p>These techniques are all valid and often used, however the latest and greatest
+cloud-native OLTP DBs take inspiration from all of these models and mix them
+together. The primary reason is that the interaction between <strong>compute</strong> and
+<strong>storage</strong> is inefficient in the monolithic model because databases organise
+data into pages before they are flushed to disk. A small amount of updates can
+therefore create a lot of page flushes and this is even worse if there are
+multiple replicas (“write amplification”). If the disk is connected over the
+network, this moves the I/O bottleneck to the network, which is typically much
+slower. DBAs are able to reduce the frequency of the page flushes, but this
+comes at the cost of slower crash recovery.</p>
+<p>One popular cloud-native database, which addresses this problem, is <strong>AWS
+Aurora</strong>, whose key insight was <em>the log is the database</em>. Aurora has both
+compute nodes and storage nodes. The compute nodes run MySQL database engines
+but only write <em>log information</em> to the storage layer instead of full database
+pages when making a transaction. This reduces network I/O as log records are
+significantly smaller. Furthermore, the storage layer itself is ultimately
+backed by an S3 filesystem, which is already replicated, so there is no need for
+replica nodes, unlike in the shared nothing approach.</p>
+<figure>
+<label for="mn1" class="margin-toggle">⊕</label>
+<input type="checkbox" id="mn1" class="margin-toggle" />
+<div class="marginnote">
+
+</div>
+<a href="%22/home/dan/Documents/KDAB/aurora.png%22" class="image-gallery" data-gall="gallery01" title><img src="%22/home/dan/Documents/KDAB/aurora.png%22" alt="Aurora Storage Node" /></a>
+</figure>
+<p>Source: Aurora (SIGMOD 17)</p>
+<p>The storage node handles this log record and goes through the following steps:
+1. Add it to the in-memory queue.
+2. Save record to disk and acknowledge.
+3. Organise the log records and check if there are any gaps in the log.
+4. Talk with other peers in the storage layer to fill in the gaps.
+5. Periodically coalese the log records into proper data pages.
+6. Periodically stage logs and pages into S3.
+7. Periodically garbage collect old pages.
+8. Periodically validate CRC codes on pages.</p>
+<p>So the storage node does still store pages, but they are used to increase read
+performance, so that in the case that a compute node needs the data for
+executing a query, the storage node doesn’t have to re-create it from the log.
+It also makes recovery much faster for the same reasons.</p>
+<p>Another advantage for the compute node is that it does not store any state. It
+does not manage any locks on tables nor manage any transaction logs. Therefore,
+it does not need to communicate with other compute nodes when executing
+transactions, which means there is no need for 2PC (it’s already atomic at the
+storage layer). Also, if a compute node fails in the middle of a transaction,
+another node can take over without coordination, because the logs for the
+transaction are already in storage.</p>
+<p>In the paper, Amazon tested both Aurora and a mirrored MySQL setup on an
+“r3.8xlarge EC2 instances with 32 vCPUs and 244GB of memory”. They find that
+Aurora has 5x faster write performance than MySQL and up to a 3x faster read
+performance. It also has better failure recovery because no manual intervention
+is required if nodes fail. Finally, it has much better scaling than mirrored
+MySQL because of the separation of the compute and storage layers.</p>
+<h2 id="references-and-futher-reading">References and Futher Reading!</h2>
+<ul>
+<li>Verbitski, Alexandre, et al. “Amazon aurora: Design considerations for high
+throughput cloud-native relational databases.” Proceedings of the 2017 ACM
+International Conference on Management of Data. 2017.</li>
+<li>Kleppmann, Martin. “Distributed systems”</li>
+<li>Depoutovitch, Alex, et al. “Taurus database: How to be fast, available, and
+frugal in the cloud.” Proceedings of the 2020 ACM SIGMOD International
+Conference on Management of Data. 2020.</li>
+</ul>
+
+    </section>
+    <section>
+    <div id="disqus_thread"></div>
+
+    <script>
+        /**
+         *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+         *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+        /*
+          var disqus_config = function () {
+          this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+          this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+          };
+        */
+        (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = 'https://danvonk.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+    </section>
+        <script type="text/javascript" src="../js/venobox.min.js"></script>
+        <script>
+            new VenoBox({
+                selector: '.image-gallery',
+                numeration: true,
+                infinigall: true,
+                share: true,
+                spinner: 'rotating-plane'
+            });
+        </script>
+
+</article>
+
+        </main>
+
+        <footer>
+           © 2025 Dan Vonk. All Rights Reserved. Site proudly generated by
+            <a href="http://jaspervdj.be/hakyll">Hakyll</a>
+        </footer>
+    </body>
+</html>

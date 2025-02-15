@@ -8,6 +8,13 @@
         <link rel="stylesheet" href="../css/tufte.css" />
         <link rel="stylesheet" href="../css/venobox.min.css" type="text/css" media="screen" />
         <link rel="stylesheet" href="../css/default.css" />
+        <!-- KATEX stuff: TODO switch to server-side? -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css" integrity="sha384-zh0CIslj+VczCZtlzBcjt5ppRcsAmDnRem7ESsYwWwg3m/OaJ2l4x7YBZl9Kxxib" crossorigin="anonymous">
+    <!-- The loading of KaTeX is deferred to speed up page rendering -->
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.js" integrity="sha384-Rma6DA2IPUwhNxmrB/7S3Tno0YY7sFu9WSYMCuulLhIqYSGZ2gKCJWIqhBWqMQfh" crossorigin="anonymous"></script>
+    <!-- To automatically render math in text elements, include the auto-render extension: -->
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/contrib/auto-render.min.js" integrity="sha384-hCXGrW6PitJEwbkoStFjeJxv+fSOOQKOPbJxSfM6G5sWZjAyWhXiTIIAmQqnlLlh" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+  </head>
     </head>
     <body>
         <header>
@@ -37,8 +44,18 @@
     </p>
     </div>
     <section class="sans">
-        <p>Many Linux users settle on whatever their desktop environment their distro provides. Then there are others are endlessly tinkering–that was me. However, for the last couple of years, I’ve settled on what I think is a happy middle-ground between the flexibility of a tiling WM like <code>sway</code> and the usability of <code>GNOME</code> or <code>KDE</code>.</p>
-<p>In case you didn’t know already, tiling window managers differ from ‘floating’ window managers like GNOME in that they subdivide the screen into smaller rectangles and place windows side-by-side in these smaller rectanlges. That is, windows cannot float on top of each other. I find this much easier to work with as one does not have to go hunting to find their text editor behind six open file browsers.</p>
+        <p>Many Linux users settle on whatever their desktop environment their distro
+provides. Then there are others are endlessly tinkering–that was me. However,
+for the last couple of years, I’ve settled on what I think is a happy
+middle-ground between the flexibility of a tiling WM like <code>sway</code> and the
+usability of <code>GNOME</code> or <code>KDE</code>.</p>
+<!--more-->
+<p>In case you didn’t know already, tiling window managers differ from ‘floating’
+window managers like GNOME in that they subdivide the screen into smaller
+rectangles and place windows side-by-side in these smaller rectanlges. That is,
+windows cannot float on top of each other. I find this much easier to work with
+as one does not have to go hunting to find their text editor behind six open
+file browsers.</p>
 <figure>
 <label for="mn0" class="margin-toggle">⊕</label>
 <input type="checkbox" id="mn0" class="margin-toggle" />
@@ -47,8 +64,14 @@ Typical split-screen configuration of my WM.
 </div>
 <a href="../images/de2.png" class="image-gallery" data-gall="gallery01" title="Typical split-screen configuration of my WM." title="Typical split-screen configuration of my WM."><img src="../images/de2.png" title="Typical split-screen configuration of my WM." alt="Two windows side-by-side in the WM." /></a>
 </figure>
-<p>However, in my experience, there always comes a point when running one of these lightweight WMs, where one wishes for the traditional heavyweight GUI approach. For me this is usually configuring network connections or VPNs, where there are many options and switches, but I use them so infrequently that I never really learn the command line workflow to configure them.</p>
-<p>Luckily, I have discovered that you can have the best of both worlds. This is because if you run Xfce, you can disable its window management gizmos and instead run an <code>i3</code> session inside it.</p>
+<p>However, in my experience, there always comes a point when running one of these
+lightweight WMs, where one wishes for the traditional heavyweight GUI approach.
+For me this is usually configuring network connections or VPNs, where there are
+many options and switches, but I use them so infrequently that I never really
+learn the command line workflow to configure them.</p>
+<p>Luckily, I have discovered that you can have the best of both worlds. This is
+because if you run Xfce, you can disable its window management gizmos and
+instead run an <code>i3</code> session inside it.</p>
 <figure>
 <label for="mn1" class="margin-toggle">⊕</label>
 <input type="checkbox" id="mn1" class="margin-toggle" />
@@ -57,7 +80,11 @@ Example of a GUI dialog which I wouldn't bother learning the command-line workfl
 </div>
 <a href="../images/de4.png" class="image-gallery" data-gall="gallery01" title="Example of a GUI dialog which I wouldn't bother learning the command-line workflow for.&lt;" title="Example of a GUI dialog which I wouldn't bother learning the command-line workflow for.&lt;"><img src="../images/de4.png" title="Example of a GUI dialog which I wouldn't bother learning the command-line workflow for.&lt;" alt="Appearance dialog in Xfce" /></a>
 </figure>
-<p>All one needs to do is go to <em>Session and Startup</em> and remove the Xfce desktop process from startup in the current session (as shown above). Then add <code>i3</code> as a startup command under the <em>Application Autostart</em> tab. Also don’t forget to remove all Xfce keyboard shortcuts under <em>Application Shortcuts</em> of the <em>Keyboard</em> settings menu, as these conflict with i3.</p>
+<p>All one needs to do is go to <em>Session and Startup</em> and remove the Xfce desktop
+process from startup in the current session (as shown above). Then add <code>i3</code> as a
+startup command under the <em>Application Autostart</em> tab. Also don’t forget to
+remove all Xfce keyboard shortcuts under <em>Application Shortcuts</em> of the
+<em>Keyboard</em> settings menu, as these conflict with i3.</p>
 <figure>
 <label for="mn2" class="margin-toggle">⊕</label>
 <input type="checkbox" id="mn2" class="margin-toggle" />
@@ -66,7 +93,9 @@ Startup entry for i3.
 </div>
 <a href="../images/de5.png" class="image-gallery" data-gall="gallery01" title="Startup entry for i3." title="Startup entry for i3."><img src="../images/de5.png" title="Startup entry for i3." alt="Appearance dialog in Xfce" /></a>
 </figure>
-<p>You can then customise your i3 config (which lives in <code>~/.config/i3/config</code>) to your heart’s content. Here’s mine for reference, which is slightly adapted from the default file:</p>
+<p>You can then customise your i3 config (which lives in <code>~/.config/i3/config</code>) to
+your heart’s content. Here’s mine for reference, which is slightly adapted from
+the default file:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode ini"><code class="sourceCode ini"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set modifier</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="dt">set $super Mod4</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="dt">set $alt Mod1</span></span>
@@ -248,7 +277,7 @@ Startup entry for i3.
         </main>
 
         <footer>
-           © 2024 Dan Vonk. All Rights Reserved. Site proudly generated by
+           © 2025 Dan Vonk. All Rights Reserved. Site proudly generated by
             <a href="http://jaspervdj.be/hakyll">Hakyll</a>
         </footer>
     </body>
