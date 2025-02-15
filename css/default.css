@@ -7,7 +7,6 @@
     }
 }
 
-
 nav {
   text-align: right;
 }
@@ -44,7 +43,6 @@ a.logo {
     padding: 0 5%;
   }
   header {
-    margin: 1rem auto 0;
   }
   nav {
     margin: 0 auto 3rem;
@@ -74,8 +72,7 @@ a.logo {
     padding: 0;
   }
   header {
-    margin: 0 0 3rem;
-    padding: 1.2rem 0;
+    padding: 1.2rem 0 0 0;
   }
   nav {
     margin: 0;
@@ -170,4 +167,31 @@ h2.post-list-title {
 
 div.post-list-teaser {
   padding-top: 1rem;
+}
+
+.embellished-hr {
+  /* Center both text and the lines */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Spacing around the break */
+  margin: 2em auto;
+  width: 80%
+}
+
+.embellished-hr::before,
+.embellished-hr::after {
+  content: "";
+  /* Grow to take up leftover space */
+  flex: 1;
+  /* The thin rule */
+  border-bottom: 1px solid;
+  /* Add some horizontal spacing between the rule and the fleurons */
+  margin: 0 1em;
+}
+
+.fleurons {
+  font-size: 1.5em;       /* Adjust size as desired */
+  white-space: nowrap;    /* Keep the fleurons on one line */
 }
