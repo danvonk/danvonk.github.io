@@ -4,8 +4,8 @@ author: Dan Vonk
 tags: music
 ---
 
-![Palm trees amongst a castle](/images/guitar/IMG_20240911_184740.jpg "The new
-body.")
+![Palm trees amongst a castle](/images/guitar/IMG_20240911_184740.jpg "The new Alder
+body with all of the gear attached.")
 
 After a year's hiatus from playing electric guitar (I usually play fingerstyle
 pieces on my acoustic nowadays), I had rediscovered my baby blue Tanglewood

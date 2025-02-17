@@ -61,7 +61,7 @@ can get myself to read more...
 | The Overcoat                                                  | N. Gogol                            |
 | The Queen of Spades                                           | A. Pushkin                          |
 | _2022_                                                        |                                     |
-| Berlin, Alexanderplatz                                        | Alfred Doeblin                      |
+| Berlin, Alexanderplatz                                        | Alfred Döblin                       |
 | The Martian Time-Slip                                         | P.K. Dick                           |
 | Lifespan                                                      | David Sinclair, Matthew D. LaPlante |
 | In the First Circle                                           | Aleksandr Solzhenitsyn              |
