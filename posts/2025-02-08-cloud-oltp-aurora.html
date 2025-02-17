@@ -43,11 +43,11 @@
     </p>
     <div>
     <p class="taglist">
-    <a title="All pages tagged 'tech'." href="../tags/tech.html" rel="tag">tech</a>
+    <a title="All pages tagged 'tech'." href="../tags/tech.html" rel="tag">tech</a>, <a title="All pages tagged 'databases'." href="../tags/databases.html" rel="tag">databases</a>
     </p>
     </div>
     <section class="sans">
-        <p>I previously (probably like C++ devs) thought of cloud computing
+        <p>I previously (probably like many “old-skool” C++ devs) thought of cloud computing
 primarily as renting other peoples’ machines at a high mark-up. However, I’ve
 been reading up on papers in the databases research
 field and so thought I would share some of my findings. The use-case I will be talking about here is how
@@ -77,9 +77,9 @@ architecture which has not changed much in the last 30-40 years.</p>
 <label for="mn0" class="margin-toggle">⊕</label>
 <input type="checkbox" id="mn0" class="margin-toggle" />
 <div class="marginnote">
-
+A traditional, monolithic DB design
 </div>
-<a href="%22/home/dan/Documents/KDAB/monolithic.png%22" class="image-gallery" data-gall="gallery01" title><img src="%22/home/dan/Documents/KDAB/monolithic.png%22" alt="Monolithic DB stack" /></a>
+<a href="../images/monolithicdb.png" class="image-gallery" data-gall="gallery01" title="A traditional, monolithic DB design" title="A traditional, monolithic DB design"><img src="../images/monolithicdb.png" title="A traditional, monolithic DB design" alt="Monolithic DB stack" /></a>
 </figure>
 <p>Here, the SQL layer compiles and optimises the query, then sends it to the
 transaction layer, which provides locking and undo management. It uses data
@@ -125,7 +125,6 @@ data is committed to disk, the log is cleared. An example log could be:</p>
 </table>
 <p>Finally, the storage layer handles storing the data in pages (perhaps using a
 B-Tree) on a durable storage medium such as an SSD+RAID setup.</p>
-<h3 id="verdict">Verdict</h3>
 <p>Positives:
 - Simple
 - High performance (low latency) as the data all resides on a single node.
@@ -151,7 +150,7 @@ it’s one of the primary reasons for a distributed system.</p>
 disjoint subsets (shards), where each shard is a self-contained node. Each shard
 runs its own instance of the database and the application sitting on top will
 route its query to the appropriate instance.</p>
-<h3 id="verdict-1">Verdict</h3>
+<p>The verdict is:</p>
 <ul>
 <li>Scalability: Reads and writes are now distributed across multiple instances,
 improving throughput ✅.</li>
@@ -173,7 +172,6 @@ their own disk and CPU, but here the subsets can overlap, which provides some
 replication. A shared query layer routes queries to the correct node based on
 the partitioning key. This can overburden nodes if some parts of the data are
 accessed more frequently than other parts.</p>
-<h3 id="verdict-2">Verdict</h3>
 <ul>
 <li>Scalability: Each node has its own workload, so it’s easy to scale, but users
 still need to pay attention to load balancing the partitions. ✅</li>
@@ -190,7 +188,6 @@ consistency (i.e. after every write, the latest value is always read back) as
 well as an impressive 99.999999999% uptime, as S3 is replicated across multiple
 data-centres and across multiple regions. Even if one or more AZs fails, such as
 in the case of a natural disaster, the data will still be readable.</p>
-<h3 id="verdict-3">Verdict</h3>
 <ul>
 <li>Scalability: Compute nodes and storage are separate, so each can be scaled
 independently ✅. Of course this has downsides too: fetching data to/from S3
@@ -225,20 +222,21 @@ replica nodes, unlike in the shared nothing approach.</p>
 <label for="mn1" class="margin-toggle">⊕</label>
 <input type="checkbox" id="mn1" class="margin-toggle" />
 <div class="marginnote">
-
+An Aurora storage node. Source: Aurora (SIGMOD 17)
 </div>
-<a href="%22/home/dan/Documents/KDAB/aurora.png%22" class="image-gallery" data-gall="gallery01" title><img src="%22/home/dan/Documents/KDAB/aurora.png%22" alt="Aurora Storage Node" /></a>
+<a href="../images/auroradb.png" class="image-gallery" data-gall="gallery01" title="An Aurora storage node. Source: Aurora (SIGMOD 17)" title="An Aurora storage node. Source: Aurora (SIGMOD 17)"><img src="../images/auroradb.png" title="An Aurora storage node. Source: Aurora (SIGMOD 17)" alt="Aurora Storage Node" /></a>
 </figure>
-<p>Source: Aurora (SIGMOD 17)</p>
-<p>The storage node handles this log record and goes through the following steps:
-1. Add it to the in-memory queue.
-2. Save record to disk and acknowledge.
-3. Organise the log records and check if there are any gaps in the log.
-4. Talk with other peers in the storage layer to fill in the gaps.
-5. Periodically coalese the log records into proper data pages.
-6. Periodically stage logs and pages into S3.
-7. Periodically garbage collect old pages.
-8. Periodically validate CRC codes on pages.</p>
+<p>The storage node handles this log record and goes through the following steps:</p>
+<ol type="1">
+<li>Add it to the in-memory queue.</li>
+<li>Save record to disk and acknowledge.</li>
+<li>Organise the log records and check if there are any gaps in the log.</li>
+<li>Talk with other peers in the storage layer to fill in the gaps.</li>
+<li>Periodically coalese the log records into proper data pages.</li>
+<li>Periodically stage logs and pages into S3.</li>
+<li>Periodically garbage collect old pages.</li>
+<li>Periodically validate CRC codes on pages.</li>
+</ol>
 <p>So the storage node does still store pages, but they are used to increase read
 performance, so that in the case that a compute node needs the data for
 executing a query, the storage node doesn’t have to re-create it from the log.
@@ -256,7 +254,7 @@ Aurora has 5x faster write performance than MySQL and up to a 3x faster read
 performance. It also has better failure recovery because no manual intervention
 is required if nodes fail. Finally, it has much better scaling than mirrored
 MySQL because of the separation of the compute and storage layers.</p>
-<h2 id="references-and-futher-reading">References and Futher Reading!</h2>
+<h2 id="references-and-futher-reading">References and Futher Reading</h2>
 <ul>
 <li>Verbitski, Alexandre, et al. “Amazon aurora: Design considerations for high
 throughput cloud-native relational databases.” Proceedings of the 2017 ACM
