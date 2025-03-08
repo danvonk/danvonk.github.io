@@ -1,16 +1,14 @@
 <article>
     <h1>$title$</h1>
-    <p class="subtitle">
-        Posted on $date$
+    <p>
+        <i>
+        posted on $date$
         $if(author)$
             by $author$
         $endif$
+        in $tags$
+        </i>
     </p>
-    <div>
-    <p class="taglist">
-    $tags$
-    </p>
-    </div>
     <section class="sans">
         $body$
 
