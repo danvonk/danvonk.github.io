@@ -14,6 +14,8 @@ can get myself to read more...
 | Title                                                         | Author                              |
 |---------------------------------------------------------------|-------------------------------------|
 | _2025_                                                        |                                     |
+| Robinson Crusoe                                               | D. Dafoe                            |
+| L'étranger                                                    | A. Camus                            |
 | Caledonian Road                                               | A. O'Hagan                          |
 | _2024_                                                        |                                     |
 | A Tale of Two Cities                                          | C. Dickens                          |
