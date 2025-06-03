@@ -1,0 +1,30 @@
+
+<div>
+  or jump to tags...
+</div>
+
+
+$partial("templates/post-list.html")$
+
+<nav class="pagination">
+  <p><em>Page $currentPageNum$ of $numPages$</em></p>
+$if(previousPageUrl)$
+    <a href="$previousPageUrl$">&laquo; Previous Page</a>
+$endif$
+$if(nextPageUrl)$
+    $if(previousPageUrl)$  $endif$
+    <a href="$nextPageUrl$">Next Page &raquo;</a>
+$endif$
+</nav>
+
+
+<script type="text/javascript" src="/js/venobox.min.js"></script>
+<script>
+      new VenoBox({
+          selector: '.image-gallery',
+          numeration: true,
+          infinigall: true,
+          share: true,
+          spinner: 'rotating-plane'
+      });
+</script>

@@ -21,7 +21,7 @@ h1 {
 }
 
 footer {
-  margin-top: 3rem;
+  margin-top: 2rem;
   padding: 1.2rem 0;
   /* border-top: 0.2rem solid #000; */
   font-size: 1.2rem;
@@ -36,8 +36,6 @@ a.logo {
     /* width: 90%; */
     margin: 0;
     padding: 0 5%;
-  }
-  header {
   }
   nav {
     margin: 0 auto 3rem;
@@ -196,3 +194,12 @@ div.post-list-teaser {
   white-space: nowrap;    /* Keep the fleurons on one line */
 }
 
+.pagination {
+  margin-top: 3rem;    /* Space above the pagination */
+  /* margin-bottom: 2rem; /\* Space below the pagination *\/ */
+  text-align: center;  /* Center the pagination links */
+}
+
+.pagination a {
+  font-size: 1.4rem;
+}

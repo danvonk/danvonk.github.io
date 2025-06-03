@@ -2,15 +2,20 @@
 {-# LANGUAGE OverloadedStrings #-}
 
 import BlogPost (blogPostCompiler, usingVenoBox)
-import Control.Monad (filterM, forM_)
+import Control.Monad (filterM, forM, forM_, liftM)
 import Data.Functor ((<&>))
+import Data.List (sortBy)
+import qualified Data.Map as M
+import Data.Maybe (fromMaybe)
+import Data.Ord (Down (..), comparing)
 import Data.Text as T hiding (elem)
-import Data.Time.Calendar
-import Data.Time.Clock
+import Data.Time.Calendar -- Keep this if used elsewhere, not directly in this diff's logic
+import Data.Time.Clock (UTCTime)
 import Gallery (galleryCompiler)
 import Hakyll
 import Hakyll.Images
-import Text.Pandoc.Class (runPure)
+import Hakyll.Web.Paginate
+
 import Text.Pandoc.Highlighting
 import Text.Pandoc.Options
 import Text.Pandoc.Readers
@@ -61,15 +66,6 @@ main = hakyllWith config $ do
                 compile $ do
                     loadImage
 
-            -- create ["pages/gallery.md"] $ do
-            --   route $ gsubRoute "pages/" (const "") `composeRoutes` setExtension "html"
-            --   compile $ do
-            --     images <- loadAll "gallery/*"
-            --     let galleryCtx = listField "images" (return images) <> pageCtx
-            --     galleryCompiler
-            --     >>= loadAndApplyTemplate "templates/default.html" galleryCtx
-            --     >>= relativizeUrls
-
             match "css/*" $ do
                 route idRoute
                 compile compressCssCompiler
@@ -119,7 +115,7 @@ main = hakyllWith config $ do
 
             create ["pages/archive.md"] $ do
                 tags <- buildTags "posts/*" (fromCapture "tags/*.html")
-                route $ gsubRoute "pages/" (const "") `composeRoutes` setExtension "html"
+                route $ gsubRoute "pages/" (const "") <> setExtension "html"
                 compile $ do
                     posts <- recentFirst =<< loadAll "posts/*"
                     let archiveCtx =
@@ -131,22 +127,33 @@ main = hakyllWith config $ do
                         >>= loadAndApplyTemplate "templates/default.html" archiveCtx
                         >>= relativizeUrls
 
-            match "pages/index.md" $ do
-                tags <- buildTags "posts/*" (fromCapture "tags/*.html")
-                route $ gsubRoute "pages/" (const "") `composeRoutes` setExtension "html"
-                compile $ do
-                    -- show "serious" posts before travel posts
-                    posts <- recentFirst =<< loadAll "posts/*"
-                    travelPosts <- filterM (hasTag "travel") posts
-                    otherPosts <- filterM (fmap not . hasTag "travel") posts
+            -- Logic for paginated index pages
+            let mkIndexIdentifier pageNr =
+                    if pageNr == 1
+                        then fromFilePath "index.html"
+                        else fromFilePath ("page/" ++ show pageNr ++ "/index.html")
 
-                    let indexCtx =
-                            listField "posts" (tagsField "tags" tags <> postCtx) (return $ otherPosts ++ travelPosts)
-                                <> pageCtx
-                    getResourceBody
-                        >>= applyAsTemplate indexCtx
-                        >>= loadAndApplyTemplate "templates/default.html" indexCtx
-                        >>= relativizeUrls
+            tags <- buildTags "posts/*" (fromCapture "tags/*.html") -- 'tags' is type Tags, available in Rules
+            pag <- buildPaginateWith grouper "posts/*" mkIndexIdentifier
+            -- Create paginated index pages
+            -- First, build the Paginate structure
+            do
+                -- Then, create rules for each page using the Paginate structure
+                paginateRules pag $ \pageNumber pattern -> do
+                    route idRoute
+                    compile $ do
+                        postsForPage <- recentFirst =<< loadAll pattern
+                        let paginateCtx = paginateContext pag pageNumber
+                        let indexCtx =
+                                -- The postsForPage are already in the desired display order for this page
+                                listField "posts" (tagsField "tags" tags <> postCtx) (return postsForPage)
+                                    <> constField "title" "Home"
+                                    <> paginateCtx
+                                    <> pageCtx
+                        makeItem ""
+                            >>= loadAndApplyTemplate "templates/index.html" indexCtx
+                            >>= loadAndApplyTemplate "templates/default.html" indexCtx
+                            >>= relativizeUrls
 
             match "templates/*" $ compile templateBodyCompiler
 
@@ -173,3 +180,7 @@ hasTag :: String -> Item a -> Compiler Bool
 hasTag tag post = do
     postTags <- getTags (itemIdentifier post)
     return (tag `elem` postTags)
+
+-- Run sortRecentFirst on ids, and then liftM (paginateEvery 10) into it
+grouper :: [Identifier] -> Rules [[Identifier]]
+grouper ids = (liftM (paginateEvery 10) . sortRecentFirst) ids
