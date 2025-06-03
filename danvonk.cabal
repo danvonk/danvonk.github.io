@@ -13,7 +13,8 @@ executable site
                     pandoc-sidenote >= 0.23.0.0,
                     pandoc-types >= 1.23,
                     pandoc >= 3.1,
-                    time >= 1.12
+                    time >= 1.12,
+                    containers >= 0.6.7
   hs-source-dirs:   src
   other-modules:    BlogPost
                     , Gallery
