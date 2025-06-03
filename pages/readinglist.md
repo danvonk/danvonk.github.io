@@ -14,6 +14,8 @@ can get myself to read more...
 | Title                                                         | Author                              |
 |---------------------------------------------------------------|-------------------------------------|
 | _2025_                                                        |                                     |
+| One Flew over the Cukoo's Nest                                | K. Kesey                            |
+| Emma                                                          | J. Austen                           |
 | Robinson Crusoe                                               | D. Dafoe                            |
 | L'étranger                                                    | A. Camus                            |
 | Caledonian Road                                               | A. O'Hagan                          |
