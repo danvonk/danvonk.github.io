@@ -8,9 +8,7 @@ import Data.List (sortBy)
 import qualified Data.Map as M
 import Data.Maybe (fromMaybe)
 import Data.Ord (Down (..), comparing)
-import Data.Text as T hiding (elem)
-import Data.Time.Calendar -- Keep this if used elsewhere, not directly in this diff's logic
-import Data.Time.Clock (UTCTime)
+import qualified Data.Text as T hiding (elem, length)
 import Gallery (galleryCompiler)
 import Hakyll
 import Hakyll.Images
@@ -133,7 +131,7 @@ main = hakyllWith config $ do
                         then fromFilePath "index.html"
                         else fromFilePath ("page/" ++ show pageNr ++ "/index.html")
 
-            tags <- buildTags "posts/*" (fromCapture "tags/*.html") -- 'tags' is type Tags, available in Rules
+            tags <- buildTags "posts/*" (fromCapture "tags/*.html")
             pag <- buildPaginateWith grouper "posts/*" mkIndexIdentifier
             -- Create paginated index pages
             -- First, build the Paginate structure
@@ -143,10 +141,11 @@ main = hakyllWith config $ do
                     route idRoute
                     compile $ do
                         postsForPage <- recentFirst =<< loadAll pattern
+                        tagCloud <- renderTagList (sortTagsBy (comparing $ Down . length . snd) tags)
                         let paginateCtx = paginateContext pag pageNumber
                         let indexCtx =
-                                -- The postsForPage are already in the desired display order for this page
                                 listField "posts" (tagsField "tags" tags <> postCtx) (return postsForPage)
+                                    <> constField "tagCloud" tagCloud
                                     <> constField "title" "Home"
                                     <> paginateCtx
                                     <> pageCtx
