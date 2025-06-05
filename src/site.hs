@@ -111,20 +111,6 @@ main = hakyllWith config $ do
                         >>= loadAndApplyTemplate "templates/default.html" tagsCtx
                         >>= relativizeUrls
 
-            create ["pages/archive.md"] $ do
-                tags <- buildTags "posts/*" (fromCapture "tags/*.html")
-                route $ gsubRoute "pages/" (const "") <> setExtension "html"
-                compile $ do
-                    posts <- recentFirst =<< loadAll "posts/*"
-                    let archiveCtx =
-                            listField "posts" (tagsField "tags" tags <> postCtx) (return posts)
-                                <> constField "title" "Archives"
-                                <> pageCtx
-                    makeItem ""
-                        >>= loadAndApplyTemplate "templates/archive.html" archiveCtx
-                        >>= loadAndApplyTemplate "templates/default.html" archiveCtx
-                        >>= relativizeUrls
-
             -- Logic for paginated index pages
             let mkIndexIdentifier pageNr =
                     if pageNr == 1
@@ -175,11 +161,6 @@ postCtx =
         <> teaserField "teaser" "content"
         <> pageCtx
 
-hasTag :: String -> Item a -> Compiler Bool
-hasTag tag post = do
-    postTags <- getTags (itemIdentifier post)
-    return (tag `elem` postTags)
-
 -- Run sortRecentFirst on ids, and then liftM (paginateEvery 10) into it
 grouper :: [Identifier] -> Rules [[Identifier]]
-grouper ids = (liftM (paginateEvery 10) . sortRecentFirst) ids
+grouper ids = (liftM (paginateEvery 8) . sortRecentFirst) ids

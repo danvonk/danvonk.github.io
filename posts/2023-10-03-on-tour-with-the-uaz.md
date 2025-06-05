@@ -3,12 +3,13 @@ title: On Tour with the UAZ
 tags: travel, personal
 ---
 
+![Side view of the UAZ-452](/images/DSCF7923.JPG "Our UAZ parked in front of
+some laundry.")
+
 You are cruising the pacific coast of California in your Mustang, the wind flows through
 your hair and the engine purrs as you thread the car through the gentle turns along the
 coastal highway. What could be better? How about trundling along in a UAZ!
 
-![Side view of the UAZ-452](/images/DSCF7923.JPG "Our UAZ parked in front of
-some laundry.")
 
 
 <!--more-->
@@ -75,7 +76,11 @@ road while you did it. As for the fuel economy, it wasn't bad at 14L/100km and w
 even managed to run it on 72 octane fuel that we picked up in water bottles from
 remote villages.
 
-Overall, the UAZ is a unique but terrible vehicle, and if you buy one in the
+![UAZ in front of mountains](/images/DSCF7979.JPG "The UAZ proudly displayed
+after scaling a treacherous mountain road.")
+
+
+Overall, the UAZ is a unique but terrible vehicle and if you buy one in the
 West, you should feel ashamed of yourself! However, in the context of
 Kyrgyzstan, I can confidently say there is no vehicle I would rather have chosen
 for this trip.

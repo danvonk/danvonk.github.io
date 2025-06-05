@@ -1,7 +1,10 @@
 
+$if(previousPageUrl)$
+$else$
 <div class="tag-list">
-  <p><i>Jump directly to posts tagged</i>: $tagCloud$</p>
+  <p><i>Or jump directly to posts tagged</i>: $tagCloud$</p>
 </div>
+$endif$
 
 
 $partial("templates/post-list.html")$
