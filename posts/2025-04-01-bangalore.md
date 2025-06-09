@@ -37,7 +37,7 @@ items were all quite mysterious. Various curries, sometimes red and sometimes
 white. Deep-fried dough and flying saucer shaped objects to go with. Not to
 forget the masala chai: was that cardamom and cloves I was tasting in there or
 was it cinnamon and ginger? No, it turns out it's everything! In the next few
-weeks, I became a lot more familiar with the items and was soon knew my idli
+weeks, I became a lot more familiar with the items and soon knew my idli
 from my vada and my coconut chutney from my sambar. Though if there was one
 common theme, it was that almost every meal was absurdly spicy.
 
@@ -65,7 +65,7 @@ Indian food available either--I tried some Jain food as well as some Goan food
 (Vindaloo) and found them both delicious. Bangalore is also famous for its
 nightlife in India and whilst it isn't remotely comparable to London or Berlin,
 it wasn't bad either, especially as I got the feeling that bars and public
-drinking in general is more of a imported, western concept^[After trying
+drinking in general is more of an imported, western concept^[After trying
 locally-made, distributed in coke bottles coconut wine in Kerala, I learnt more
 about the historical Hindu beliefs about the impurity of alcohol, which therefore
 confined distillers and brewers to being untouchable, so it makes sense that drinking would be
@@ -74,20 +74,39 @@ traditionally confined to the home and would be reflected in the culture.].
 ![Market in Bangalore](/images/DSCF8683.JPG "A market scene in the same
 neighbourhood as previously.")
 
-Eventually, it was time to see some sights outside of the big city, which
-required taking a train to Mysore, a city that is a few hours west of Bangalore.
-It's known as the "cultural and intellectual" centre of Karnataka (which was
-previously called _Mysore State_). But not content with this step-change, we
-took a quick look at the place and then headed to our main destination
-_Srirangapatna_, a small village nearby which contains some important historical
-sites. The first was one of Tipu Sultan's palaces, which is an ornate teak
-pavillion in the Indo-Islamic style, surrounded by green lawns and towering
-giant Rain trees. Nice but more of a country house than anything superior
-and regal. The second was the wonderful Ranganathaswamy temple, built in the
-10th century. Entering it felt like going into a subterranean lair: low stone
-ceilings, held up by intricately carved columns, which kept most of the light
-and heat out. I'm not very keyed into how one prays at these temples but there
-seems to be an awful lot of queuing!
+Eventually, it was time to see some sights outside of the big city, for which we
+decided to take a train to Mysore, a city that is a couple of hours west of
+Bangalore. Despite popular conceptions about rail travel in India, we happened
+to take the new business express train, which makes the long journey from
+Chennai through Bangalore and onto the west coast and is about as modern as any
+regional train in Europe. Clean and nice. However, on the way back, we
+experienced more of the "classic" Indian train journey experience: a sleeping
+carriage with bunks chok full people sitting, laying and generally hanging from
+the ceiling. The windows were open-frame (no glass) and the doors were kept open
+during the entire trip, which provided a nice breeze as well as the opportunity
+to stick your head out and catch a nice view (if you dared). Though despite this
+breeze and the many ceiling fans, it was still obnoxiously hot inside. But at least one
+didn't have to go unrefreshed on this train, as every 10 minutes, an attendant would
+walk down the gangway, shouting "water", "coffee/tea" or whichever snacks he was
+selling at maximum volume to overcome the clack-clack of the train along the
+tracks. I have to admit, it was good service but quite annoying if you're trying
+to decompress after a long day out and about. The snacks definitely fell into
+the "DO NOT EAT STREETFOOD!" category that everyone warns you about--there was
+definitely not much in the way of sanitary precautions being taken.
+
+Back to Mysore: The city is known as the "cultural and intellectual" centre of
+Karnataka^[The state was previously known as _Mysore State_.]. But I suppose
+we're not so much into that milieu, so we took a quick look at the place and
+then headed to our main destination _Srirangapatna_, a small village nearby
+which contains some important historical sites. The first was one of Tipu
+Sultan's palaces, which is an ornate teak pavilion in the Indo-Islamic style,
+surrounded by green lawns and towering giant Rain trees. It was pleasant but more of
+a country house than anything superior and regal. The second was the wonderful
+Ranganathaswamy temple--built in the 10th century. Entering it felt like going
+into a subterranean lair: low stone ceilings, held up by intricately carved
+columns which kept most of the light and heat out and lots of incense. I'm not
+very keyed into how one prays at these temples, but there seems to be an awful
+lot more queuing than actually seeing the altars and shrines!
 
 ![Hindu Temple near Mysore](/images/DSCF8698.JPG "The road leading up to the
 temple in Sri Rangapatna.")
