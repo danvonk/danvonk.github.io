@@ -11,9 +11,9 @@ Bangalore, which is known as India's "silicon valley", was my first port of call
 for my trip to India. It was the winter semester break and I had just been
 travelling around Venice and Triest, so my mind was hitherto occupied with the
 calm and cultured sights of northern Italy. However, this collected state
-quickly absconded even as soon as my first night in India, when my
-long-neglected feeling of culture shock arose and prompted me to realise that
-this would be another truly great holiday.
+absconded as soon as my first night in India, when my
+long-neglected sense of culture shock arose again and brought me back into the
+present with the overwhelming feeling of newness that all travelers crave.
 
 <!--more-->
 
