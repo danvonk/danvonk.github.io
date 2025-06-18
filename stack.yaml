@@ -19,7 +19,7 @@
 # resolver: https://example.com/snapshots/2018-01-01.yaml
 resolver:
   # lts-21.3
-  lts-22.3
+  lts-23.25
 nix:
   enable: true
 
@@ -45,13 +45,12 @@ packages:
 #
 extra-deps:
   - mtl-2.3.1
-  - containers-0.6.7
-  - hakyll-4.16.0.0
+  - containers-0.6.8
+  - hakyll-4.16.6.0
   - hakyll-images-1.2.1
   - pandoc-types-1.23.1
   - pandoc-sidenote-0.23.0.0
-  - pandoc-3.1.11
-  - time-1.12.2
+  - pandoc-3.6
 
 # Override default flag values for local packages and extra-deps
 # flags: {}
