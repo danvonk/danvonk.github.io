@@ -4,13 +4,10 @@ author: Dan Vonk
 tags: personal, travel
 ---
 
-![Turkish railways train stopped beside the platform](/images/DSCF8806.JPG "The
-Dogu Express reaches its penultimate stop, leaving enough time to buy and drink
-a quick Turkish coffee on the platform.")
+![View of the tea fields in Munnar](/images/DSCF8806.JPG "A view of the tea fields in the Kennan Devan hills near Munnar, Kerala.")
 
-
-hello from kerala
-
+After having experienced the hustle and bustle of Bangalore, the next plan was
+to explore the state of Kerala.
 
 <!--more-->
 
@@ -27,10 +24,6 @@ a quick Turkish coffee on the platform.")
 Dogu Express reaches its penultimate stop, leaving enough time to buy and drink
 a quick Turkish coffee on the platform.")
 
-
-![Turkish railways train stopped beside the platform](/images/DSCF8720.JPG "The
-Dogu Express reaches its penultimate stop, leaving enough time to buy and drink
-a quick Turkish coffee on the platform.")
 
 
 
