@@ -1,36 +1,42 @@
 ---
-title: Simulating Quantum Circuits on Classical Hardware (Tensor Networks)
+title: Simulating Quantum Circuits using Tensor Networks in Rust
 author: Dan Vonk
 tags: tech, maths, quantum
 ---
 
-Although general-purpose, practical quantum computers do not yet actually exist,
-they are an emerging technology which offer many interesting properties when
-compared to classical computers. In particular, because of their utilisation of
-quantum properties, they are able to solve some problems significantly faster
-than a classical machine would. For example, integer factorisation is the
-problem of factoring a positive integer into its prime factors. It is classed as
-a decision problem, which has a best-known sub-exponential time complexity
-$\mathcal{O(\exp(\log N))}$ on classical computers. However, the well-known
-Shor's Algorithm \cite{hayward2008quantum} is able to solve this problem in
-$\mathcal{O(N^{3})}$ time, i.e. polynomial time, on a quantum computer. This
-result has implications in the field of cryptography, where it becomes possible
-to break RSA encryption, which relies on the difficulty of factoring a large
-number $N$ into two prime factors to provide security. In fact, many quantum
-algorithms exist which are significantly faster than their classical
-counterparts and these could speed up a whole range of tasks from modelling of
-chemical and physical processes (which are naturally quantum processes) to
-linear algebra based tasks such as least squares regression and principal
-component analysis, through the HHL (Harrow–Hassidim–Lloyd) algorithm.
+![IBM Quantum Computer](/images/ibm_quantum_comp.jpg "It looks cool and shiny
+but unfortunately I don't have one of these at home--let's simulate one instead.")
 
-<!--more-->
+General-purpose, practical quantum computers do not yet actually exist but with
+every passing day there is more and more hullabaloo around them. If they do in
+fact emerge at some point in time, then they would offer some quite compelling
+properties when compared to classical computers. In particular, they are able to
+solve some problems significantly faster than a classical machine would. For
+example, integer factorisation is the problem of factoring a positive integer
+into its prime factors. It's a decision problem which has a best-known time
+complexity $\mathcal{O}(\exp (\log{N}))$ on classical computers. However, the
+well-known _Shor's Algorithm_ is able to solve this problem in
+$\mathcal{O}(N^{3})$ time, i.e. polynomial time on a quantum computer. This
+result has implications in the field of cryptography, where it becomes possible
+to break RSA encryption, which currently relies on the difficulty of factoring a
+large number $N$ into two prime factors to provide security. In fact, many
+quantum algorithms exist which are faster than their classical counterparts and
+these could speed up a whole range of tasks from modelling of chemical processes
+to linear algebra.
 
 However, quantum computers in their current state are only of limited use. One
-major reason is because they are highly susceptible to noise, which leads to
+reason is because they are highly susceptible to noise, which leads to
 errors in computations. Therefore, quantum computers are kept in laboratory
 conditions at close to absolute zero with high isolation from the external
-environment to maintain coherence. This provides the motivation for simulating
-quantum computers on classical hardware.
+environment to maintain coherence. 
+
+Fortunately, one doesn't actually need a quantum computer to design quantum
+algorithms or get a better understanding of the technology. For small quantum circuits,
+it's perfectly feasible to simulate them on classical computers. This article
+will discuss how you can create your own simulator using Rust and give an
+introduction into an interesting technique for maintaining performance: tensor networks.
+
+<!--more-->
 
 The fundamental unit of a quantum computer is the qubit, which is analogue to a
 classical bit, except that it can be in a superposition (a ``combination'' of)
