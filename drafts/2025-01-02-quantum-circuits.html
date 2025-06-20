@@ -4,17 +4,19 @@
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Simulating Quantum Circuits - Dan Vonk</title>
+        <title>Simulating Quantum Circuits using Tensor Networks in Rust - Dan Vonk</title>
         <link rel="stylesheet" href="../css/tufte.css" />
         <link rel="stylesheet" href="../css/venobox.min.css" type="text/css" media="screen" />
         <link rel="stylesheet" href="../css/default.css" />
-        <!-- KATEX stuff: TODO switch to server-side? -->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css" integrity="sha384-zh0CIslj+VczCZtlzBcjt5ppRcsAmDnRem7ESsYwWwg3m/OaJ2l4x7YBZl9Kxxib" crossorigin="anonymous">
-    <!-- The loading of KaTeX is deferred to speed up page rendering -->
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.js" integrity="sha384-Rma6DA2IPUwhNxmrB/7S3Tno0YY7sFu9WSYMCuulLhIqYSGZ2gKCJWIqhBWqMQfh" crossorigin="anonymous"></script>
-    <!-- To automatically render math in text elements, include the auto-render extension: -->
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/contrib/auto-render.min.js" integrity="sha384-hCXGrW6PitJEwbkoStFjeJxv+fSOOQKOPbJxSfM6G5sWZjAyWhXiTIIAmQqnlLlh" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
-  </head>
+        <link rel="apple-touch-icon" sizes="180x180" href="../static/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="../static/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="../static/favicon-16x16.png">
+        <link rel="manifest" href="../static/site.webmanifest">
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css" integrity="sha384-5TcZemv2l/9On385z///+d7MSYlvIEw9FuZTIdZ14vJLqWphw7e7ZPuOiCHJcFCP" crossorigin="anonymous">
+        <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js" integrity="sha384-cMkvdD8LoxVzGF/RPUKAcvmm49FQ0oxwDF3BGKtDXcEc+T1b2N+teh/OJfpU0jr6" crossorigin="anonymous"></script>
+        <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/contrib/auto-render.min.js" integrity="sha384-hCXGrW6PitJEwbkoStFjeJxv+fSOOQKOPbJxSfM6G5sWZjAyWhXiTIIAmQqnlLlh" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+    </head>
     </head>
     <body>
         <header>
@@ -23,18 +25,16 @@
             </div>
             <nav>
                 <a href="../about.html">About</a>
-                <a href="../archive.html">Archive</a>
                 <a href="../readinglist.html">Reading List</a>
-                <!-- <a href="/gallery.html">Gallery</a> -->
             </nav>
             <div class="embellished-hr">
-              <span class="fleurons">🙥 🙧 </span>
+              <span class="fleurons">🙥 🙧</span>
             </div>
         </header>
 
         <main role="main">
             <article>
-    <h1>Simulating Quantum Circuits</h1>
+    <h1>Simulating Quantum Circuits using Tensor Networks in Rust</h1>
     <p>
         <i>
         posted on  2 January, 2025
@@ -45,39 +45,48 @@
         </i>
     </p>
     <section class="sans">
-        <p>Although general-purpose, practical quantum computers do not yet actually exist,
-they are an emerging technology which offer many interesting properties when
-compared to classical computers. In particular, because of their utilisation of
-quantum properties, they are able to solve some problems significantly faster
-than a classical machine would. For example, integer factorisation is the
-problem of factoring a positive integer into its prime factors. It is classed as
-a decision problem, which has a best-known sub-exponential time complexity
-<span class="math inline">𝒪(ℯ𝓍𝓅(𝓁ℴℊ𝒩))</span> on classical computers. However, the well-known
-Shor’s Algorithm  is able to solve this problem in <span class="math inline">𝒪(𝒩<sup>3</sup>)</span>
-time, i.e. polynomial time, on a quantum computer. This result has implications
-in the field of cryptography, where it becomes possible to break RSA encryption,
-which relies on the difficulty of factoring a large number <span class="math inline"><em>N</em></span> into two prime
-factors to provide security. In fact, many quantum algorithms exist which are
-significantly faster than their classical counterparts and these could speed up
-a whole range of tasks from modelling of chemical and physical processes (which
-are naturally quantum processes) to linear algebra based tasks such as least
-squares regression and principal component analysis, through the HHL (Harrow–Hassidim–Lloyd) algorithm
-.</p>
-<!--more-->
+        <figure>
+<label for="mn0" class="margin-toggle">⊕</label>
+<input type="checkbox" id="mn0" class="margin-toggle" />
+<div class="marginnote">
+It looks cool and shiny but unfortunately I don't have one of these at home--let's simulate one instead.
+</div>
+<a href="../images/ibm_quantum_comp.jpg" class="image-gallery" data-gall="gallery01" title="It looks cool and shiny but unfortunately I don't have one of these at home--let's simulate one instead." title="It looks cool and shiny but unfortunately I don't have one of these at home--let's simulate one instead."><img src="../images/ibm_quantum_comp.jpg" title="It looks cool and shiny but unfortunately I don't have one of these at home--let's simulate one instead." alt="IBM Quantum Computer" /></a>
+</figure>
+<p>General-purpose, practical quantum computers do not yet actually exist but with
+every passing day there is more and more hullabaloo around them. If they do in
+fact emerge at some point in time, then they would offer some quite compelling
+properties when compared to classical computers. In particular, they are able to
+solve some problems significantly faster than a classical machine would. For
+example, integer factorisation is the problem of factoring a positive integer
+into its prime factors. It’s a decision problem which has a best-known time
+complexity <span class="math inline">𝒪(exp (log <em>N</em>))</span> on classical computers. However, the
+well-known <em>Shor’s Algorithm</em> is able to solve this problem in
+<span class="math inline">𝒪(<em>N</em><sup>3</sup>)</span> time, i.e. polynomial time on a quantum computer. This
+result has implications in the field of cryptography, where it becomes possible
+to break RSA encryption, which currently relies on the difficulty of factoring a
+large number <span class="math inline"><em>N</em></span> into two prime factors to provide security. In fact, many
+quantum algorithms exist which are faster than their classical counterparts and
+these could speed up a whole range of tasks from modelling of chemical processes
+to linear algebra.</p>
 <p>However, quantum computers in their current state are only of limited use. One
-major reason is because they are highly susceptible to noise, which leads to
+reason is because they are highly susceptible to noise, which leads to
 errors in computations. Therefore, quantum computers are kept in laboratory
 conditions at close to absolute zero with high isolation from the external
-environment to maintain coherence. This provides the motivation for simulating
-quantum computers on classical hardware.</p>
+environment to maintain coherence.</p>
+<p>Fortunately, one doesn’t actually need a quantum computer to design quantum
+algorithms or get a better understanding of the technology. For small quantum circuits,
+it’s perfectly feasible to simulate them on classical computers. This article
+will discuss how you can create your own simulator using Rust and give an
+introduction into an interesting technique for maintaining performance: tensor networks.</p>
+<!--more-->
 <p>The fundamental unit of a quantum computer is the qubit, which is analogue to a
 classical bit, except that it can be in a superposition (a ``combination’’ of)
 of 0 and 1 at the same time. Specifically, a qubit <span class="math inline">$\ket{\psi}$</span> is an element of
-a Hilbert space <span class="math inline">ℋ</span> with the basis
-vectors [{ ,  } = { {(1,0)}^{T}, {(0,1)}^{T}},] such
-that [ =  + .] If strictly either
-<span class="math inline"><em>α</em></span> or <span class="math inline"><em>β</em></span> is equal to 0, then <span class="math inline">$\ket{\psi}$</span> is a classical bit. A
-qubit must also remain normalised, meaning
+a Hilbert space <span class="math inline">ℋ</span> with the basis vectors [{ ,  } =
+{ {(1,0)}^{T}, {(0,1)}^{T}},] such that [ =  + 
+.] If strictly either <span class="math inline"><em>α</em></span> or <span class="math inline"><em>β</em></span> is equal to 0, then
+<span class="math inline">$\ket{\psi}$</span> is a classical bit. A qubit must also remain normalised, meaning
 that [||^{2} + |^{2}| = 1.]</p>
 <p>Operations can be performed on <span class="math inline">$\ket{\psi}$</span> to modify its state and these are
 represented by matrices <span class="math inline"><em>U</em></span>, but because all operations must preserve the
@@ -87,8 +96,8 @@ defined as</p>
 [ H = 
 <p>]</p>
 <p>This operation is often used to balance the amplitudes for <span class="math inline">$\ket{0}$</span> and
-<span class="math inline">$\ket{1}$</span>, but for a general state <span class="math inline">$\ket{\psi}$</span> performs
-[H  =  [(+ )  + (- ) ].]</p>
+<span class="math inline">$\ket{1}$</span>, but for a general state <span class="math inline">$\ket{\psi}$</span> performs [H  =
+ [(+ )  + (- ) ].]</p>
 <p>Another fundamental operation on a qubit is to  it on the
 standard basis, where it collapses to one of the classical basis states
 according to probabilities <span class="math inline">|<em>α</em>|<sup>2</sup></span> and <span class="math inline">|<em>β</em>|<sup>2</sup></span> respectively. This
@@ -99,7 +108,8 @@ answer with a certain probability, and most quantum algorithms are designed to
 hardware. However, the difficulty arises when one wants to simulate multiple
 qubits. This is because the overall state-space <span class="math inline">ℋ</span> is the tensor
 product between all of the other states</p>
-<p>[  = <em>{1} </em>{2} _{n}]</p>
+<p>[  = <em>{1} </em>{2} 
+_{n}]</p>
 and this value grows exponentially such that <span class="math inline">dim (ℋ) = 2<sup><em>n</em></sup></span>. For
 example, a quantum system with 10 qubits would require 1024 complex numbers to
 describe, while a system with 30 qubits would require approximately one billion
@@ -111,52 +121,53 @@ difficulty of getting hardware, certain techniques have been developed to more
 efficiently perform these simulations.
 %——————————————————————————-
 <p>%——————————————————————————-</p>
-<p>There are two main ways to simulate quantum circuits on classical machines,
-Schrödinger-style and Feynman-style simulation and both of these have
-trade-offs in terms of time and space requirements.</p>
+<p>There are two main ways to simulate quantum circuits on
+classical machines, Schrödinger-style and Feynman-style simulation and both of
+these have trade-offs in terms of time and space requirements.</p>
 <p>Schrödinger simulation is perhaps the simpler scheme to understand. Here, the
-unitary transformation for each gate in the circuit is directly applied to the full state
-vector, i.e for a state <span class="math inline">$\ket{\psi} \in \mathbb{C}^{2^{n}}$</span> and a gate
-<span class="math inline"><em>U</em> ∈ ℂ<sup>2 × 2</sup></span>, the following process occurs. Firstly, because
-<span class="math inline"><em>U</em></span> operates only on a single qubit, it must be expanded using identity
+unitary transformation for each gate in the circuit is directly applied to the
+full state vector, i.e for a state <span class="math inline">$\ket{\psi} \in \mathbb{C}^{2^{n}}$</span> and a
+gate <span class="math inline"><em>U</em> ∈ ℂ<sup>2 × 2</sup></span>, the following process occurs. Firstly,
+because <span class="math inline"><em>U</em></span> operates only on a single qubit, it must be expanded using identity
 transformations for the other qubits</p>
 <p>[U_{k} = I_{1} … U … I_{k}]</p>
 <p>then the state can be updated using a matrix transformation</p>
 <p>[  = U_{k} .]</p>
-<p>In practice however, programs such as Grafeyn  store the amplitudes for each qubit
-separately, so a gate can be directly applied to the intended qubit. Due to
-needing to store the entire state vector, the space complexity of this style of
-simulation is <span class="math inline">𝒪(2<sup><em>n</em></sup>)</span> for any number of gates, whilst the time
-complexity is <span class="math inline">𝒪(<em>m</em>⋅2<sup><em>N</em></sup>)</span> for <span class="math inline"><em>m</em></span> gates.</p>
+<p>In practice however, programs such as Grafeyn  store
+the amplitudes for each qubit separately, so a gate can be directly applied to
+the intended qubit. Due to needing to store the entire state vector, the space
+complexity of this style of simulation is <span class="math inline">𝒪(2<sup><em>n</em></sup>)</span> for any number of
+gates, whilst the time complexity is <span class="math inline">𝒪(<em>m</em> ⋅ 2<sup><em>N</em></sup>)</span> for <span class="math inline"><em>m</em></span> gates.</p>
 <p>The other approach to quantum circuit simulation is Feynman-style simulation,
 which is based on the path integral formulation of quantum mechanics, where a
-path is a sequence of computations that the system  traverse during the
-gate computation. Once all possible paths have been enumerated, they are
-summed together and this represents the total amplitudes of the measurement until
-the end of the chosen gate.</p>
+path is a sequence of computations that the system  traverse
+during the gate computation. Once all possible paths have been enumerated, they
+are summed together and this represents the total amplitudes of the measurement
+until the end of the chosen gate.</p>
 <p>The advantage of this method is that it does not require storing the entire
 (large) state vector. Memory is only needed to track the intermediate values
 along each path, which can in fact be done in <span class="math inline">𝒪(<em>n</em>)</span> time for a single
-path of <span class="math inline"><em>n</em></span> qubits. By contrast, the time complexity is much higher, as it must loop over all
-<span class="math inline">2<sup><em>n</em></sup></span> possible paths.</p>
+path of <span class="math inline"><em>n</em></span> qubits. By contrast, the time complexity is much higher, as it must
+loop over all <span class="math inline">2<sup><em>n</em></sup></span> possible paths.</p>
 <p>Therefore, neither of these methods dominate the other, which leads to the idea
 that they could be used in conjunction. Indeed, the paper Grafeyn by Westrick
 and Liu et al. introduces a hybrid circuit simulator with support for both
 Schrödinger and Feynman style simulation in an efficient and parallel manner.
 The important realisation of the paper is that Feynman simulation becomes
-extremely inefficient when the computation branches significantly and returns to a single point (<code>combinatorial explosion'') whereas Schrödinger simulation is more efficient in these cases, as only the state vector must be stored. However, many parts of circuits have no branching at all (such as \texttt{CX} or controlled-not gates), therefore it is possible to group these non-interfering sub-circuits into</code>kernels’’, which can be
-simulated using the Feynman technique, whilst leaving the interfering parts to
-be simulated using the Schrödinger technique.</p>
-<p>The second realisation in terms of efficiency of the paper is the focus on . The
-unitary transformations of many gates in quantum computing are
-sparse, meaning they have more zero entries than non-zero ones. Special
-algorithms for sparse matrix-vector multiplication exist and are significantly
-faster than a naive implementation. This is beneficial for Schrödinger
-simulation, which is based on these operations. Similarly, Feynman-style
-simulation also benefits from sparsity because fewer paths must be considered.
-Grafeyn can therefore perform re-ordering operations on gates (e.g. if they have
-commutativity) in order to improve sparsity both inside of a kernel (i.e. Feynman simulation)
-and outside (i.e. Schrödinger simulation).</p>
+extremely inefficient when the computation branches significantly and returns to
+a single point (<code>combinatorial explosion'') whereas Schrödinger simulation is more efficient in these cases, as only the state vector must be stored. However, many parts of circuits have no branching at all (such as \texttt{CX} or controlled-not gates), therefore it is possible to group these non-interfering sub-circuits into</code>kernels’’, which can be simulated using the Feynman
+technique, whilst leaving the interfering parts to be simulated using the
+Schrödinger technique.</p>
+<p>The second realisation in terms of efficiency of the paper is the focus on
+. The unitary transformations of many gates in quantum
+computing are sparse, meaning they have more zero entries than non-zero ones.
+Special algorithms for sparse matrix-vector multiplication exist and are
+significantly faster than a naive implementation. This is beneficial for
+Schrödinger simulation, which is based on these operations. Similarly,
+Feynman-style simulation also benefits from sparsity because fewer paths must be
+considered. Grafeyn can therefore perform re-ordering operations on gates (e.g.<br />
+if they have commutativity) in order to improve sparsity both inside of a kernel
+(i.e. Feynman simulation) and outside (i.e. Schrödinger simulation).</p>
 
     </section>
     <section>
@@ -199,7 +210,7 @@ and outside (i.e. Schrödinger simulation).</p>
 
         <footer>
             <div class="embellished-hr">
-              <span class="fleurons">🙥 🙧 </span>
+              <span class="fleurons">🙥 🙧</span>
             </div>
            © 2025 Dan Vonk. All Rights Reserved. Site proudly generated by
             <a href="http://jaspervdj.be/hakyll">Hakyll</a>
