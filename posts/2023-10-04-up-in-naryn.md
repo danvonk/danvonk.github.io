@@ -52,10 +52,10 @@ Still driving further south, the scenary went from beautiful to stunning as we
 left the open country for the mountains.
 
 ![Street scene in Bangalore](/images/DSCF7863.JPG "A stream crosses the
-otherwise monontonous green desert of the steppe.")
+otherwise monotonous green desert of the steppe near Bosogo.")
 
 Driving on these dirt tracks in the UAZ requires a bit of skill. The roads are
-universally terrible with deep corrugations and many potholes. Becuase the UAZ
+universally terrible with deep corrugations and many potholes. Because the UAZ
 has so little in the way of suspension, hitting a pothole means jumping up in
 your seat and hitting your head on the roof, meanwhile the whole car squeaks and
 groans. Therefore, the best strategy is to go as fast as you can in order to
