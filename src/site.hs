@@ -38,6 +38,7 @@ main = hakyllWith config $ do
         , "css/et-book/et-book-semi-bold-old-style-figures/*"
         , "js/*"
         , "images/**.png"
+        , "images/**.svg"
         , "fonts/*"
         , "static/*"
         ]
