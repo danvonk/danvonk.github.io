@@ -4,9 +4,11 @@ author: Dan Vonk
 tags: cuda, programming, physics, C++
 ---
 
-![Neutron scattering experiment](/images/kws1-schema_2021-01.jpg "Small angle neutron scattering for materials research requires a high-energy
-particle accelerator. Understandably, these are hard to get, so if you can
-simulate the process, it's a huge productivity gain.")
+![Neutron scattering experiment](/images/kws1-schema_2021-01.jpg "Small angle
+neutron scattering for materials research uses a high-energy particle
+accelerator to produce scattering amplitude functions. However, the physics
+behind the neutron scattering is well-known and can be simulated on supercomputer clusters, provided an initial
+seed trajectory and molecular (MD) information is given.")
 
 I recently completed a project where I improved the performance of a program for neutron
 scattering physics simulation by using CUDA to get some quite large
@@ -20,9 +22,7 @@ worked surprisingly well.
 
 In the blog, I'll give some of the physics context
 behind the program, why neutron scattering simulations are even needed, and then
-finally talk about how exactly the CUDA implementation worked. Note that the content is
-adapted from an academic report, so the style of writing is a bit more formal
-than might be expected from a blog...
+finally talk about how exactly the CUDA implementation worked. 
 
 The Theory
 ---
@@ -94,20 +94,115 @@ implementations which are able to run on graphics cards (e.g. using
 NVIDIA's CUDA) would significantly improve the performance of Sassena due to the much larger
 thread-count of GPUs.
 
-The Previous Implementation
+The Previous (CPU) Implementation
 ---------------------------
 
-So essentially the 
-
-A major hypothesis of this IDP was that implementing scattering on GPUs would
+The main hypothesis was that implementing scattering on GPUs would
 lead to performance increases over the CPU implementation. This was because in
-roof-line analyses using #cite(<perf>), it was determined that although the CPU implementation showed
+roof-line analyses using `perf`, it was determined that although the CPU implementation showed
 strong scaling up to 24 cores, it had become bound by memory throughput
 limitations, meaning that any further increase in thread count would not improve
 performance as the processors would simply be idling while they wait for
-memory transfer operations to complete.
+memory transfer operations to complete. 
+
+Let's look at the general flow of the CPU implementation for self-scattering and
+how we transform this time signal into the desired output. It's all based around
+OOP of course (very popular in the 2010s!) and implemented in the
+`SelfVectorsScatterDevice` class:
+
+```cpp
+fftw_complex *SelfVectorsScatterDevice::scatter(size_t mi, size_t ai)
+{
+    double s = scatterfactors.get(assignment_[ai]);
+    // double allocate (2*NF), to allow direct application of autocorrelation.
+    size_t NTHREADS = worker_threads.size();
+    size_t offset = (mi % NTHREADS) * 2 * NF;
+
+    fftw_complex *p_at_local = &(at_[offset]);
+
+    double qx = subvector_index_[mi].x;
+    double qy = subvector_index_[mi].y;
+    double qz = subvector_index_[mi].z;
+
+    coor_t *p_data = &(p_coordinates[ai * NF * 3]);
+
+    for (size_t j = 0; j < NF; ++j) {
+        coor_t x1 = p_data[j * 3];
+        coor_t y1 = p_data[j * 3 + 1];
+        coor_t z1 = p_data[j * 3 + 2];
+
+        double p1 = x1 * qx + y1 * qy + z1 * qz;
+        double sp1 = sin(p1);
+        double cp1 = cos(p1);
+        p_at_local[j][0] = s * cp1;
+        p_at_local[j][1] = s * sp1;
+    }
+
+    memset(&p_at_local[NF], 0, NF * sizeof(fftw_complex));
+
+    return p_at_local;
+```
+
+The `scatter` function is the heart of the algorithm. We're calculating $a_i(t)
+= s_i \cdot \exp{(i q \cdot r_i(t))}$ here, namely the phase of the scattering
+amplitude for each incoming scattering vector $q$ and each atom $i$ over every
+frame in $1 \dots NF$. Because the program can be run on multiple hardware
+threads (on a single MPI node), we need to calculate an offset in the output
+buffer `at_` and the input data.
+
+This $a_i(t)$ signal needs to be further processed depending on the use-case of
+the program. Autocorrelate computes the time autocorrelation of the amplitude
+signal, which gives us the intermediate scattering function $F_s(q, \tau)$,
+which is often used in hydrogen-dominated incoherent dynamics. By contrast,
+square computes the function $|a_i(t)|^2$, which is the time-independent "self intensity" per
+atom. Finally, there's a plain DSP, which just sums $A(t) = \sum_i a_i(t)$.
 
 
+```cpp
+void SelfVectorsScatterDevice::dsp(fftw_complex *at)
+{
+    if (Params::Inst()->scattering.dsp.type == "autocorrelate") 
+    {
+            fftw_execute_dft(fftw_plan_fwd_, at, at);
+            for (size_t i = 0; i < 2 * NF; ++i) {
+                at[i][0] = at[i][0] * at[i][0] + at[i][1] * at[i][1];
+                at[i][1] = 0;
+            }
+            fftw_execute_dft(fftw_plan_backwd_, at, at);
+            for (size_t i = 0; i < NF; ++i) {
+                double factor = (1.0 / (2 * NF * (NF - i)));
+                at[i][0] *= factor;
+                at[i][1] *= factor;
+            }
+        }
+    } else if (Params::Inst()->scattering.dsp.type == "square") {
+        size_t NF = N;
+        for (size_t n = 0; n < NF; n++) {
+            double r = at[n][0] * at[n][0] + at[n][1] * at[n][1];
+            at[n][0] = r;
+            at[n][1] = 0;
+        }
+    }
+    // plain removed as it does nothing!
+    // error checking removed for clarity
+}
+```
+
+The final step is to reduce all of these `at_` signals into additional `afinal`
+and `a2final` signals for the HDF5 output. These sum or sum and square the
+signal over all $NF$ time-frames respectively.
+
+```cpp
+void SelfVectorsScatterDevice::store(fftw_complex *at)
+{
+    complex<double> a = smath::reduce<double>(at, NF) * (1.0 / NF);
+    afinal_ += a;
+    a2final_ += a * conj(a);
+    smath::add_elements(atfinal_, at, NF);
+}
+
+
+```
 
 
 Designing a Scattering System in CUDA
@@ -122,24 +217,26 @@ single transaction. If coalesced properly, then the memory throughput of the
 program can approach the theoretical peak memory bandwidth of the GPU, which is
 usually much higher than for CPUs.
 
-It was chosen to first implement self-scattering over all-scattering in CUDA in
-order to evaluate this hypothesis as it is relatively simpler. Additionally, the
+In order to verify the hypothesis, I first chose to  implement self-scattering instead of all-scattering in CUDA 
+as it is relatively simpler. Additionally, the
 most important DSP type to implement in self-scattering is autocorrelation as
-this corresponds to dynamic incoherent scattering. Autocorrelation is ordinarily
+this corresponds to dynamic incoherent scattering, which is more important in most use-cases of the program. Autocorrelation is ordinarily
 an $O(N^2)$ algorithm for a signal of length $N$, as it involves calculating the
 product of a signal with all of its possible time-shifts. However, by computing
 the discrete Fourier transform (DFT), multiplying this with the complex
-conjugate of the signal and then computing the inverse DFT of this, it can be
+conjugate of the signal and then computing the inverse DFT, it can be
 calculated in $O(N log N)$ time. Highly optimised libraries for calculating DFTs
-exist in CUDA, such as `cuFFT` #cite(<guide2013cuda>), and for high dimensional
-DFTs, these implementations can be faster than on the CPU.
+exist in CUDA, such as `cuFFT`, and particularly for high dimensional
+DFTs, these implementations can be faster than on the CPU. It also kept the
+overall system simpler as writing a high-performance FFT on the GPU is a
+complicated topic.
 
 It was decided to base the implementation of self-scattering on a task-based
 model instead of traditional thread-based programming as had been used
 previously in Sassena. This allows for encapsulating each stage of the
 scattering process as a task and letting the task manager determine the
 optimal allocation of threads and streaming multi-processors to each task. The
-library chosen for this was _Taskflow_ #cite(<taskflow>). Furthermore, Taskflow
+library chosen for this was _Taskflow_. Furthermore, Taskflow
 allows for creating a _computational graph_ either at compile-time or runtime
 and then dispatching the entire graph to the GPU in one step. This decreases
 latency over launching each kernel (i.e. essentially a function run on the GPU)
@@ -148,7 +245,12 @@ graph has been dispatched.
 
 
 ![Taskflow graph](/images/sassena/cudaflow.svg "The task graph
-created by Taskflow and dispatched to the GPU for self-scattering with autocorrelation at runtime.")
+created by Taskflow and dispatched to the GPU for self-scattering with
+autocorrelation at runtime. The entire process is built around three stages.
+First is the self-scattering kernel, which calculates amplitudes according to
+the Born approximation. Then, it's sent to the DSP layer, which has various
+modes like autocorrelate or square. Finally, both store_atfinal and store are
+reduction kernels to get our final amplitude function.")
 
 In this implementation of self-scattering, it was decided to continue the previous
 model of calculating multiple orientational averaging vectors in parallel, but
@@ -239,11 +341,11 @@ __global__ void sass::cuda::cuda_scatter(...)
 Because of our choice of coordinate system, this meant that each kernel must
 calculate two unique indices `idx` and `jdx` and the allocated threads may span
 multiple thread blocks. It is further important to note that an additional
-`offset` variable is needed to skip the second copy of the signal, created due
-to autocorrelation. Additional kernels were also needed for DSP tasks, which
+`offset` variable is needed to skip the second copy of the signal, which is created due
+to autocorrelation. Additional kernels were also needed for DSP tasks. These
 repeat this pattern. For example, as part of the autocorrelation, the power
-spectrum of the signal is calculated, which would typically be referred to as
-the _dynamic structure factor_ in the neutron scattering literature:
+spectrum of the signal is calculated (typically be referred to as
+the _dynamic structure factor_ in the neutron scattering literature):
 
 ```cpp
 // For DSP type "autocorrelate"
@@ -262,13 +364,56 @@ __global__ void sass::cuda::autocorrelate_pow_spect(complex *at, size_t N, size_
 ```
 
 However, in this example, `jdx` needs to range over both copies of the signal,
-so the kernel is launched on a larger grid.
+so here the kernel is launched on a larger grid:
 
 ```cpp
-// We need twice as many threads because we 2*NF for the autocorrelation
+// We need twice as many threads because we need 2*NF for the autocorrelation
 // in the y-axis.
 dim3 double_at_grid((N + blockDim_.x - 1) / blockDim_.x,
                     (2 * NF + blockDim_.y - 1) / blockDim_.y);
+```
+
+Other DSP functions are also available, though these are simpler:
+
+```cpp
+
+// For DSP type "square"
+__global__ void sass::cuda::square_elements(fftw_complex *at, size_t N, size_t NF)
+{
+    // Calculate the thread index in the 2D grid
+    size_t idx = blockIdx.x * blockDim.x + threadIdx.x;
+    size_t jdx = blockIdx.y * blockDim.y + threadIdx.y;
+
+    if (idx < N && jdx < NF) {
+        size_t offset = idx * 2 * NF;
+
+        // Point to the specific element within the subvector
+        fftw_complex *data = &(at[offset]);
+
+        double r = data[jdx][0] * data[jdx][0] + data[jdx][1] * data[jdx][1];
+        data[jdx][0] = r;
+        data[jdx][1] = 0;
+    }
+}
+
+// For DSP type "autocorrelate"
+__global__ void sass::cuda::autocorrelate_normalize(fftw_complex *at, size_t N, size_t NF)
+{
+    // Calculate the thread index in the 2D grid
+    size_t idx = blockIdx.x * blockDim.x + threadIdx.x;
+    size_t jdx = blockIdx.y * blockDim.y + threadIdx.y;
+
+    if (idx < N && jdx < NF) {
+        size_t offset = idx * 2 * NF;
+        // get subvector
+        fftw_complex *data = &(at[offset]);
+
+        double factor = (1.0 / (2.0 * NF * (NF - jdx)));
+        data[jdx][0] *= factor;
+        data[jdx][1] *= factor;
+    }
+}
+
 ```
 
 Excluding the coordinate and scattering factors arrays, the most important data
@@ -284,9 +429,11 @@ for each iteration of the outer-most `ATOM_BLOCK` loop and delete them when the
 program ends. This is significantly more efficient than re-allocating these
 buffers for each iteration.
 
+
+
 Furthermore, if the DSP type was autocorrelation, the same scheme is used for
 pre-allocating the working memory for the DFTs. For both of these allocations,
-a simple `id` numbering scheme is employed in the manner shown in @id-scheme.
+a simple `id` numbering scheme is employed.
 
 ```cpp
 // Create at_ptrs and fft_handles in advance and re-use them
@@ -315,21 +462,20 @@ the `id` in exactly the same manner.
 Now that the contribution of each atom to the scattering intensity is
 known, these signal buffers must be _reduced_ into intermediate buffers so that
 they can be written into the final output values `fq`, `fq2` and `fqt` in the
-HDF5 file. As the parallelism of Sassena has now increased significantly in this
+HDF5 file format. As the parallelism of Sassena has now increased significantly in this
 implementation, careful attention must be paid to the reduction step as many
 simultaneous writes to a single location can cause data races. The naive
 synchronisation approach would be to use mutexes in this case. For CUDA code, it
-is more common to use the `atomicAdd` instruction instead of a mutex lock as it
-is generally considered faster. However, even atomic instructions incur
-performance overhead as they force the serialisation of the instruction stream,
-causing contention and hence reducing parallelism.
+is more common to use the `atomicAdd` instruction instead of a mutex lock as it's
+generally faster. However, even atomic instructions incur
+performance overhead as they force the serialisation of the instruction stream, which introduces contention.
 
 One possible remedy to this problem is to use _partial reduction_, where an
 intermediate buffer is created in memory for each thread block. All threads in
 the thread block will then reduce into this intermediate buffer and only one
 thread in the buffer will use an `atomicAdd` instruction to write the
 intermediate buffer into the global buffer. This approach significantly reduces resource
-contention and was used in Sassena for reducing to the `afinal` and `a2final`
+contention and was used in the new implementation for reducing to the `afinal` and `a2final`
 buffers, which eventually output to `fq` and `fq2`.
 
 ```cpp
@@ -370,7 +516,7 @@ complex *at, size_t N, size_t NF)
 }
 ```
 
-In @store-kernel, the partial reduction technique to reduce to the
+In the store kernel, the partial reduction technique to reduce to the
 intermediate buffers `shared_a` and `shared_a2` was used. These are both created in
 block-level memory, meaning that accessing it is faster than global memory. We
 use the `__syncthreads()` function to wait until all threads in the block have
@@ -381,3 +527,17 @@ intermediate buffer into the global `atfinal` and `a2final` buffers.
 Conclusion
 ----------
 
+
+![Performance Comparison](/images/sassena/cpu-v-gpu.png "A comparison of the new
+GPU implementation, running on an RTX 3080, when compared to a single-node
+implementation of the previous, CPU based, implementation with varying numbers
+(NP) of hardware threads used.")
+
+Overall the CUDA implementation significantly out performs the existing
+single-node CPU implementations of the self scattering kernel, as shown in the
+graph. However, the previous implementation supported MPI, which meant that the
+tasks could be split across many nodes in a supercomputer cluster. Luckily, the
+new CUDA implementation is directly "wired" into the existing MPI
+communication infrastructure, meaning that some nodes in the MPI cluster can use
+CPUs while others would be GPU nodes, giving us the ability to use both, which
+is known as a "hybrid" setup in the HPC world.
