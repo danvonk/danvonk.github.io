@@ -14,6 +14,7 @@ can get myself to read more...
 | Title                                                         | Author                              |
 |---------------------------------------------------------------|-------------------------------------|
 | _2025_                                                        |                                     |
+| The God of Small Things                                       | A. Roy                              |
 | Life of Johnson                                               | S. Boswell                          |
 | One Flew over the Cuckoo's Nest                               | K. Kesey                            |
 | Emma                                                          | J. Austen                           |
@@ -121,7 +122,6 @@ can get myself to read more...
 | Ask The Dust                                                  | J. Fante                            |
 | Women                                                         | H. Bukowski                         |
 | Post Office                                                   | H. Bukowski                         |
-
 
 ... and any further back, I haven't tracked or can't remember!
 
