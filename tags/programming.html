@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Posts tagged 'programming' - Dan Vonk</title>
+        <link rel="stylesheet" href="../css/tufte.css" />
+        <link rel="stylesheet" href="../css/venobox.min.css" type="text/css" media="screen" />
+        <link rel="stylesheet" href="../css/default.css" />
+        <link rel="apple-touch-icon" sizes="180x180" href="../static/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="../static/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="../static/favicon-16x16.png">
+        <link rel="manifest" href="../static/site.webmanifest">
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css" integrity="sha384-5TcZemv2l/9On385z///+d7MSYlvIEw9FuZTIdZ14vJLqWphw7e7ZPuOiCHJcFCP" crossorigin="anonymous">
+        <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js" integrity="sha384-cMkvdD8LoxVzGF/RPUKAcvmm49FQ0oxwDF3BGKtDXcEc+T1b2N+teh/OJfpU0jr6" crossorigin="anonymous"></script>
+        <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/contrib/auto-render.min.js" integrity="sha384-hCXGrW6PitJEwbkoStFjeJxv+fSOOQKOPbJxSfM6G5sWZjAyWhXiTIIAmQqnlLlh" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+    </head>
+    </head>
+    <body>
+        <header>
+            <div class="logo">
+                <a href="../">Dan Vonk</a>
+            </div>
+            <nav>
+                <a href="../about.html">About</a>
+                <a href="../readinglist.html">Reading List</a>
+            </nav>
+            <div class="embellished-hr">
+              <span class="fleurons">🙥 🙧</span>
+            </div>
+        </header>
+
+        <main role="main">
+            <h2>Posts tagged 'programming'</h2>
+<ul class="post-list">
+    
+        <li class="post-list-item">
+            
+            <h2 class="post-list-title"><a href="../posts/2024-10-05-neutron-scattering-cuda-taskflow.html">GPU-Accelerating a Neutron Scattering Simulation with CUDA</a></h2>
+            
+
+            <div><i>posted on  5 October, 2024 in</i> <a title="All pages tagged 'cuda'." href="../tags/cuda.html" rel="tag">cuda</a>, <a title="All pages tagged 'programming'." href="../tags/programming.html" rel="tag">programming</a>, <a title="All pages tagged 'physics'." href="../tags/physics.html" rel="tag">physics</a>, <a title="All pages tagged 'C++'." href="../tags/C%2B%2B.html" rel="tag">C++</a></div>
+            <div class="post-list-teaser">
+            
+            <article>
+            <section class="sans">
+            <figure>
+<label for="mn0" class="margin-toggle">⊕</label>
+<input type="checkbox" id="mn0" class="margin-toggle" />
+<div class="marginnote">
+Small angle neutron scattering for materials research uses a high-energy particle accelerator to produce scattering amplitude functions. However, the physics behind the neutron scattering is well-known and can be simulated on supercomputer clusters, provided an initial seed trajectory and molecular (MD) information is given.
+</div>
+<a href="../images/kws1-schema_2021-01.jpg" class="image-gallery" data-gall="gallery01" title="Small angle neutron scattering for materials research uses a high-energy particle accelerator to produce scattering amplitude functions. However, the physics behind the neutron scattering is well-known and can be simulated on supercomputer clusters, provided an initial seed trajectory and molecular (MD) information is given." title="Small angle neutron scattering for materials research uses a high-energy particle accelerator to produce scattering amplitude functions. However, the physics behind the neutron scattering is well-known and can be simulated on supercomputer clusters, provided an initial seed trajectory and molecular (MD) information is given."><img src="../images/kws1-schema_2021-01.jpg" title="Small angle neutron scattering for materials research uses a high-energy particle accelerator to produce scattering amplitude functions. However, the physics behind the neutron scattering is well-known and can be simulated on supercomputer clusters, provided an initial seed trajectory and molecular (MD) information is given." alt="Neutron scattering experiment" /></a>
+</figure>
+<p>I recently completed a project where I improved the performance of a program for neutron
+scattering physics simulation by using CUDA to get some quite large
+performance gains. Despite the existing application already being
+written for super-computer clusters with MPI, writing a CUDA scattering
+implementation, offloading some nodes to the GPU, and
+allowing for a “hybrid” CPU/GPU computation model that still supports CPU clusters
+worked surprisingly well.</p>
+
+            </section>
+            </article>
+            
+            </div>
+
+            
+            <a href="../posts/2024-10-05-neutron-scattering-cuda-taskflow.html">Read more</a>
+            
+            <hr />
+        </li>
+    
+</ul>
+
+
+        </main>
+
+        <footer>
+            <div class="embellished-hr">
+              <span class="fleurons">🙥 🙧</span>
+            </div>
+           © 2025 Dan Vonk. All Rights Reserved. Site proudly generated by
+            <a href="http://jaspervdj.be/hakyll">Hakyll</a>
+        </footer>
+    </body>
+</html>

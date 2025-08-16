@@ -1,0 +1,557 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>GPU-Accelerating a Neutron Scattering Simulation with CUDA - Dan Vonk</title>
+        <link rel="stylesheet" href="../css/tufte.css" />
+        <link rel="stylesheet" href="../css/venobox.min.css" type="text/css" media="screen" />
+        <link rel="stylesheet" href="../css/default.css" />
+        <link rel="apple-touch-icon" sizes="180x180" href="../static/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="../static/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="../static/favicon-16x16.png">
+        <link rel="manifest" href="../static/site.webmanifest">
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css" integrity="sha384-5TcZemv2l/9On385z///+d7MSYlvIEw9FuZTIdZ14vJLqWphw7e7ZPuOiCHJcFCP" crossorigin="anonymous">
+        <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js" integrity="sha384-cMkvdD8LoxVzGF/RPUKAcvmm49FQ0oxwDF3BGKtDXcEc+T1b2N+teh/OJfpU0jr6" crossorigin="anonymous"></script>
+        <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/contrib/auto-render.min.js" integrity="sha384-hCXGrW6PitJEwbkoStFjeJxv+fSOOQKOPbJxSfM6G5sWZjAyWhXiTIIAmQqnlLlh" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+    </head>
+    </head>
+    <body>
+        <header>
+            <div class="logo">
+                <a href="../">Dan Vonk</a>
+            </div>
+            <nav>
+                <a href="../about.html">About</a>
+                <a href="../readinglist.html">Reading List</a>
+            </nav>
+            <div class="embellished-hr">
+              <span class="fleurons">🙥 🙧</span>
+            </div>
+        </header>
+
+        <main role="main">
+            <article>
+    <h1>GPU-Accelerating a Neutron Scattering Simulation with CUDA</h1>
+    <p>
+        <i>
+        posted on  5 October, 2024
+        
+            by Dan Vonk
+        
+        in <a title="All pages tagged 'cuda'." href="../tags/cuda.html" rel="tag">cuda</a>, <a title="All pages tagged 'programming'." href="../tags/programming.html" rel="tag">programming</a>, <a title="All pages tagged 'physics'." href="../tags/physics.html" rel="tag">physics</a>, <a title="All pages tagged 'C++'." href="../tags/C%2B%2B.html" rel="tag">C++</a>
+        </i>
+    </p>
+    <section class="sans">
+        <figure>
+<label for="mn0" class="margin-toggle">⊕</label>
+<input type="checkbox" id="mn0" class="margin-toggle" />
+<div class="marginnote">
+Small angle neutron scattering for materials research uses a high-energy particle accelerator to produce scattering amplitude functions. However, the physics behind the neutron scattering is well-known and can be simulated on supercomputer clusters, provided an initial seed trajectory and molecular (MD) information is given.
+</div>
+<a href="../images/kws1-schema_2021-01.jpg" class="image-gallery" data-gall="gallery01" title="Small angle neutron scattering for materials research uses a high-energy particle accelerator to produce scattering amplitude functions. However, the physics behind the neutron scattering is well-known and can be simulated on supercomputer clusters, provided an initial seed trajectory and molecular (MD) information is given." title="Small angle neutron scattering for materials research uses a high-energy particle accelerator to produce scattering amplitude functions. However, the physics behind the neutron scattering is well-known and can be simulated on supercomputer clusters, provided an initial seed trajectory and molecular (MD) information is given."><img src="../images/kws1-schema_2021-01.jpg" title="Small angle neutron scattering for materials research uses a high-energy particle accelerator to produce scattering amplitude functions. However, the physics behind the neutron scattering is well-known and can be simulated on supercomputer clusters, provided an initial seed trajectory and molecular (MD) information is given." alt="Neutron scattering experiment" /></a>
+</figure>
+<p>I recently completed a project where I improved the performance of a program for neutron
+scattering physics simulation by using CUDA to get some quite large
+performance gains. Despite the existing application already being
+written for super-computer clusters with MPI, writing a CUDA scattering
+implementation, offloading some nodes to the GPU, and
+allowing for a “hybrid” CPU/GPU computation model that still supports CPU clusters
+worked surprisingly well.</p>
+<!--more-->
+<p>In the blog, I’ll give some of the physics context
+behind the program, why neutron scattering simulations are even needed, and then
+finally talk about how exactly the CUDA implementation worked.</p>
+<h2 id="the-theory">The Theory</h2>
+<p>Neutron scattering is a technique used to probe the atomic structure of
+materials by directing a beam of neutrons at a sample and analysing the way that
+these neutrons scatter. The well-known X-ray scattering technique is commonplace
+in science, but neutrons have the advantage of being neutrally charged, which
+means they can penetrate much deeper into the material. They also interact
+directly with the nuclei of atoms, rather than the electron clouds. This gives
+researchers a complementary technique to study e.g. diffusive or vibrational
+properties of materials. Researchers typically study the overall <em>scattering
+amplitude graph</em>, which determines where the scattered neutrons “end up”. These
+techniques are useful in domains such as crystallography, where the positions of
+the peaks in the graph determine important constants such as the structure
+factor of the material.</p>
+<p>In the <em>Born approximation</em>, the <em>total scattering amplitude</em> is calculated as the
+sum of the contributions of all <span class="math inline"><em>N</em></span> individual scatterers, i.e. atoms. Given a position vector <span class="math inline"><strong>r</strong><sub><em>n</em></sub>(<em>t</em>)</span> provided by
+the “seeding” <em>molecular dynamics</em> (MD) simulation, the overall amplitude arises from the constructive
+interference amplitudes, which is calculated as:</p>
+<p><span class="math display"><em>A</em>(<strong>q</strong>, <em>t</em>) = ∑<sub><em>n</em> ∈ {1, …, <em>N</em>}</sub> ⋅ <em>b</em><sub><em>n</em></sub>(<strong>q</strong>) ⋅ <em>e</em><sup><em>i</em><strong>q</strong></sup> ⋅ <strong>r</strong><sub><em>n</em></sub>(<em>t</em>)</span></p>
+<p>for a scattering vector <span class="math inline"><strong>q</strong></span> given the atomic prefactor <span class="math inline"><em>b</em><sub><em>n</em></sub>(<strong>q</strong>)</span>.
+For neutron scattering this is a fixed constant. For X-rays it is calculated as</p>
+<p><span class="math display">$$b_n (\bm{q}) = \sum_{j = 1}^{x} c_j \cdot e^{- d_j \cdot {\|\bm{q}\|}^2}$$</span></p>
+<p>where <span class="math inline"><em>c</em><sub><em>j</em></sub></span> and <span class="math inline"><em>d</em><sub><em>j</em></sub></span> are tabulated constants. The other relevant equation in
+scattering theory is the associated <em>total scattering intensity</em>, which is given
+by</p>
+<p><span class="math display"><em>F</em>(<strong>q</strong>, <em>t</em>) = <em>A</em>(<strong>q</strong>, <em>t</em>) ⋅ <em>A</em><sup>*</sup>(<strong>q</strong>, <em>t</em>)</span></p>
+<p>where <span class="math inline"><em>A</em><sup>*</sup>(<strong>q</strong>, <em>t</em>)</span> is the complex conjugate of <span class="math inline"><em>A</em>(<strong>q</strong>, <em>t</em>)</span>.
+However, in certain experiments, e.g. involving liquids, the sample may be <em>isotropic</em>, that is its properties are the same in
+all directions. Therefore, the scattering intensity becomes independent of the specific
+direction of <span class="math inline"><strong>q</strong></span> and only depends on the magnitude, which usually requires
+averaging the signal over all possible orientations of <span class="math inline"><strong>q</strong></span>. Similarly, in
+experiments focusing on the dynamics of the system, such as <em>inelastic</em> neutron
+scattering, the average behaviour of the system over a timescale is of interest
+and therefore requires summing the signal over time.</p>
+<p>Although these operations are all computationally simple, the large data-sets
+mean that effective use of modern computer hardware is highly important. Specifically,
+programs for computing these scattering intensities must be massively
+parallelisable in order to scale well on multi-core machines and even clusters.
+Furthermore, in high-performance computing on many threads, careful attention
+must be paid to memory access patterns in order to make the most effective use
+of limited throughput between memory and processors.</p>
+<p>Several programs to perform these tasks in a scalable manner have been written,
+including <em>Sassena</em>. This program was written to scale
+effectively on large supercomputers such as the Jaguar Cray XT5 at Oak Ridge
+National Laboratory, which it does by using MPI process-based parallelism as
+well as thread-based parallelism. Although the software was designed for high-performance
+in mind, the target platforms for which it was developed were primarily
+supercomputers from the early 2010s, many of which do not exist any more.
+Furthermore, the architecture of modern clusters have changed since
+then, particularly with the introduction of general-purpose graphics card
+programming (GPGPUs), meaning that programs which use a hybrid of CPU and GPU
+code can be run on them. A hypothesis of this report was that creating
+implementations which are able to run on graphics cards (e.g. using
+NVIDIA’s CUDA) would significantly improve the performance of Sassena due to the much larger
+thread-count of GPUs.</p>
+<h2 id="the-previous-cpu-implementation">The Previous (CPU) Implementation</h2>
+<p>The main hypothesis was that implementing scattering on GPUs would
+lead to performance increases over the CPU implementation. This was because in
+roof-line analyses using <code>perf</code>, it was determined that although the CPU implementation showed
+strong scaling up to 24 cores, it had become bound by memory throughput
+limitations, meaning that any further increase in thread count would not improve
+performance as the processors would simply be idling while they wait for
+memory transfer operations to complete.</p>
+<p>Let’s look at the general flow of the CPU implementation for self-scattering and
+how we transform this time signal into the desired output. It’s all based around
+OOP of course (very popular in the 2010s!) and implemented in the
+<code>SelfVectorsScatterDevice</code> class:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>fftw_complex <span class="op">*</span>SelfVectorsScatterDevice<span class="op">::</span>scatter<span class="op">(</span><span class="dt">size_t</span> mi<span class="op">,</span> <span class="dt">size_t</span> ai<span class="op">)</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">double</span> s <span class="op">=</span> scatterfactors<span class="op">.</span>get<span class="op">(</span><span class="va">assignment_</span><span class="op">[</span>ai<span class="op">]);</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">// double allocate (2*NF), to allow direct application of autocorrelation.</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">size_t</span> NTHREADS <span class="op">=</span> worker_threads<span class="op">.</span>size<span class="op">();</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">size_t</span> offset <span class="op">=</span> <span class="op">(</span>mi <span class="op">%</span> NTHREADS<span class="op">)</span> <span class="op">*</span> <span class="dv">2</span> <span class="op">*</span> NF<span class="op">;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    fftw_complex <span class="op">*</span>p_at_local <span class="op">=</span> <span class="op">&amp;(</span><span class="va">at_</span><span class="op">[</span>offset<span class="op">]);</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="dt">double</span> qx <span class="op">=</span> <span class="va">subvector_index_</span><span class="op">[</span>mi<span class="op">].</span>x<span class="op">;</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="dt">double</span> qy <span class="op">=</span> <span class="va">subvector_index_</span><span class="op">[</span>mi<span class="op">].</span>y<span class="op">;</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="dt">double</span> qz <span class="op">=</span> <span class="va">subvector_index_</span><span class="op">[</span>mi<span class="op">].</span>z<span class="op">;</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="dt">coor_t</span> <span class="op">*</span>p_data <span class="op">=</span> <span class="op">&amp;(</span>p_coordinates<span class="op">[</span>ai <span class="op">*</span> NF <span class="op">*</span> <span class="dv">3</span><span class="op">]);</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">size_t</span> j <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> j <span class="op">&lt;</span> NF<span class="op">;</span> <span class="op">++</span>j<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>        <span class="dt">coor_t</span> x1 <span class="op">=</span> p_data<span class="op">[</span>j <span class="op">*</span> <span class="dv">3</span><span class="op">];</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>        <span class="dt">coor_t</span> y1 <span class="op">=</span> p_data<span class="op">[</span>j <span class="op">*</span> <span class="dv">3</span> <span class="op">+</span> <span class="dv">1</span><span class="op">];</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>        <span class="dt">coor_t</span> z1 <span class="op">=</span> p_data<span class="op">[</span>j <span class="op">*</span> <span class="dv">3</span> <span class="op">+</span> <span class="dv">2</span><span class="op">];</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>        <span class="dt">double</span> p1 <span class="op">=</span> x1 <span class="op">*</span> qx <span class="op">+</span> y1 <span class="op">*</span> qy <span class="op">+</span> z1 <span class="op">*</span> qz<span class="op">;</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>        <span class="dt">double</span> sp1 <span class="op">=</span> sin<span class="op">(</span>p1<span class="op">);</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>        <span class="dt">double</span> cp1 <span class="op">=</span> cos<span class="op">(</span>p1<span class="op">);</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>        p_at_local<span class="op">[</span>j<span class="op">][</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> s <span class="op">*</span> cp1<span class="op">;</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>        p_at_local<span class="op">[</span>j<span class="op">][</span><span class="dv">1</span><span class="op">]</span> <span class="op">=</span> s <span class="op">*</span> sp1<span class="op">;</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    memset<span class="op">(&amp;</span>p_at_local<span class="op">[</span>NF<span class="op">],</span> <span class="dv">0</span><span class="op">,</span> NF <span class="op">*</span> <span class="kw">sizeof</span><span class="op">(</span>fftw_complex<span class="op">));</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> p_at_local<span class="op">;</span></span></code></pre></div>
+<p>The <code>scatter</code> function is the heart of the algorithm. We’re calculating <span class="math inline"><em>a</em><sub><em>i</em></sub>(<em>t</em>) = <em>s</em><sub><em>i</em></sub> ⋅ exp (<em>i</em><em>q</em> ⋅ <em>r</em><sub><em>i</em></sub>(<em>t</em>))</span> here, namely the phase of the scattering
+amplitude for each incoming scattering vector <span class="math inline"><em>q</em></span> and each atom <span class="math inline"><em>i</em></span> over every
+frame in <span class="math inline">1…<em>N</em><em>F</em></span>. Because the program can be run on multiple hardware
+threads (on a single MPI node), we need to calculate an offset in the output
+buffer <code>at_</code> and the input data.</p>
+<p>This <span class="math inline"><em>a</em><sub><em>i</em></sub>(<em>t</em>)</span> signal needs to be further processed depending on the use-case of
+the program. Autocorrelate computes the time autocorrelation of the amplitude
+signal, which gives us the intermediate scattering function <span class="math inline"><em>F</em><sub><em>s</em></sub>(<em>q</em>, <em>τ</em>)</span>,
+which is often used in hydrogen-dominated incoherent dynamics. By contrast,
+square computes the function <span class="math inline">|<em>a</em><sub><em>i</em></sub>(<em>t</em>)|<sup>2</sup></span>, which is the time-independent “self intensity” per
+atom. Finally, there’s a plain DSP, which just sums <span class="math inline"><em>A</em>(<em>t</em>) = ∑<sub><em>i</em></sub><em>a</em><sub><em>i</em></sub>(<em>t</em>)</span>.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> SelfVectorsScatterDevice<span class="op">::</span>dsp<span class="op">(</span>fftw_complex <span class="op">*</span>at<span class="op">)</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>Params<span class="op">::</span>Inst<span class="op">()-&gt;</span>scattering<span class="op">.</span>dsp<span class="op">.</span>type <span class="op">==</span> <span class="st">&quot;autocorrelate&quot;</span><span class="op">)</span> </span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>            fftw_execute_dft<span class="op">(</span><span class="va">fftw_plan_fwd_</span><span class="op">,</span> at<span class="op">,</span> at<span class="op">);</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> <span class="op">(</span><span class="dt">size_t</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="dv">2</span> <span class="op">*</span> NF<span class="op">;</span> <span class="op">++</span>i<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>                at<span class="op">[</span>i<span class="op">][</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> at<span class="op">[</span>i<span class="op">][</span><span class="dv">0</span><span class="op">]</span> <span class="op">*</span> at<span class="op">[</span>i<span class="op">][</span><span class="dv">0</span><span class="op">]</span> <span class="op">+</span> at<span class="op">[</span>i<span class="op">][</span><span class="dv">1</span><span class="op">]</span> <span class="op">*</span> at<span class="op">[</span>i<span class="op">][</span><span class="dv">1</span><span class="op">];</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>                at<span class="op">[</span>i<span class="op">][</span><span class="dv">1</span><span class="op">]</span> <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>            <span class="op">}</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>            fftw_execute_dft<span class="op">(</span><span class="va">fftw_plan_backwd_</span><span class="op">,</span> at<span class="op">,</span> at<span class="op">);</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> <span class="op">(</span><span class="dt">size_t</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> NF<span class="op">;</span> <span class="op">++</span>i<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>                <span class="dt">double</span> factor <span class="op">=</span> <span class="op">(</span><span class="fl">1.0</span> <span class="op">/</span> <span class="op">(</span><span class="dv">2</span> <span class="op">*</span> NF <span class="op">*</span> <span class="op">(</span>NF <span class="op">-</span> i<span class="op">)));</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>                at<span class="op">[</span>i<span class="op">][</span><span class="dv">0</span><span class="op">]</span> <span class="op">*=</span> factor<span class="op">;</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>                at<span class="op">[</span>i<span class="op">][</span><span class="dv">1</span><span class="op">]</span> <span class="op">*=</span> factor<span class="op">;</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>            <span class="op">}</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span> <span class="cf">else</span> <span class="cf">if</span> <span class="op">(</span>Params<span class="op">::</span>Inst<span class="op">()-&gt;</span>scattering<span class="op">.</span>dsp<span class="op">.</span>type <span class="op">==</span> <span class="st">&quot;square&quot;</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>        <span class="dt">size_t</span> NF <span class="op">=</span> N<span class="op">;</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> <span class="op">(</span><span class="dt">size_t</span> n <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> n <span class="op">&lt;</span> NF<span class="op">;</span> n<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>            <span class="dt">double</span> r <span class="op">=</span> at<span class="op">[</span>n<span class="op">][</span><span class="dv">0</span><span class="op">]</span> <span class="op">*</span> at<span class="op">[</span>n<span class="op">][</span><span class="dv">0</span><span class="op">]</span> <span class="op">+</span> at<span class="op">[</span>n<span class="op">][</span><span class="dv">1</span><span class="op">]</span> <span class="op">*</span> at<span class="op">[</span>n<span class="op">][</span><span class="dv">1</span><span class="op">];</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>            at<span class="op">[</span>n<span class="op">][</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> r<span class="op">;</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>            at<span class="op">[</span>n<span class="op">][</span><span class="dv">1</span><span class="op">]</span> <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    <span class="co">// plain removed as it does nothing!</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>    <span class="co">// error checking removed for clarity</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>The final step is to reduce all of these <code>at_</code> signals into additional <code>afinal</code>
+and <code>a2final</code> signals for the HDF5 output. These sum or sum and square the
+signal over all <span class="math inline"><em>N</em><em>F</em></span> time-frames respectively.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> SelfVectorsScatterDevice<span class="op">::</span>store<span class="op">(</span>fftw_complex <span class="op">*</span>at<span class="op">)</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    complex<span class="op">&lt;</span><span class="dt">double</span><span class="op">&gt;</span> a <span class="op">=</span> smath<span class="op">::</span>reduce<span class="op">&lt;</span><span class="dt">double</span><span class="op">&gt;(</span>at<span class="op">,</span> NF<span class="op">)</span> <span class="op">*</span> <span class="op">(</span><span class="fl">1.0</span> <span class="op">/</span> NF<span class="op">);</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">afinal_</span> <span class="op">+=</span> a<span class="op">;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="va">a2final_</span> <span class="op">+=</span> a <span class="op">*</span> conj<span class="op">(</span>a<span class="op">);</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    smath<span class="op">::</span>add_elements<span class="op">(</span><span class="va">atfinal_</span><span class="op">,</span> at<span class="op">,</span> NF<span class="op">);</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span></code></pre></div>
+<h2 id="designing-a-scattering-system-in-cuda">Designing a Scattering System in CUDA</h2>
+<p>If the memory was bound by operations such as transferring coordinates
+and scattering factors, then more scaling might be possible on the GPU! This is
+because once data has been transferred onto global video RAM (VRAM), it is
+possible for certain memory accesses to be <em>coalesced</em> by the CUDA runtime,
+meaning that data requests from multiple threads are efficiently combined into a
+single transaction. If coalesced properly, then the memory throughput of the
+program can approach the theoretical peak memory bandwidth of the GPU, which is
+usually much higher than for CPUs.</p>
+<p>In order to verify the hypothesis, I first chose to implement self-scattering instead of all-scattering in CUDA
+as it is relatively simpler. Additionally, the
+most important DSP type to implement in self-scattering is autocorrelation as
+this corresponds to dynamic incoherent scattering, which is more important in most use-cases of the program. Autocorrelation is ordinarily
+an <span class="math inline"><em>O</em>(<em>N</em><sup>2</sup>)</span> algorithm for a signal of length <span class="math inline"><em>N</em></span>, as it involves calculating the
+product of a signal with all of its possible time-shifts. However, by computing
+the discrete Fourier transform (DFT), multiplying this with the complex
+conjugate of the signal and then computing the inverse DFT, it can be
+calculated in <span class="math inline"><em>O</em>(<em>N</em><em>l</em><em>o</em><em>g</em><em>N</em>)</span> time. Highly optimised libraries for calculating DFTs
+exist in CUDA, such as <code>cuFFT</code>, and particularly for high dimensional
+DFTs, these implementations can be faster than on the CPU. It also kept the
+overall system simpler as writing a high-performance FFT on the GPU is a
+complicated topic.</p>
+<p>It was decided to base the implementation of self-scattering on a task-based
+model instead of traditional thread-based programming as had been used
+previously in Sassena. This allows for encapsulating each stage of the
+scattering process as a task and letting the task manager determine the
+optimal allocation of threads and streaming multi-processors to each task. The
+library chosen for this was <em>Taskflow</em>. Furthermore, Taskflow
+allows for creating a <em>computational graph</em> either at compile-time or runtime
+and then dispatching the entire graph to the GPU in one step. This decreases
+latency over launching each kernel (i.e. essentially a function run on the GPU)
+one after the other in C++, as no communication is needed with the CPU once the
+graph has been dispatched.</p>
+<figure>
+<label for="mn1" class="margin-toggle">⊕</label>
+<input type="checkbox" id="mn1" class="margin-toggle" />
+<div class="marginnote">
+The task graph created by Taskflow and dispatched to the GPU for self-scattering with autocorrelation at runtime. The entire process is built around three stages. First is the self-scattering kernel, which calculates amplitudes according to the Born approximation. Then, it's sent to the DSP layer, which has various modes like autocorrelate or square. Finally, both store_atfinal and store are reduction kernels to get our final amplitude function.
+</div>
+<a href="../images/sassena/cudaflow.svg" class="image-gallery" data-gall="gallery01" title="The task graph created by Taskflow and dispatched to the GPU for self-scattering with autocorrelation at runtime. The entire process is built around three stages. First is the self-scattering kernel, which calculates amplitudes according to the Born approximation. Then, it's sent to the DSP layer, which has various modes like autocorrelate or square. Finally, both store_atfinal and store are reduction kernels to get our final amplitude function." title="The task graph created by Taskflow and dispatched to the GPU for self-scattering with autocorrelation at runtime. The entire process is built around three stages. First is the self-scattering kernel, which calculates amplitudes according to the Born approximation. Then, it's sent to the DSP layer, which has various modes like autocorrelate or square. Finally, both store_atfinal and store are reduction kernels to get our final amplitude function."><img src="../images/sassena/cudaflow.svg" title="The task graph created by Taskflow and dispatched to the GPU for self-scattering with autocorrelation at runtime. The entire process is built around three stages. First is the self-scattering kernel, which calculates amplitudes according to the Born approximation. Then, it's sent to the DSP layer, which has various modes like autocorrelate or square. Finally, both store_atfinal and store are reduction kernels to get our final amplitude function." alt="Taskflow graph" /></a>
+</figure>
+<p>In this implementation of self-scattering, it was decided to continue the previous
+model of calculating multiple orientational averaging vectors in parallel, but
+also to further increase parallelism by calculating the contribution of several
+atoms in parallel for the scattering intensity. This meant the core loop of the
+program became</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span>n <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> n <span class="op">&lt;</span> assignment<span class="op">.</span>size<span class="op">();</span> n <span class="op">+=</span> ATOM_BLOCK<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  tf<span class="op">::</span>cudaFlow flow<span class="op">;</span> <span class="co">// a computational graph</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span>atom <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> atom <span class="op">&lt;</span> <span class="bu">std::</span>min<span class="op">(</span>ATOM_BLOCK<span class="op">,</span>assignment<span class="op">.</span>size<span class="op">()-</span>n<span class="op">);</span>atom<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span>i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> NM<span class="op">;</span> i <span class="op">+=</span> AVG_BLOCK<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>      <span class="dt">size_t</span> N <span class="op">=</span> <span class="bu">std::</span>min<span class="op">(</span>AVG_BLOCK<span class="op">,</span> NM<span class="op">-</span>i<span class="op">);</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>      dim3 blockDim <span class="op">=</span> dim3<span class="op">(</span><span class="dv">32</span><span class="op">,</span> <span class="dv">32</span><span class="op">);</span> <span class="co">// a fixed 1024 block of threads</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>      <span class="co">// N in the x-axis, NF in the y-axis.</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>      <span class="co">// Additional division as N % blockDim.x != 0 possible</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>      dim3 single_at_grid<span class="op">((</span>N <span class="op">+</span> blockDim<span class="op">.</span>x <span class="op">-</span> <span class="dv">1</span><span class="op">)</span> <span class="op">/</span> blockDim<span class="op">.</span>x<span class="op">,</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>                          <span class="op">(</span>NF <span class="op">+</span> blockDim<span class="op">.</span>y <span class="op">-</span> <span class="dv">1</span><span class="op">)</span> <span class="op">/</span> blockDim<span class="op">.</span>y<span class="op">);</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>      <span class="kw">auto</span> zero_dat <span class="op">=</span> cudaflow<span class="op">.</span>memset<span class="op">(</span>at<span class="op">[</span>id<span class="op">],</span> <span class="dv">0</span><span class="op">,</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>                    <span class="dv">2</span> <span class="op">*</span> NF <span class="op">*</span> N <span class="op">*</span> <span class="kw">sizeof</span><span class="op">(</span>complex<span class="op">));</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>      <span class="co">// create scattering kernel and provide it with threads</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>      <span class="kw">auto</span> kernel <span class="op">=</span> flow<span class="op">.</span>kernel<span class="op">(</span>single_at_grid<span class="op">,</span> <span class="va">blockDim_</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>                  sass<span class="op">::</span>cuda<span class="op">::</span>cuda_scatter<span class="op">,</span> <span class="op">...).</span>name<span class="op">(</span><span class="st">&quot;self_scatter&quot;</span><span class="op">);</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>      kernel<span class="op">.</span>succeed<span class="op">(</span>zero_dat<span class="op">);</span> <span class="co">// define the edges of the graph</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>      <span class="co">// continue building graph with DSP and reduction kernels next...</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Send cudaflow to the gpu and execute</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>  cudaflow<span class="op">.</span>run<span class="op">(</span>stream<span class="op">);</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>  stream<span class="op">.</span>synchronize<span class="op">();</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>Although Taskflow manages the allocation and scheduling of kernels onto
+processors on the GPU, it is still necessary to define how many threads are
+desired for each kernel. In contrast to the CPU, where each processor has
+several cores (e.g. 16) and where each core is able to run one thread at a time,
+GPUs contain significantly more cores, typically at least 60. Moreover, each
+core runs several threads at a time, called a <em>warp</em>, which is typically 32
+threads. On each processor in the GPU, a larger number of threads can be created
+(usually 1024 and called a <em>thread block</em>) and the execution of these is
+interleaved to hide the latency of memory accesses.</p>
+<figure>
+<label for="mn2" class="margin-toggle">⊕</label>
+<input type="checkbox" id="mn2" class="margin-toggle" />
+<div class="marginnote">
+Thread structure in CUDA. Source: CUDA Developer Guide.
+</div>
+<a href="../images/sassena/grid-of-thread-blocks.png" class="image-gallery" data-gall="gallery01" title="Thread structure in CUDA. Source: CUDA Developer Guide." title="Thread structure in CUDA. Source: CUDA Developer Guide."><img src="../images/sassena/grid-of-thread-blocks.png" title="Thread structure in CUDA. Source: CUDA Developer Guide." alt="CUDA Thread Structure" /></a>
+</figure>
+<p>Threads on the GPU are structured on a two-dimensional coordinate system and it
+is up to the programmer to use this information to create a sensible partition
+of the work amongst these threads. In Sassena, the convention that the
+<span class="math inline"><em>x</em></span>-axis would correspond to <span class="math inline"><em>N</em></span>, the number of orientational averaging vectors
+in the block (from a total <span class="math inline"><em>N</em><sub><em>M</em></sub></span>) and the <span class="math inline"><em>y</em></span>-axis would correspond to <span class="math inline"><em>N</em><sub><em>F</em></sub></span>,
+the number of frames in the MD simulation, was used.</p>
+<p>As stated, in order to use these threads, the algorithm in each kernel must be
+written so that each thread is assigned work and does not interfere with the
+work of other threads.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>__global__ <span class="dt">void</span> sass<span class="op">::</span>cuda<span class="op">::</span>cuda_scatter<span class="op">(...)</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Calculate the thread index in the 2D grid</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">size_t</span> idx <span class="op">=</span> blockIdx<span class="op">.</span>x <span class="op">*</span> blockDim<span class="op">.</span>x <span class="op">+</span> threadIdx<span class="op">.</span>x<span class="op">;</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">size_t</span> jdx <span class="op">=</span> blockIdx<span class="op">.</span>y <span class="op">*</span> blockDim<span class="op">.</span>y <span class="op">+</span> threadIdx<span class="op">.</span>y<span class="op">;</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>idx <span class="op">&lt;</span> N <span class="op">&amp;&amp;</span> jdx <span class="op">&lt;</span> NF<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>        <span class="dt">size_t</span> offset <span class="op">=</span> idx <span class="op">*</span> <span class="dv">2</span> <span class="op">*</span> NF<span class="op">;</span> <span class="co">// as 2 copies of data for autocorrelation</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">const</span> <span class="dt">size_t</span> qindex <span class="op">=</span> index <span class="op">+</span> idx<span class="op">;</span> <span class="co">// sub-vector index</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">const</span> <span class="dt">double</span> s <span class="op">=</span> scatterfactors<span class="op">[</span>aindex<span class="op">];</span> <span class="co">// b_n</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>        complex <span class="op">*</span>p_at_local <span class="op">=</span> <span class="op">&amp;(</span>at<span class="op">[</span>offset<span class="op">]);</span> <span class="co">// output buffer</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>        <span class="co">// q vec</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">const</span> <span class="dt">double</span> qx <span class="op">=</span> subvector_index<span class="op">[</span>qindex<span class="op">].</span>x<span class="op">;</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">const</span> <span class="dt">double</span> qy <span class="op">=</span> subvector_index<span class="op">[</span>qindex<span class="op">].</span>y<span class="op">;</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">const</span> <span class="dt">double</span> qz <span class="op">=</span> subvector_index<span class="op">[</span>qindex<span class="op">].</span>z<span class="op">;</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>        <span class="co">// r_n</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>        <span class="dt">coor_t</span> <span class="op">*</span>p_data <span class="op">=</span> <span class="op">&amp;(</span>p_coords<span class="op">[</span>aindex <span class="op">*</span> NF <span class="op">*</span> <span class="dv">3</span><span class="op">]);</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>        <span class="at">const</span> <span class="dt">coor_t</span> x1 <span class="op">=</span> p_data<span class="op">[</span>jdx <span class="op">*</span> <span class="dv">3</span><span class="op">];</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>        <span class="at">const</span> <span class="dt">coor_t</span> y1 <span class="op">=</span> p_data<span class="op">[</span>jdx <span class="op">*</span> <span class="dv">3</span> <span class="op">+</span> <span class="dv">1</span><span class="op">];</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>        <span class="at">const</span> <span class="dt">coor_t</span> z1 <span class="op">=</span> p_data<span class="op">[</span>jdx <span class="op">*</span> <span class="dv">3</span> <span class="op">+</span> <span class="dv">2</span><span class="op">];</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>        <span class="co">// x^T * q</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>        <span class="at">const</span> <span class="dt">double</span> p1 <span class="op">=</span> x1 <span class="op">*</span> qx <span class="op">+</span> y1 <span class="op">*</span> qy <span class="op">+</span> z1 <span class="op">*</span> qz<span class="op">;</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>        <span class="dt">double</span> cp1<span class="op">,</span> sp1<span class="op">;</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>        sincos<span class="op">(</span>p1<span class="op">,</span> <span class="op">&amp;</span>sp1<span class="op">,</span> <span class="op">&amp;</span>cp1<span class="op">);</span></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>        p_at_local<span class="op">[</span>jdx<span class="op">][</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> s <span class="op">*</span> cp1<span class="op">;</span> <span class="co">// re</span></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>        p_at_local<span class="op">[</span>jdx<span class="op">][</span><span class="dv">1</span><span class="op">]</span> <span class="op">=</span> s <span class="op">*</span> sp1<span class="op">;</span> <span class="co">// im</span></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>Because of our choice of coordinate system, this meant that each kernel must
+calculate two unique indices <code>idx</code> and <code>jdx</code> and the allocated threads may span
+multiple thread blocks. It is further important to note that an additional
+<code>offset</code> variable is needed to skip the second copy of the signal, which is created due
+to autocorrelation. Additional kernels were also needed for DSP tasks. These
+repeat this pattern. For example, as part of the autocorrelation, the power
+spectrum of the signal is calculated (typically be referred to as
+the <em>dynamic structure factor</em> in the neutron scattering literature):</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">// For DSP type &quot;autocorrelate&quot;</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>__global__ <span class="dt">void</span> sass<span class="op">::</span>cuda<span class="op">::</span>autocorrelate_pow_spect<span class="op">(</span>complex <span class="op">*</span>at<span class="op">,</span> <span class="dt">size_t</span> N<span class="op">,</span> <span class="dt">size_t</span> NF<span class="op">)</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Calculate the thread index in the 2D grid</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">size_t</span> idx <span class="op">=</span> blockIdx<span class="op">.</span>x <span class="op">*</span> blockDim<span class="op">.</span>x <span class="op">+</span> threadIdx<span class="op">.</span>x<span class="op">;</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">size_t</span> jdx <span class="op">=</span> blockIdx<span class="op">.</span>y <span class="op">*</span> blockDim<span class="op">.</span>y <span class="op">+</span> threadIdx<span class="op">.</span>y<span class="op">;</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>idx <span class="op">&lt;</span> N <span class="op">&amp;&amp;</span> jdx <span class="op">&lt;</span> <span class="dv">2</span> <span class="op">*</span> NF<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>        <span class="dt">size_t</span> offset <span class="op">=</span> idx <span class="op">*</span> <span class="dv">2</span> <span class="op">*</span> NF<span class="op">;</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>        complex <span class="op">*</span>data <span class="op">=</span> <span class="op">&amp;(</span>at<span class="op">[</span>offset<span class="op">]);</span> <span class="co">// get subvector</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>        data<span class="op">[</span>jdx<span class="op">][</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> data<span class="op">[</span>jdx<span class="op">][</span><span class="dv">0</span><span class="op">]</span> <span class="op">*</span> data<span class="op">[</span>jdx<span class="op">][</span><span class="dv">0</span><span class="op">]</span> <span class="op">+</span> data<span class="op">[</span>jdx<span class="op">][</span><span class="dv">1</span><span class="op">]</span> <span class="op">*</span> data<span class="op">[</span>jdx<span class="op">][</span><span class="dv">1</span><span class="op">];</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>        data<span class="op">[</span>jdx<span class="op">][</span><span class="dv">1</span><span class="op">]</span> <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>However, in this example, <code>jdx</code> needs to range over both copies of the signal,
+so here the kernel is launched on a larger grid:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">// We need twice as many threads because we need 2*NF for the autocorrelation</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">// in the y-axis.</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>dim3 double_at_grid<span class="op">((</span>N <span class="op">+</span> <span class="va">blockDim_</span><span class="op">.</span>x <span class="op">-</span> <span class="dv">1</span><span class="op">)</span> <span class="op">/</span> <span class="va">blockDim_</span><span class="op">.</span>x<span class="op">,</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>                    <span class="op">(</span><span class="dv">2</span> <span class="op">*</span> NF <span class="op">+</span> <span class="va">blockDim_</span><span class="op">.</span>y <span class="op">-</span> <span class="dv">1</span><span class="op">)</span> <span class="op">/</span> <span class="va">blockDim_</span><span class="op">.</span>y<span class="op">);</span></span></code></pre></div>
+<p>Other DSP functions are also available, though these are simpler:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co">// For DSP type &quot;square&quot;</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>__global__ <span class="dt">void</span> sass<span class="op">::</span>cuda<span class="op">::</span>square_elements<span class="op">(</span>fftw_complex <span class="op">*</span>at<span class="op">,</span> <span class="dt">size_t</span> N<span class="op">,</span> <span class="dt">size_t</span> NF<span class="op">)</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Calculate the thread index in the 2D grid</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">size_t</span> idx <span class="op">=</span> blockIdx<span class="op">.</span>x <span class="op">*</span> blockDim<span class="op">.</span>x <span class="op">+</span> threadIdx<span class="op">.</span>x<span class="op">;</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">size_t</span> jdx <span class="op">=</span> blockIdx<span class="op">.</span>y <span class="op">*</span> blockDim<span class="op">.</span>y <span class="op">+</span> threadIdx<span class="op">.</span>y<span class="op">;</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>idx <span class="op">&lt;</span> N <span class="op">&amp;&amp;</span> jdx <span class="op">&lt;</span> NF<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>        <span class="dt">size_t</span> offset <span class="op">=</span> idx <span class="op">*</span> <span class="dv">2</span> <span class="op">*</span> NF<span class="op">;</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>        <span class="co">// Point to the specific element within the subvector</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>        fftw_complex <span class="op">*</span>data <span class="op">=</span> <span class="op">&amp;(</span>at<span class="op">[</span>offset<span class="op">]);</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>        <span class="dt">double</span> r <span class="op">=</span> data<span class="op">[</span>jdx<span class="op">][</span><span class="dv">0</span><span class="op">]</span> <span class="op">*</span> data<span class="op">[</span>jdx<span class="op">][</span><span class="dv">0</span><span class="op">]</span> <span class="op">+</span> data<span class="op">[</span>jdx<span class="op">][</span><span class="dv">1</span><span class="op">]</span> <span class="op">*</span> data<span class="op">[</span>jdx<span class="op">][</span><span class="dv">1</span><span class="op">];</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>        data<span class="op">[</span>jdx<span class="op">][</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> r<span class="op">;</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>        data<span class="op">[</span>jdx<span class="op">][</span><span class="dv">1</span><span class="op">]</span> <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a><span class="co">// For DSP type &quot;autocorrelate&quot;</span></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>__global__ <span class="dt">void</span> sass<span class="op">::</span>cuda<span class="op">::</span>autocorrelate_normalize<span class="op">(</span>fftw_complex <span class="op">*</span>at<span class="op">,</span> <span class="dt">size_t</span> N<span class="op">,</span> <span class="dt">size_t</span> NF<span class="op">)</span></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Calculate the thread index in the 2D grid</span></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>    <span class="dt">size_t</span> idx <span class="op">=</span> blockIdx<span class="op">.</span>x <span class="op">*</span> blockDim<span class="op">.</span>x <span class="op">+</span> threadIdx<span class="op">.</span>x<span class="op">;</span></span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>    <span class="dt">size_t</span> jdx <span class="op">=</span> blockIdx<span class="op">.</span>y <span class="op">*</span> blockDim<span class="op">.</span>y <span class="op">+</span> threadIdx<span class="op">.</span>y<span class="op">;</span></span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>idx <span class="op">&lt;</span> N <span class="op">&amp;&amp;</span> jdx <span class="op">&lt;</span> NF<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>        <span class="dt">size_t</span> offset <span class="op">=</span> idx <span class="op">*</span> <span class="dv">2</span> <span class="op">*</span> NF<span class="op">;</span></span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>        <span class="co">// get subvector</span></span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>        fftw_complex <span class="op">*</span>data <span class="op">=</span> <span class="op">&amp;(</span>at<span class="op">[</span>offset<span class="op">]);</span></span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>        <span class="dt">double</span> factor <span class="op">=</span> <span class="op">(</span><span class="fl">1.0</span> <span class="op">/</span> <span class="op">(</span><span class="fl">2.0</span> <span class="op">*</span> NF <span class="op">*</span> <span class="op">(</span>NF <span class="op">-</span> jdx<span class="op">)));</span></span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>        data<span class="op">[</span>jdx<span class="op">][</span><span class="dv">0</span><span class="op">]</span> <span class="op">*=</span> factor<span class="op">;</span></span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a>        data<span class="op">[</span>jdx<span class="op">][</span><span class="dv">1</span><span class="op">]</span> <span class="op">*=</span> factor<span class="op">;</span></span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>Excluding the coordinate and scattering factors arrays, the most important data
+structure in the self-scattering implementation was the <em>signal buffer</em>, which
+was accessed as the array <code>cpp complex* at</code> in the above code snippets.
+This buffer has size <span class="math inline">2 ⋅ <em>N</em><sub><em>F</em></sub> ⋅ <em>N</em> ⋅ <em>d</em></span>, where <span class="math inline"><em>d</em>=</span> <code>sizeof(complex)</code>
+and <span class="math inline"><em>N</em></span> is the number of orientational averaging vectors in one block. The
+buffer contains the contribution of one atom to the overall output for each time
+step and orientational averaging vector in the block. Because the number of
+orientational averaging vectors stays constant over the life of the program, we
+can pre-allocate these signal buffers before scattering begins, re-use them
+for each iteration of the outer-most <code>ATOM_BLOCK</code> loop and delete them when the
+program ends. This is significantly more efficient than re-allocating these
+buffers for each iteration.</p>
+<p>Furthermore, if the DSP type was autocorrelation, the same scheme is used for
+pre-allocating the working memory for the DFTs. For both of these allocations,
+a simple <code>id</code> numbering scheme is employed.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Create at_ptrs and fft_handles in advance and re-use them</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>cr_id <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> <span class="co">// creation ID used to keep track of the at_ptrs and fft_handles</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span>n <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> n <span class="op">&lt;</span> <span class="bu">std::</span>min<span class="op">(</span>ATOM_BLOCK<span class="op">,</span> assignment<span class="op">.</span>size<span class="op">()</span> <span class="op">-</span> n<span class="op">);</span> <span class="op">++</span>n<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">size_t</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> NM<span class="op">;</span> i <span class="op">+=</span> NTHREADS<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">const</span> <span class="dt">size_t</span> N <span class="op">=</span> <span class="bu">std::</span>min<span class="op">(</span>NTHREADS<span class="op">,</span> NM <span class="op">-</span> i<span class="op">);</span> <span class="co">// number of subvectors in block</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>        complex <span class="op">*</span>d <span class="op">=</span> <span class="kw">nullptr</span><span class="op">;</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>        cudaMalloc<span class="op">(&amp;</span>d<span class="op">,</span> <span class="dv">2</span> <span class="op">*</span> NF <span class="op">*</span> N <span class="op">*</span> <span class="kw">sizeof</span><span class="op">(</span>complex<span class="op">));</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>        at_ptrs<span class="op">[</span>cr_id<span class="op">]</span> <span class="op">=</span> d<span class="op">;</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>Params<span class="op">::</span>Inst<span class="op">()-&gt;</span>scattering<span class="op">.</span>dsp<span class="op">.</span>type <span class="op">==</span> <span class="st">&quot;autocorrelate&quot;</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>            <span class="co">// Create a DFT plan and store it</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>            cufftHandle dft<span class="op">;</span> cufftCreate<span class="op">(&amp;</span>dft<span class="op">);</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>            <span class="kw">auto</span> res <span class="op">=</span> cufftPlan1d<span class="op">(&amp;</span>dft<span class="op">,</span> <span class="dv">2</span> <span class="op">*</span> NF<span class="op">,</span> CUFFT_Z2Z<span class="op">,</span> N<span class="op">);</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="op">(</span>res <span class="op">!=</span> CUFFT_SUCCESS<span class="op">)</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>                sass<span class="op">::</span>err<span class="op">(</span><span class="st">&quot;Could not create a cuFFT plan for autocorrelation.&quot;</span><span class="op">);</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>            fft_handles<span class="op">[</span>cr_id<span class="op">]</span> <span class="op">=</span> dft<span class="op">;</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>        <span class="op">++</span>cr_id<span class="op">;</span></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span> <span class="op">}</span></span></code></pre></div>
+<p>These buffers are then accessed when building the Taskflow tasks by calculating
+the <code>id</code> in exactly the same manner.</p>
+<p>Now that the contribution of each atom to the scattering intensity is
+known, these signal buffers must be <em>reduced</em> into intermediate buffers so that
+they can be written into the final output values <code>fq</code>, <code>fq2</code> and <code>fqt</code> in the
+HDF5 file format. As the parallelism of Sassena has now increased significantly in this
+implementation, careful attention must be paid to the reduction step as many
+simultaneous writes to a single location can cause data races. The naive
+synchronisation approach would be to use mutexes in this case. For CUDA code, it
+is more common to use the <code>atomicAdd</code> instruction instead of a mutex lock as it’s
+generally faster. However, even atomic instructions incur
+performance overhead as they force the serialisation of the instruction stream, which introduces contention.</p>
+<p>One possible remedy to this problem is to use <em>partial reduction</em>, where an
+intermediate buffer is created in memory for each thread block. All threads in
+the thread block will then reduce into this intermediate buffer and only one
+thread in the buffer will use an <code>atomicAdd</code> instruction to write the
+intermediate buffer into the global buffer. This approach significantly reduces resource
+contention and was used in the new implementation for reducing to the <code>afinal</code> and <code>a2final</code>
+buffers, which eventually output to <code>fq</code> and <code>fq2</code>.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>__global__ <span class="dt">void</span> sass<span class="op">::</span>cuda<span class="op">::</span>store<span class="op">(</span>complex <span class="op">*</span>afinal<span class="op">,</span> complex <span class="op">*</span>a2final<span class="op">,</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>complex <span class="op">*</span>at<span class="op">,</span> <span class="dt">size_t</span> N<span class="op">,</span> <span class="dt">size_t</span> NF<span class="op">)</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">extern</span> __shared__ complex<span class="op">&lt;</span><span class="dt">double</span><span class="op">&gt;</span> shared_mem<span class="op">[];</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    complex<span class="op">&lt;</span><span class="dt">double</span><span class="op">&gt;</span> <span class="op">*</span>shared_a <span class="op">=</span> shared_mem<span class="op">;</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    complex<span class="op">&lt;</span><span class="dt">double</span><span class="op">&gt;</span> <span class="op">*</span>shared_a2 <span class="op">=</span> shared_mem <span class="op">+</span> blockDim<span class="op">.</span>x<span class="op">;</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>threadIdx<span class="op">.</span>x <span class="op">&lt;</span> N<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>        <span class="dt">size_t</span> offset <span class="op">=</span> threadIdx<span class="op">.</span>x <span class="op">*</span> <span class="dv">2</span> <span class="op">*</span> NF<span class="op">;</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>        complex <span class="op">*</span>data <span class="op">=</span> <span class="op">&amp;(</span>at<span class="op">[</span>offset<span class="op">]);</span> <span class="co">// get subvector</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>        <span class="kw">auto</span> a <span class="op">=</span> complex<span class="op">&lt;</span><span class="dt">double</span><span class="op">&gt;(</span><span class="fl">0.0</span><span class="op">,</span> <span class="fl">0.0</span><span class="op">);</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> <span class="op">(</span>i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> NF<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>            a <span class="op">+=</span> complex<span class="op">&lt;</span><span class="dt">double</span><span class="op">&gt;(</span>data<span class="op">[</span>i<span class="op">][</span><span class="dv">0</span><span class="op">],</span> data<span class="op">[</span>i<span class="op">][</span><span class="dv">1</span><span class="op">]);</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>        a <span class="op">*=</span> <span class="fl">1.0</span> <span class="op">/</span> NF<span class="op">;</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>        shared_a<span class="op">[</span>threadIdx<span class="op">.</span>x<span class="op">]</span> <span class="op">=</span> a<span class="op">;</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>        shared_a2<span class="op">[</span>threadIdx<span class="op">.</span>x<span class="op">]</span> <span class="op">=</span> a <span class="op">*</span> conj<span class="op">(</span>a<span class="op">);</span></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>        <span class="kw">auto</span> a2 <span class="op">=</span> a <span class="op">*</span> conj<span class="op">(</span>a<span class="op">);</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>        shared_a<span class="op">[</span>threadIdx<span class="op">.</span>x<span class="op">]</span> <span class="op">=</span> complex<span class="op">&lt;</span><span class="dt">double</span><span class="op">&gt;(</span><span class="fl">0.0</span><span class="op">,</span> <span class="fl">0.0</span><span class="op">);</span></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>        shared_a2<span class="op">[</span>threadIdx<span class="op">.</span>x<span class="op">]</span> <span class="op">=</span> complex<span class="op">&lt;</span><span class="dt">double</span><span class="op">&gt;(</span><span class="fl">0.0</span><span class="op">,</span> <span class="fl">0.0</span><span class="op">);</span></span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>    __syncthreads<span class="op">();</span></span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>threadIdx<span class="op">.</span>x <span class="op">==</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>        complex<span class="op">&lt;</span><span class="dt">double</span><span class="op">&gt;</span> block_sum_a<span class="op">(</span><span class="fl">0.0</span><span class="op">,</span> <span class="fl">0.0</span><span class="op">);</span></span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>        complex<span class="op">&lt;</span><span class="dt">double</span><span class="op">&gt;</span> block_sum_a2<span class="op">(</span><span class="fl">0.0</span><span class="op">,</span> <span class="fl">0.0</span><span class="op">);</span></span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> <span class="op">(</span>i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> blockDim<span class="op">.</span>x<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>            block_sum_a <span class="op">+=</span> shared_a<span class="op">[</span>i<span class="op">];</span></span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>            block_sum_a2 <span class="op">+=</span> shared_a2<span class="op">[</span>i<span class="op">];</span></span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>        atomicAdd<span class="op">(&amp;(</span>afinal<span class="op">[</span><span class="dv">0</span><span class="op">][</span><span class="dv">0</span><span class="op">]),</span> block_sum_a<span class="op">.</span>real<span class="op">());</span></span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>        atomicAdd<span class="op">(&amp;(</span>afinal<span class="op">[</span><span class="dv">0</span><span class="op">][</span><span class="dv">1</span><span class="op">]),</span> block_sum_a<span class="op">.</span>imag<span class="op">());</span></span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>        atomicAdd<span class="op">(&amp;(</span>a2final<span class="op">[</span><span class="dv">0</span><span class="op">][</span><span class="dv">0</span><span class="op">]),</span> block_sum_a2<span class="op">.</span>real<span class="op">());</span></span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>        atomicAdd<span class="op">(&amp;(</span>a2final<span class="op">[</span><span class="dv">0</span><span class="op">][</span><span class="dv">1</span><span class="op">]),</span> block_sum_a2<span class="op">.</span>imag<span class="op">());</span></span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>In the store kernel, the partial reduction technique to reduce to the
+intermediate buffers <code>shared_a</code> and <code>shared_a2</code> was used. These are both created in
+block-level memory, meaning that accessing it is faster than global memory. We
+use the <code>__syncthreads()</code> function to wait until all threads in the block have
+finished. Finally, only the thread where <code>threadIdx.x == 0</code> reduces the
+intermediate buffer into the global <code>atfinal</code> and <code>a2final</code> buffers.</p>
+<h2 id="conclusion">Conclusion</h2>
+<figure>
+<label for="mn3" class="margin-toggle">⊕</label>
+<input type="checkbox" id="mn3" class="margin-toggle" />
+<div class="marginnote">
+A comparison of the new GPU implementation, running on an RTX 3080, when compared to a single-node implementation of the previous, CPU based, implementation with varying numbers (NP) of hardware threads used.
+</div>
+<a href="../images/sassena/cpu-v-gpu.png" class="image-gallery" data-gall="gallery01" title="A comparison of the new GPU implementation, running on an RTX 3080, when compared to a single-node implementation of the previous, CPU based, implementation with varying numbers (NP) of hardware threads used." title="A comparison of the new GPU implementation, running on an RTX 3080, when compared to a single-node implementation of the previous, CPU based, implementation with varying numbers (NP) of hardware threads used."><img src="../images/sassena/cpu-v-gpu.png" title="A comparison of the new GPU implementation, running on an RTX 3080, when compared to a single-node implementation of the previous, CPU based, implementation with varying numbers (NP) of hardware threads used." alt="Performance Comparison" /></a>
+</figure>
+<p>Overall the CUDA implementation significantly out performs the existing
+single-node CPU implementations of the self scattering kernel, as shown in the
+graph. However, the previous implementation supported MPI, which meant that the
+tasks could be split across many nodes in a supercomputer cluster. Luckily, the
+new CUDA implementation is directly “wired” into the existing MPI
+communication infrastructure, meaning that some nodes in the MPI cluster can use
+CPUs while others would be GPU nodes, giving us the ability to use both, which
+is known as a “hybrid” setup in the HPC world.</p>
+
+    </section>
+    <section>
+    <div id="disqus_thread"></div>
+
+    <script>
+        /**
+         *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+         *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+        /*
+          var disqus_config = function () {
+          this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+          this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+          };
+        */
+        (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = 'https://danvonk.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+    </section>
+        <script type="text/javascript" src="../js/venobox.min.js"></script>
+        <script>
+            new VenoBox({
+                selector: '.image-gallery',
+                numeration: true,
+                infinigall: true,
+                share: true,
+                spinner: 'rotating-plane'
+            });
+        </script>
+
+</article>
+
+        </main>
+
+        <footer>
+            <div class="embellished-hr">
+              <span class="fleurons">🙥 🙧</span>
+            </div>
+           © 2025 Dan Vonk. All Rights Reserved. Site proudly generated by
+            <a href="http://jaspervdj.be/hakyll">Hakyll</a>
+        </footer>
+    </body>
+</html>

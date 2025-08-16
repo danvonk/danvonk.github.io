@@ -36,7 +36,7 @@
             
 
 <div class="tag-list">
-  <p><i>Or jump directly to posts tagged</i>: <a href="./tags/personal.html" rel="tag">personal (14)</a>, <a href="./tags/travel.html" rel="tag">travel (14)</a>, <a href="./tags/tech.html" rel="tag">tech (3)</a>, <a href="./tags/music.html" rel="tag">music (2)</a>, <a href="./tags/databases.html" rel="tag">databases (1)</a>, <a href="./tags/haskell.html" rel="tag">haskell (1)</a></p>
+  <p><i>Or jump directly to posts tagged</i>: <a href="./tags/personal.html" rel="tag">personal (15)</a>, <a href="./tags/travel.html" rel="tag">travel (15)</a>, <a href="./tags/tech.html" rel="tag">tech (3)</a>, <a href="./tags/music.html" rel="tag">music (2)</a>, <a href="./tags/C%2B%2B.html" rel="tag">C++ (1)</a>, <a href="./tags/cuda.html" rel="tag">cuda (1)</a>, <a href="./tags/databases.html" rel="tag">databases (1)</a>, <a href="./tags/haskell.html" rel="tag">haskell (1)</a>, <a href="./tags/physics.html" rel="tag">physics (1)</a>, <a href="./tags/programming.html" rel="tag">programming (1)</a></p>
 </div>
 
 
@@ -258,6 +258,43 @@ that was made in Leningrad in the mid 1980s.</p>
     
         <li class="post-list-item">
             
+            <h2 class="post-list-title"><a href="./posts/2024-10-05-neutron-scattering-cuda-taskflow.html">GPU-Accelerating a Neutron Scattering Simulation with CUDA</a></h2>
+            
+
+            <div><i>posted on  5 October, 2024 in</i> <a title="All pages tagged 'cuda'." href="./tags/cuda.html" rel="tag">cuda</a>, <a title="All pages tagged 'programming'." href="./tags/programming.html" rel="tag">programming</a>, <a title="All pages tagged 'physics'." href="./tags/physics.html" rel="tag">physics</a>, <a title="All pages tagged 'C++'." href="./tags/C%2B%2B.html" rel="tag">C++</a></div>
+            <div class="post-list-teaser">
+            
+            <article>
+            <section class="sans">
+            <figure>
+<label for="mn0" class="margin-toggle">⊕</label>
+<input type="checkbox" id="mn0" class="margin-toggle" />
+<div class="marginnote">
+Small angle neutron scattering for materials research uses a high-energy particle accelerator to produce scattering amplitude functions. However, the physics behind the neutron scattering is well-known and can be simulated on supercomputer clusters, provided an initial seed trajectory and molecular (MD) information is given.
+</div>
+<a href="./images/kws1-schema_2021-01.jpg" class="image-gallery" data-gall="gallery01" title="Small angle neutron scattering for materials research uses a high-energy particle accelerator to produce scattering amplitude functions. However, the physics behind the neutron scattering is well-known and can be simulated on supercomputer clusters, provided an initial seed trajectory and molecular (MD) information is given." title="Small angle neutron scattering for materials research uses a high-energy particle accelerator to produce scattering amplitude functions. However, the physics behind the neutron scattering is well-known and can be simulated on supercomputer clusters, provided an initial seed trajectory and molecular (MD) information is given."><img src="./images/kws1-schema_2021-01.jpg" title="Small angle neutron scattering for materials research uses a high-energy particle accelerator to produce scattering amplitude functions. However, the physics behind the neutron scattering is well-known and can be simulated on supercomputer clusters, provided an initial seed trajectory and molecular (MD) information is given." alt="Neutron scattering experiment" /></a>
+</figure>
+<p>I recently completed a project where I improved the performance of a program for neutron
+scattering physics simulation by using CUDA to get some quite large
+performance gains. Despite the existing application already being
+written for super-computer clusters with MPI, writing a CUDA scattering
+implementation, offloading some nodes to the GPU, and
+allowing for a “hybrid” CPU/GPU computation model that still supports CPU clusters
+worked surprisingly well.</p>
+
+            </section>
+            </article>
+            
+            </div>
+
+            
+            <a href="./posts/2024-10-05-neutron-scattering-cuda-taskflow.html">Read more</a>
+            
+            <hr />
+        </li>
+    
+        <li class="post-list-item">
+            
             <h2 class="post-list-title"><a href="./posts/2024-09-20-stratocaster-body-swap.html">Stratocaster Body Swap</a></h2>
             
 
@@ -288,42 +325,6 @@ also been long since replaced by some nice “Warman” pickups made by a bloke 
 
             
             <a href="./posts/2024-09-20-stratocaster-body-swap.html">Read more</a>
-            
-            <hr />
-        </li>
-    
-        <li class="post-list-item">
-            
-            <h2 class="post-list-title"><a href="./posts/2023-11-01-day-in-nizwa.html">A Day in Nizwa</a></h2>
-            
-
-            <div><i>posted on  1 November, 2023 in</i> <a title="All pages tagged 'travel'." href="./tags/travel.html" rel="tag">travel</a>, <a title="All pages tagged 'personal'." href="./tags/personal.html" rel="tag">personal</a></div>
-            <div class="post-list-teaser">
-            
-            <article>
-            <section class="sans">
-            <figure>
-<label for="mn0" class="margin-toggle">⊕</label>
-<input type="checkbox" id="mn0" class="margin-toggle" />
-<div class="marginnote">
-A relaxing shot from the garden of Nizwa castle.
-</div>
-<a href="./images/f6006272.jpg" class="image-gallery" data-gall="gallery01" title="A relaxing shot from the garden of Nizwa castle." title="A relaxing shot from the garden of Nizwa castle."><img src="./images/f6006272.jpg" title="A relaxing shot from the garden of Nizwa castle." alt="Palm trees amongst a castle" /></a>
-</figure>
-<p>Despite Oman having a long history, there wasn’t much evident of it in the
-capital city Muscat, which is a city caught between being a hectic
-middle-eastern metropolis and a resort town for rich oil-sheiks, depending on
-where you are and your station in life. Therefore, in search of some history, I
-took a coach out to Nizwa, a major city and oasis town in the desert interior of
-the country.</p>
-
-            </section>
-            </article>
-            
-            </div>
-
-            
-            <a href="./posts/2023-11-01-day-in-nizwa.html">Read more</a>
             
             <hr />
         </li>
