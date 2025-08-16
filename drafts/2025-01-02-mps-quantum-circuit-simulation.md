@@ -1,7 +1,7 @@
 ---
-title: Simulating Quantum Circuits using Tensor Networks in Rust
+title: Tensor Network (MPS) Circuit Simulation in Rust
 author: Dan Vonk
-tags: tech, maths, quantum
+tags: tech, maths, quantum, physics
 ---
 
 ![IBM Quantum Computer](/images/ibm_quantum_comp.jpg "It looks cool and shiny
