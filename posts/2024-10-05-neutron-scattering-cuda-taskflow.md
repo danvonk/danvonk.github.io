@@ -1,5 +1,5 @@
 ---
-title: GPU-Accelerating a Neutron Scattering Simulation with CUDA
+title: Neutron Scattering Simulations with CUDA
 author: Dan Vonk
 tags: cuda, programming, physics, C++
 ---
