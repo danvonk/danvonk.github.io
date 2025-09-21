@@ -11,6 +11,7 @@ $partial("templates/post-list.html")$
 
 <nav class="pagination">
   <p><em>Page $currentPageNum$ of $numPages$</em></p>
+  <div>
 $if(previousPageUrl)$
     <a href="$previousPageUrl$">&laquo; Previous Page</a>
 $endif$
@@ -18,6 +19,7 @@ $if(nextPageUrl)$
     $if(previousPageUrl)$  $endif$
     <a href="$nextPageUrl$">Next Page &raquo;</a>
 $endif$
+  </div>
 </nav>
 
 
