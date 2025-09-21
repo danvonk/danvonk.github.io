@@ -1,7 +1,7 @@
 ---
 title: Adding a Lightbox Library to Hakyll
 author: Dan Vonk
-tags: haskell, tech
+tags: Haskell, tech
 ---
 
 Often when I am blogging, I am describing past events such as holidays and one of
