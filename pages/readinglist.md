@@ -11,6 +11,8 @@ always glad for it and it definitely has helped me develop my thinking. I'm
 hoping that by tracking my books read and posting my progress publicly that I
 can get myself to read more...
 
+<div class="table-wrap">
+
 | Title                                                         | Author                     |
 |---------------------------------------------------------------|----------------------------|
 | _2025_                                                        |                            |
@@ -123,6 +125,7 @@ can get myself to read more...
 | Ask The Dust                                                  | J. Fante                   |
 | Women                                                         | H. Bukowski                |
 | Post Office                                                   | H. Bukowski                |
+</div>
 
 ... and any further back, I haven't tracked or can't remember!
 

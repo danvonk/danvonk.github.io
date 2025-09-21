@@ -56,6 +56,7 @@ a.logo {
     margin: 0 0.6rem;
     font-size: 1.6rem;
   }
+  .sans colgroup col { width: auto !important; }
 }
 
 @media (min-width: 640px) {
@@ -182,4 +183,15 @@ div.post-list-teaser {
   margin: 2rem 0;
   text-align: center;
   font-size: 1.21rem;
+}
+
+.table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  position: relative;
+}
+
+.table-wrap table {
+  min-width: 480px; /* ensures there’s something to scroll */
+  border-collapse: collapse;
 }
