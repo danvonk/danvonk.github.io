@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Tensor Network (MPS) Circuit Simulation in Rust - Dan Vonk</title>
+        <title>Matrix Product State (MPS) Circuit Simulation in Rust - Dan Vonk</title>
         <link rel="stylesheet" href="../css/tufte.css" />
         <link rel="stylesheet" href="../css/venobox.min.css" type="text/css" media="screen" />
         <link rel="stylesheet" href="../css/default.css" />
@@ -13,10 +13,9 @@
         <link rel="icon" type="image/png" sizes="16x16" href="../static/favicon-16x16.png">
         <link rel="manifest" href="../static/site.webmanifest">
 
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css" integrity="sha384-5TcZemv2l/9On385z///+d7MSYlvIEw9FuZTIdZ14vJLqWphw7e7ZPuOiCHJcFCP" crossorigin="anonymous">
-        <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js" integrity="sha384-cMkvdD8LoxVzGF/RPUKAcvmm49FQ0oxwDF3BGKtDXcEc+T1b2N+teh/OJfpU0jr6" crossorigin="anonymous"></script>
-        <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/contrib/auto-render.min.js" integrity="sha384-hCXGrW6PitJEwbkoStFjeJxv+fSOOQKOPbJxSfM6G5sWZjAyWhXiTIIAmQqnlLlh" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
-    </head>
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css" integrity="sha384-5TcZemv2l/9On385z///+d7MSYlvIEw9FuZTIdZ14vJLqWphw7e7ZPuOiCHJcFCP" crossorigin="anonymous">
+   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js" integrity="sha384-cMkvdD8LoxVzGF/RPUKAcvmm49FQ0oxwDF3BGKtDXcEc+T1b2N+teh/OJfpU0jr6" crossorigin="anonymous"></script>
+   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/contrib/auto-render.min.js" integrity="sha384-hCXGrW6PitJEwbkoStFjeJxv+fSOOQKOPbJxSfM6G5sWZjAyWhXiTIIAmQqnlLlh" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
     </head>
     <body>
         <header>
@@ -34,14 +33,14 @@
 
         <main role="main">
             <article>
-    <h1>Tensor Network (MPS) Circuit Simulation in Rust</h1>
+    <h1>Matrix Product State (MPS) Circuit Simulation in Rust</h1>
     <p>
         <i>
         posted on  2 January, 2025
         
             by Dan Vonk
         
-        in <a title="All pages tagged 'tech'." href="../tags/tech.html" rel="tag">tech</a>, <a title="All pages tagged 'physics'." href="../tags/physics.html" rel="tag">physics</a>
+        in <a title="All pages tagged 'tech'." href="../tags/tech.html" rel="tag">tech</a>, <a title="All pages tagged 'maths'." href="../tags/maths.html" rel="tag">maths</a>, <a title="All pages tagged 'quantum'." href="../tags/quantum.html" rel="tag">quantum</a>, <a title="All pages tagged 'physics'." href="../tags/physics.html" rel="tag">physics</a>
         </i>
     </p>
     <section class="sans">
@@ -49,10 +48,21 @@
 <label for="mn0" class="margin-toggle">⊕</label>
 <input type="checkbox" id="mn0" class="margin-toggle" />
 <div class="marginnote">
-It looks cool and shiny but unfortunately I don't have one of these at home--let's simulate one instead.
+Unless you have one of these in your cupboard, you might have to settle for classical simulation.
 </div>
-<a href="../images/ibm_quantum_comp.jpg" class="image-gallery" data-gall="gallery01" title="It looks cool and shiny but unfortunately I don't have one of these at home--let's simulate one instead." title="It looks cool and shiny but unfortunately I don't have one of these at home--let's simulate one instead."><img src="../images/ibm_quantum_comp.jpg" title="It looks cool and shiny but unfortunately I don't have one of these at home--let's simulate one instead." alt="IBM Quantum Computer" /></a>
+<a href="../images/ibm_quantum_comp.jpg" class="image-gallery" data-gall="gallery01" title="Unless you have one of these in your cupboard, you might have to settle for classical simulation." title="Unless you have one of these in your cupboard, you might have to settle for classical simulation."><img src="../images/ibm_quantum_comp.jpg" title="Unless you have one of these in your cupboard, you might have to settle for classical simulation." alt="IBM Quantum Computer" /></a>
 </figure>
+<p>I was recently playing around with a research artifact from the paper Grafeyn</p>
+<blockquote>
+<p>
+In this paper, we present a hybrid Schrödinger-Feynman
+technique which takes advantage of sparsity by selectively
+synchronizing Feynman paths. Our hybrid technique partitions the
+circuit into kernels (groups of gates) and uses Feynman simulation
+within each kernel. It then synchronizes across the kernels by
+using Schrödinger-style simulation
+</p>
+</blockquote>
 <p>General-purpose, practical quantum computers do not yet actually exist but with
 every passing day there is more and more hullabaloo around them. If they do in
 fact emerge at some point in time, then they would offer some quite compelling

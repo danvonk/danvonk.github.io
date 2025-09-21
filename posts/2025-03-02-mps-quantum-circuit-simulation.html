@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Matrix Product State (MPS) Circuit Simulation in Rust - Dan Vonk</title>
+        <link rel="stylesheet" href="../css/tufte.css" />
+        <link rel="stylesheet" href="../css/venobox.min.css" type="text/css" media="screen" />
+        <link rel="stylesheet" href="../css/default.css" />
+        <link rel="apple-touch-icon" sizes="180x180" href="../static/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="../static/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="../static/favicon-16x16.png">
+        <link rel="manifest" href="../static/site.webmanifest">
+
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css" integrity="sha384-5TcZemv2l/9On385z///+d7MSYlvIEw9FuZTIdZ14vJLqWphw7e7ZPuOiCHJcFCP" crossorigin="anonymous">
+   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js" integrity="sha384-cMkvdD8LoxVzGF/RPUKAcvmm49FQ0oxwDF3BGKtDXcEc+T1b2N+teh/OJfpU0jr6" crossorigin="anonymous"></script>
+   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/contrib/auto-render.min.js" integrity="sha384-hCXGrW6PitJEwbkoStFjeJxv+fSOOQKOPbJxSfM6G5sWZjAyWhXiTIIAmQqnlLlh" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+    </head>
+    <body>
+        <header>
+            <div class="logo">
+                <a href="../">Dan Vonk</a>
+            </div>
+            <nav>
+                <a href="../about.html">About</a>
+                <a href="../readinglist.html">Reading List</a>
+            </nav>
+            <div class="embellished-hr">
+              <span class="fleurons">🙥 🙧</span>
+            </div>
+        </header>
+
+        <main role="main">
+            <article>
+    <h1>Matrix Product State (MPS) Circuit Simulation in Rust</h1>
+    <p>
+        <i>
+        posted on  2 March, 2025
+        
+            by Dan Vonk
+        
+        in <a title="All pages tagged 'tech'." href="../tags/tech.html" rel="tag">tech</a>, <a title="All pages tagged 'maths'." href="../tags/maths.html" rel="tag">maths</a>, <a title="All pages tagged 'quantum'." href="../tags/quantum.html" rel="tag">quantum</a>, <a title="All pages tagged 'physics'." href="../tags/physics.html" rel="tag">physics</a>, <a title="All pages tagged 'Rust'." href="../tags/Rust.html" rel="tag">Rust</a>
+        </i>
+    </p>
+    <section class="sans">
+        <figure>
+<label for="mn0" class="margin-toggle">⊕</label>
+<input type="checkbox" id="mn0" class="margin-toggle" />
+<div class="marginnote">
+Bells and whistles: unless you have one of these in your cupboard, you might have to settle for classical simulation.
+</div>
+<a href="../images/ibm_quantum_comp.jpg" class="image-gallery" data-gall="gallery01" title="Bells and whistles: unless you have one of these in your cupboard, you might have to settle for classical simulation." title="Bells and whistles: unless you have one of these in your cupboard, you might have to settle for classical simulation."><img src="../images/ibm_quantum_comp.jpg" title="Bells and whistles: unless you have one of these in your cupboard, you might have to settle for classical simulation." alt="IBM Quantum Computer" /></a>
+</figure>
+<p>I was recently playing around with a research artefact from the paper
+<a href="https://cs.nyu.edu/~shw8119/24/qce24-grafeyn.pdf">Grafeyn</a> which implemented some
+interesting techniques for circuit simulation. Also, it was written in Rust, so
+that doubly piqued my interest! Here’s what the paper has to say about itself…</p>
+<!--more-->
+<blockquote>
+<p>
+In this paper, we present a hybrid Schrödinger-Feynman
+technique which takes advantage of sparsity by selectively
+synchronizing Feynman paths. Our hybrid technique partitions the
+circuit into kernels (groups of gates) and uses Feynman simulation
+within each kernel. It then synchronizes across the kernels by
+using Schrödinger-style simulation.
+</p>
+</blockquote>
+<h2 id="background">Background</h2>
+<p>So there are two main ways to simulate quantum circuits on classical machines:
+Schrödinger-style and Feynman-style simulation. Both of these have trade-offs in
+terms of time and space requirements. Schrödinger simulation is the simpler
+scheme to understand, where the unitary transformation for each gate in the
+circuit is directly applied to the full state vector. Note that in practice,
+simulators store the amplitudes for each qubit separately, so a gate can be
+directly applied to the intended qubit without formulating a global state over
+all qubits. Nevertheless, due to needing to store every qubit’s amplitude, the
+space complexity is <span class="math inline">𝒪(2<sup><em>n</em></sup>)</span> for any number of gates, whilst the
+time complexity is <span class="math inline">𝒪(<em>m</em> ⋅ 2<sup><em>N</em></sup>)</span> for <span class="math inline"><em>m</em></span> gates.</p>
+<p>The other approach to quantum circuit simulation is Feynman-style simulation,
+which is based on the path integral formulation of quantum mechanics, where a
+path is a sequence of computations that the system <em>might</em> traverse during the
+gate computation. Once all possible paths have been enumerated, they are summed
+together and this represents the total amplitudes of the measurement until the
+end of the chosen gate. The advantage of this method is that it does not require
+storing the entire (large) state vector. Memory is only needed to track the
+intermediate values along each path, which can be done in
+<span class="math inline">𝒪(<em>n</em>)</span> time for a single path of <span class="math inline"><em>n</em></span> qubits. However, by contrast, the time
+complexity is much higher, as it must loop over all <span class="math inline">2<sup><em>n</em></sup></span> possible paths.</p>
+<p>Therefore, neither of these methods dominate the other, which leads to the idea
+that they could be used in conjunction. The paper Grafeyn does just this with
+the additional ealisation that Feynman simulation becomes inefficient
+when the computation branches significantly and then returns to a single point
+(“combinatorial explosion”), whereas Schrödinger simulation is more efficient in
+these cases as only the state vector must be stored. However, many parts of
+circuits have no branching at all (such as CX or CNOT gates). Therefore it is
+possible to group these non-interfering sub-circuits into “kernels”, which can
+be simulated using the Feynman technique, whilst leaving the interfering parts
+to be simulated using the Schrödinger technique.</p>
+<h2 id="matrix-product-states">Matrix Product States</h2>
+<p>An interesting middle-ground between these two methods are <em>Tensor
+Networks</em>, which are a collection of methods for representing wave functions in
+a more compact manner. The simplest method is the <em>matrix product state</em>
+(MPS), which is a one-dimensional chain of tensors connected to each other by a
+<em>bond dimension</em>. I thought it would be interesting to compare MPS with the
+hybrid method from the paper, so I implemented it alongside the existing code in Rust.</p>
+<p>Back to MPS: instead of storing the <span class="math inline"><em>c</em><sub>1</sub>, …, <em>c</em><sub><em>n</em></sub></span> weights (amplitudes
+for each qubit) explicitly, it decomposes them into a product of <span class="math inline"><em>N</em></span>
+tensors</p>
+<p><span class="math display"><em>c</em><sub>1</sub>, …, <em>c</em><sub><em>n</em></sub> = <em>A</em><sub><em>i</em>1</sub><em>A</em><sub><em>i</em>2</sub>…<em>A</em><sub><em>i</em><em>N</em></sub></span></p>
+<p>Each of these corresponds to one of the qubits (called a <em>site</em>) and is a rank-3 tensor
+<span class="math inline"><em>A</em><sup>[<em>k</em>]</sup>(<em>α</em><sub><em>k</em> − 1</sub>, <em>i</em><sub><em>k</em></sub>, <em>α</em><sub><em>k</em></sub>)</span>. The index <span class="math inline"><em>α</em><sub><em>k</em> − 1</sub></span> is the
+left-bond index and represents the entanglement between the current site and
+all other sites to the left. Meanwhile <span class="math inline"><em>i</em><sub><em>k</em></sub> ∈ {0, 1}</span> represents the <em>physical
+dimension</em> and corresponds to the state of 0 and 1 at this
+site. Finally, <span class="math inline"><em>α</em><sub><em>k</em></sub></span> is the <em>right bond index</em> and represents the same
+information as the subsequent site’s left bond index.</p>
+<p>In order to model the MPS form in code, a numerics library is needed so that
+tensors can be represented and a higher-order singular-value decomposition (SVD) can be applied on them to
+bring the tensors back into MPS form once a gate has been applied. As Grafeyn is
+written in Rust, this choice was more complicated than initially expected. The
+most common crate in the Rust ecosystem for representing tensors is
+<em>ndarray</em>. However, this crate does not contain any linear algebra
+operations such as the SVD. Therefore, a companion crate <em>ndarray-linalg</em>
+must be used to provide these features. This sounds acceptable in theory, but
+some problems were encountered while trying to actually use these crates!
+Firstly, <em>ndarray-linalg</em> is not compatible with the latest version of
+<em>ndarray</em> (quite strange I must say), so an older version must be used, which means important
+library features become missing. For example, <em>ndarray</em> stores its
+tensors in row-major format, but when one wants to use the SVD on this tensor,
+the <em>ndarray-linalg</em> crate will call its bindings into the
+OpenBLAS C library, which uses column-major (“Fortran”) format.
+However, no automatic conversion between formats will occur, so one must do this
+manually. Unfortunately, this older version of <em>ndarray</em> does not support
+the <code>into_col_major</code> functions, so this also needs to be done by hand
+by transposing the tensors. This is also not completely trivial as the tensor
+objects in this library are kept as “views” into the underlying data and so it
+is difficult to know when the actual operations will be executed. This was all
+pretty dissapointing for a Rust fan as I know this would have all been trivial
+in C++ with a library like <em>Eigen</em>.</p>
+<p>Due to all of these difficulties, I decided to avoid using any tensor
+libraries and decompose the rank-3 tensors into collections of matrices, which
+allows the use of the <em>nalgebra</em> crate, which supports SVD natively and
+does not require any conversions from row-major format:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode rust"><code class="sourceCode rust"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">pub</span> <span class="kw">struct</span> MPSState <span class="op">{</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">// One component in the pair for Left |0&gt; and Right |1&gt; respectively.</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">pub</span> tensors<span class="op">:</span> <span class="dt">Vec</span><span class="op">&lt;</span>(DMatrix<span class="op">&lt;</span>Complex<span class="op">&gt;,</span> DMatrix<span class="op">&lt;</span>Complex<span class="op">&gt;</span>)<span class="op">&gt;,</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Bond dimensions between sites: (dL, dR)</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">pub</span> bond_dims<span class="op">:</span> <span class="dt">Vec</span><span class="op">&lt;</span>(<span class="dt">usize</span><span class="op">,</span> <span class="dt">usize</span>)<span class="op">&gt;,</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Number of sites (qubits)</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">pub</span> n_sites<span class="op">:</span> <span class="dt">usize</span><span class="op">,</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>Given the <code>MPSState</code> representation, it is now possible to apply gates to
+the matrix product state. The simplest gates to apply are ones which operate
+only on one qubit, such as the T, H or Sdg gates.
+Here one simply needs to identify the site which the gate operates on and apply
+the gate’s unitary matrix to the physical dimensions of the tensors:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode rust"><code class="sourceCode rust"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> (tensor_0<span class="op">,</span> tensor_1) <span class="op">=</span> <span class="op">&amp;</span><span class="kw">mut</span> <span class="kw">self</span><span class="op">.</span>tensors[site]<span class="op">;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> mat <span class="op">=</span> <span class="op">&amp;</span>gate<span class="op">.</span>mat<span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">// Apply the gate to the |0&gt; and |1&gt; components of the site</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> new_tensor_0 <span class="op">=</span> tensor_0<span class="op">.</span>clone() <span class="op">*</span> mat[(<span class="dv">0</span><span class="op">,</span> <span class="dv">0</span>)]</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>                 <span class="op">+</span> tensor_1<span class="op">.</span>clone() <span class="op">*</span> mat[(<span class="dv">0</span><span class="op">,</span> <span class="dv">1</span>)]<span class="op">;</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> new_tensor_1 <span class="op">=</span> tensor_0<span class="op">.</span>clone() <span class="op">*</span> mat[(<span class="dv">1</span><span class="op">,</span> <span class="dv">0</span>)]</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>                 <span class="op">+</span> tensor_1<span class="op">.</span>clone() <span class="op">*</span> mat[(<span class="dv">1</span><span class="op">,</span> <span class="dv">1</span>)]<span class="op">;</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="op">*</span>tensor_0 <span class="op">=</span> new_tensor_0<span class="op">;</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="op">*</span>tensor_1 <span class="op">=</span> new_tensor_1<span class="op">;</span></span></code></pre></div>
+<p>However, applying a two-qubit gate is significantly more complex and is a bit too long
+to be shown as a code snippet. The first case to consider is when a gate is
+applied to two adjacent qubits and goes something like this:</p>
+<ol type="1">
+<li>Input: Site indices <span class="math inline"><em>l</em></span> and <span class="math inline"><em>r</em></span>, gate <span class="math inline"><em>g</em></span>. Check <span class="math inline"><em>l</em> &lt; <em>r</em></span> else swap indices.</li>
+<li>Retrieve tensors pairs  and  from MPS state.</li>
+<li>Build joint <span class="math inline"><em>A</em></span> tensor of shape <span class="math inline">(<em>d</em><sub><em>L</em></sub> ⋅ <em>d</em><sub><em>R</em></sub>, 4)</span> by iterating over the tensor and copying values from the site tensors:
+<ol type="a">
+<li>Apply gate: <span class="math inline"><em>A</em><sup>′</sup> = <em>A</em> ⋅ <em>g</em></span>.</li>
+<li>Reshape <span class="math inline"><em>A</em><sup>′</sup></span> to <span class="math inline">(<em>d</em><sub><em>L</em></sub> ⋅ 2, <em>d</em><sub><em>R</em></sub> ⋅ 2)</span> by manual iteration otherwise the site
+will become permanently fused after SVD application.</li>
+<li>Perform SVD: <span class="math inline"><em>A</em><sup>′</sup> = <em>U</em><em>Σ</em><em>V</em><sup><em>T</em></sup></span> and truncate the number of singular
+values <span class="math inline"><em>Σ</em></span> by a maximum threshold defined in the configuration ().</li>
+<li>Scale the columns of <span class="math inline"><em>U</em></span> and the rows of <span class="math inline"><em>V</em><sup><em>T</em></sup></span> by the singluar
+values (balanced splitting of the entanglement information).</li>
+<li><span class="math inline"><em>U</em></span> now has shape <span class="math inline">(<em>d</em><sub><em>L</em></sub> ⋅ 2, |<em>Σ</em>|)</span>, now split into two
+<span class="math inline">(<em>d</em><sub><em>L</em></sub>, |<em>Σ</em>|)</span> for each physical dimension and store back in the
+correct site in .</li>
+<li><span class="math inline"><em>V</em><sup><em>T</em></sup></span> has shape <span class="math inline">(|<em>Σ</em>|,<em>d</em><sub><em>R</em></sub> ⋅ 2)</span> so likewise split it
+back into a slice for each physical dimension and store in the correct site.</li>
+</ol></li>
+</ol>
+<p>This process only works for applying gates to adjacent qubits. If the sites are
+not adjacent, they must be swapped until they become adjacent. This is done by
+inserting Swap gates into the gate stream. Once the gate has been
+successfully applied, the sites are simply swapped in the reverse direction until
+their original sites are reached again.</p>
+<p>Grafeyn also supports gates that affect three sites, such as CSwap or CCX.
+Although there are advanced methods that are able to apply these gates directly
+to the MPS state, I took the easier path and used algebraic rewriting patterns
+to decompose them into two-qubit gates, which greatly simplified the process.</p>
+<h2 id="performance">Performance</h2>
+<p>The performance of the existing simulators was compared to the new MPS simulator
+in some example circuits. The first circuit, <em>cascading entanglement</em> has 10
+qubits and starts with an H gate on site 0, it then entangles this qubit with
+the rest of the qubits by using CX gates. The second experiment is
+<code>grover_n2</code> is taken from QASMBench and is a well-known quantum search
+algorithm. It is able to search a list in <span class="math inline">𝒪(<em>N</em><sup>1/2</sup>)</span> time rather
+than <span class="math inline">𝒪(<em>N</em>)</span> for a classical computer. The third experiment,
+<em>rotations</em>, uses several rotation gates but does not create
+entangelement between distant qubits. Finally, <em>VQE</em> is another standard
+circuit taken from QASMBench and is an algorithm which approximates the lowest
+eigenvalue of a Hamiltonian, a common operation in quantum computing. As seen in
+the chart, the performance of the MPS simulator
+usually lies somewhere in between the sparse and dense simulators. This was
+expected considering many of these experiments have moderate
+entanglement and the performance of the MPS simulator is directly related to the
+dimensions of its tensors, which is governed by the maximum bond dimension
+<span class="math inline"><em>χ</em></span>, which is itself related to the amount of entangelement in the system.</p>
+<figure>
+<label for="mn1" class="margin-toggle">⊕</label>
+<input type="checkbox" id="mn1" class="margin-toggle" />
+<div class="marginnote">
+MPS simulation compared with the existing Grafeyn simulators.
+</div>
+<a href="../images/mps_runtime_performance.svg" class="image-gallery" data-gall="gallery01" title="MPS simulation compared with the existing Grafeyn simulators." title="MPS simulation compared with the existing Grafeyn simulators."><img src="../images/mps_runtime_performance.svg" title="MPS simulation compared with the existing Grafeyn simulators." alt="Runtime performance on selected experiments" /></a>
+</figure>
+<p>One of the limitations of the current MPS setup is that it is hard to achieve
+good parallelism with it. It’s relatively trivial to apply 1Q gates in parallel
+with it, as long as these touch different sites. However, as soon as 2Q gates
+need to be applied, things get more complicated, in part because the whole state
+might be need to locked if the gate operation must swap two sites on opposite ends of the MPS
+until they become adjacent, preventing the application of any other gates. By
+contrast, both the dense simulator and sparse simulators make use of parallelism
+and the dense one can even make use of CUDA through the scripting language
+<em>Futhark</em>. Nevertheless, switching to and from MPS might still make sense in
+some scenarios, e.g. dense states with low entanglement.</p>
+
+    </section>
+    <section>
+    <div id="disqus_thread"></div>
+
+    <script>
+        /**
+         *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+         *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+        /*
+          var disqus_config = function () {
+          this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+          this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+          };
+        */
+        (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = 'https://danvonk.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+    </section>
+        <script type="text/javascript" src="../js/venobox.min.js"></script>
+        <script>
+            new VenoBox({
+                selector: '.image-gallery',
+                numeration: true,
+                infinigall: true,
+                share: true,
+                spinner: 'rotating-plane'
+            });
+        </script>
+
+</article>
+
+        </main>
+
+        <footer>
+            <div class="embellished-hr">
+              <span class="fleurons">🙥 🙧</span>
+            </div>
+           © 2025 Dan Vonk. All Rights Reserved. Site proudly generated by
+            <a href="http://jaspervdj.be/hakyll">Hakyll</a>
+        </footer>
+    </body>
+</html>

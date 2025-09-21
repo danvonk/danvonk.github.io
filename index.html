@@ -13,10 +13,9 @@
         <link rel="icon" type="image/png" sizes="16x16" href="./static/favicon-16x16.png">
         <link rel="manifest" href="./static/site.webmanifest">
 
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css" integrity="sha384-5TcZemv2l/9On385z///+d7MSYlvIEw9FuZTIdZ14vJLqWphw7e7ZPuOiCHJcFCP" crossorigin="anonymous">
-        <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js" integrity="sha384-cMkvdD8LoxVzGF/RPUKAcvmm49FQ0oxwDF3BGKtDXcEc+T1b2N+teh/OJfpU0jr6" crossorigin="anonymous"></script>
-        <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/contrib/auto-render.min.js" integrity="sha384-hCXGrW6PitJEwbkoStFjeJxv+fSOOQKOPbJxSfM6G5sWZjAyWhXiTIIAmQqnlLlh" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
-    </head>
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css" integrity="sha384-5TcZemv2l/9On385z///+d7MSYlvIEw9FuZTIdZ14vJLqWphw7e7ZPuOiCHJcFCP" crossorigin="anonymous">
+   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js" integrity="sha384-cMkvdD8LoxVzGF/RPUKAcvmm49FQ0oxwDF3BGKtDXcEc+T1b2N+teh/OJfpU0jr6" crossorigin="anonymous"></script>
+   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/contrib/auto-render.min.js" integrity="sha384-hCXGrW6PitJEwbkoStFjeJxv+fSOOQKOPbJxSfM6G5sWZjAyWhXiTIIAmQqnlLlh" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
     </head>
     <body>
         <header>
@@ -36,7 +35,7 @@
             
 
 <div class="tag-list">
-  <p><i>Or jump directly to posts tagged</i>: <a href="./tags/personal.html" rel="tag">personal (15)</a>, <a href="./tags/travel.html" rel="tag">travel (15)</a>, <a href="./tags/tech.html" rel="tag">tech (3)</a>, <a href="./tags/music.html" rel="tag">music (2)</a>, <a href="./tags/C%2B%2B.html" rel="tag">C++ (1)</a>, <a href="./tags/cuda.html" rel="tag">cuda (1)</a>, <a href="./tags/databases.html" rel="tag">databases (1)</a>, <a href="./tags/haskell.html" rel="tag">haskell (1)</a>, <a href="./tags/physics.html" rel="tag">physics (1)</a>, <a href="./tags/programming.html" rel="tag">programming (1)</a></p>
+  <p><i>Or jump directly to posts tagged</i>: <a href="./tags/personal.html" rel="tag">personal (15)</a>, <a href="./tags/travel.html" rel="tag">travel (15)</a>, <a href="./tags/tech.html" rel="tag">tech (4)</a>, <a href="./tags/music.html" rel="tag">music (2)</a>, <a href="./tags/physics.html" rel="tag">physics (2)</a>, <a href="./tags/C%2B%2B.html" rel="tag">C++ (1)</a>, <a href="./tags/CUDA.html" rel="tag">CUDA (1)</a>, <a href="./tags/Haskell.html" rel="tag">Haskell (1)</a>, <a href="./tags/Rust.html" rel="tag">Rust (1)</a>, <a href="./tags/databases.html" rel="tag">databases (1)</a>, <a href="./tags/maths.html" rel="tag">maths (1)</a>, <a href="./tags/programming.html" rel="tag">programming (1)</a>, <a href="./tags/quantum.html" rel="tag">quantum (1)</a></p>
 </div>
 
 
@@ -116,6 +115,40 @@ present with the overwhelming feeling of newness that all travelers crave.</p>
 
             
             <a href="./posts/2025-04-01-bangalore.html">Read more</a>
+            
+            <hr />
+        </li>
+    
+        <li class="post-list-item">
+            
+            <h2 class="post-list-title"><a href="./posts/2025-03-02-mps-quantum-circuit-simulation.html">Matrix Product State (MPS) Circuit Simulation in Rust</a></h2>
+            
+
+            <div><i>posted on  2 March, 2025 in</i> <a title="All pages tagged 'tech'." href="./tags/tech.html" rel="tag">tech</a>, <a title="All pages tagged 'maths'." href="./tags/maths.html" rel="tag">maths</a>, <a title="All pages tagged 'quantum'." href="./tags/quantum.html" rel="tag">quantum</a>, <a title="All pages tagged 'physics'." href="./tags/physics.html" rel="tag">physics</a>, <a title="All pages tagged 'Rust'." href="./tags/Rust.html" rel="tag">Rust</a></div>
+            <div class="post-list-teaser">
+            
+            <article>
+            <section class="sans">
+            <figure>
+<label for="mn0" class="margin-toggle">⊕</label>
+<input type="checkbox" id="mn0" class="margin-toggle" />
+<div class="marginnote">
+Bells and whistles: unless you have one of these in your cupboard, you might have to settle for classical simulation.
+</div>
+<a href="./images/ibm_quantum_comp.jpg" class="image-gallery" data-gall="gallery01" title="Bells and whistles: unless you have one of these in your cupboard, you might have to settle for classical simulation." title="Bells and whistles: unless you have one of these in your cupboard, you might have to settle for classical simulation."><img src="./images/ibm_quantum_comp.jpg" title="Bells and whistles: unless you have one of these in your cupboard, you might have to settle for classical simulation." alt="IBM Quantum Computer" /></a>
+</figure>
+<p>I was recently playing around with a research artefact from the paper
+<a href="https://cs.nyu.edu/~shw8119/24/qce24-grafeyn.pdf">Grafeyn</a> which implemented some
+interesting techniques for circuit simulation. Also, it was written in Rust, so
+that doubly piqued my interest! Here’s what the paper has to say about itself…</p>
+
+            </section>
+            </article>
+            
+            </div>
+
+            
+            <a href="./posts/2025-03-02-mps-quantum-circuit-simulation.html">Read more</a>
             
             <hr />
         </li>
@@ -258,10 +291,10 @@ that was made in Leningrad in the mid 1980s.</p>
     
         <li class="post-list-item">
             
-            <h2 class="post-list-title"><a href="./posts/2024-10-05-neutron-scattering-cuda-taskflow.html">GPU-Accelerating a Neutron Scattering Simulation with CUDA</a></h2>
+            <h2 class="post-list-title"><a href="./posts/2024-10-05-neutron-scattering-cuda-taskflow.html">Neutron Scattering Simulations with CUDA</a></h2>
             
 
-            <div><i>posted on  5 October, 2024 in</i> <a title="All pages tagged 'cuda'." href="./tags/cuda.html" rel="tag">cuda</a>, <a title="All pages tagged 'programming'." href="./tags/programming.html" rel="tag">programming</a>, <a title="All pages tagged 'physics'." href="./tags/physics.html" rel="tag">physics</a>, <a title="All pages tagged 'C++'." href="./tags/C%2B%2B.html" rel="tag">C++</a></div>
+            <div><i>posted on  5 October, 2024 in</i> <a title="All pages tagged 'CUDA'." href="./tags/CUDA.html" rel="tag">CUDA</a>, <a title="All pages tagged 'programming'." href="./tags/programming.html" rel="tag">programming</a>, <a title="All pages tagged 'physics'." href="./tags/physics.html" rel="tag">physics</a>, <a title="All pages tagged 'C++'." href="./tags/C%2B%2B.html" rel="tag">C++</a></div>
             <div class="post-list-teaser">
             
             <article>
@@ -293,52 +326,18 @@ worked surprisingly well.</p>
             <hr />
         </li>
     
-        <li class="post-list-item">
-            
-            <h2 class="post-list-title"><a href="./posts/2024-09-20-stratocaster-body-swap.html">Stratocaster Body Swap</a></h2>
-            
-
-            <div><i>posted on 20 September, 2024 in</i> <a title="All pages tagged 'music'." href="./tags/music.html" rel="tag">music</a></div>
-            <div class="post-list-teaser">
-            
-            <article>
-            <section class="sans">
-            <figure>
-<label for="mn0" class="margin-toggle">⊕</label>
-<input type="checkbox" id="mn0" class="margin-toggle" />
-<div class="marginnote">
-The new Alder body with all of the gear attached.
-</div>
-<a href="./images/guitar/IMG_20240911_184740.jpg" class="image-gallery" data-gall="gallery01" title="The new Alder body with all of the gear attached." title="The new Alder body with all of the gear attached."><img src="./images/guitar/IMG_20240911_184740.jpg" title="The new Alder body with all of the gear attached." alt="Palm trees amongst a castle" /></a>
-</figure>
-<p>After a year’s hiatus from playing electric guitar (I usually play fingerstyle
-pieces on my acoustic nowadays), I had rediscovered my baby blue Tanglewood
-Stratocaster, which was my first guitar. I had already modded it to the stage
-where not much of the original guitar remained. The bridge was replaced by a MiM
-Fender one, the tuners are now retro-style Washburn tuners, and similarly the pickups have
-also been long since replaced by some nice “Warman” pickups made by a bloke in Wales.</p>
-
-            </section>
-            </article>
-            
-            </div>
-
-            
-            <a href="./posts/2024-09-20-stratocaster-body-swap.html">Read more</a>
-            
-            <hr />
-        </li>
-    
 </ul>
 
 
 <nav class="pagination">
   <p><em>Page 1 of 3</em></p>
+  <div>
 
 
     
     <a href="./page/2/index.html">Next Page &raquo;</a>
 
+  </div>
 </nav>
 
 
