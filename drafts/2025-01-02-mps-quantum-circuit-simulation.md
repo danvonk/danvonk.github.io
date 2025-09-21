@@ -1,11 +1,30 @@
 ---
-title: Tensor Network (MPS) Circuit Simulation in Rust
+title: Matrix Product State (MPS) Circuit Simulation in Rust
 author: Dan Vonk
 tags: tech, maths, quantum, physics
 ---
 
-![IBM Quantum Computer](/images/ibm_quantum_comp.jpg "It looks cool and shiny
-but unfortunately I don't have one of these at home--let's simulate one instead.")
+![IBM Quantum Computer](/images/ibm_quantum_comp.jpg "Unless you have one of
+these in your cupboard, you might have to settle for classical simulation.")
+
+
+I was recently playing around with a research artifact from the paper Grafeyn
+
+<blockquote>
+<p>
+In this paper, we present a hybrid Schrödinger-Feynman
+technique which takes advantage of sparsity by selectively
+synchronizing Feynman paths. Our hybrid technique partitions the
+circuit into kernels (groups of gates) and uses Feynman simulation
+within each kernel. It then synchronizes across the kernels by
+using Schrödinger-style simulation
+</p>
+</blockquote>
+
+
+
+
+
 
 General-purpose, practical quantum computers do not yet actually exist but with
 every passing day there is more and more hullabaloo around them. If they do in
