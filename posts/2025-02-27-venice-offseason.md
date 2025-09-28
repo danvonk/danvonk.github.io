@@ -24,7 +24,7 @@ I stayed in Mestre, which is an industrial port city on the land-side of Venice.
 Its skyline is marked by the firm Fincantieri, who have their large marine
 cranes towering over the place. This firm constructs the mega cruise-ships for
 Norwegian Cruise Lines and the like. So the Venice isn't just an open-air
-museum, at least for now! Another suprise was how international thee employees
+museum, at least for now! Another suprise was how international the employees
 were as well, with many East Asians but also plenty of people from all over
 Europe. This was only an advantage for me as Mestre had some great cheap
 restaurants catering to them, which I frequented before and after commuting from

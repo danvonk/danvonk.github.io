@@ -1,7 +1,7 @@
 ---
 title: Matrix Product State (MPS) Circuit Simulation in Rust
 author: Dan Vonk
-tags: tech, maths, quantum, physics, Rust
+tags: tech, quantum, physics, Rust
 ---
 
 ![IBM Quantum Computer](/images/ibm_quantum_comp.jpg "Bells and whistles: unless you have one of
