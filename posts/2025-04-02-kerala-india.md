@@ -24,7 +24,7 @@ love a bit of communism too it turns out.
 Yes, it was quite jarring to see the communists flags everywhere and when
 travelling on a dusty road through the jungle, one might easily mistake the
 place for Cuba. However, the topic of communism in Kerala is complex. Though
-they never went for "true" communism, they did carry out extensive land reform
+they never went for "true" Communism, they did carry out extensive land reform
 and institute a generous welfare state. This clearly did have some positive
 outcomes: the place felt a lot more "civilised", less chaotic and far more
 orderly than Karnataka. However, when speaking to locals, many of them weren't
@@ -62,8 +62,8 @@ but this suited me just fine towards the end of the trip.
 are wide and still used as working beaches by fishermen.")
 
 The Kerala backwaters are another great day-trip to make and we did ours in long
-"kayaks". I'd recommend this over the traditional house boats, which double up
-as hotels. These boats are quite large and don't get you into the smaller
+piloted canoes. I'd recommend this over the traditional house boats, which double up
+as hotels. Those boats are quite large and don't get you into the smaller
 waterways, which feel much more authentic and local.
 
 ![A boat on the backwaters](/images/IMG_20250325_090408.jpg "Travelling the
@@ -80,27 +80,31 @@ The closest major hill station reachable from Cochin is Munnar. It's easily and
 cheaply (less than 100 rupees) accessible by coach from Ernakulum bus station,
 though getting a comfortable ride is far from guaranteed! Expect a packed bus
 with no AC: the ventilation is provided by the lack of (glass) windows, so hope
-you don't get stuck in traffic.
+you don't get stuck in traffic. The trip itself though is stunning, with the
+winding roads taking you up through the jungle (watch out for the monkeys) and
+finally into the emerald-green 
+tea hills above, interspersed with the occasional blooming jacaranda tree nobly
+perched between.
 
-Munnar itself is touristy and you'll be swamped by auto drivers trying to sell
-you voyages around the tea fields as you walk through town. However, it's
-still worth doing all of this as you get a very scenic ride through the
-rainforests and tea fields. Our driver also took us to a well-known spot for
+Munnar itself is quite touristy and you'll be swamped by auto drivers trying to sell
+you voyages around the tea fields as you walk through town. Annoying. However, it's
+still worth doing the tour at least once as you get a very scenic ride through the
+jungle and tea fields. Our driver also took us to a well-known spot for
 seeing elephants and we just found them hanging out by a creek, cooling
-themselves off!
+themselves off! (NB: I think they are there a lot.)
 
 ![Elephants at a brook](/images/DSCF8834.JPG "A family of elephants enjoying a
 bath in a creek.")
 
 Sunrise hikes are another popular tourist activity here and it's another
 money-maker for the local town: one can't just enter the national park by
-themselves, one needs a guide. So with our guide, we set off at 5AM to
+himself, one needs a guide. So with our guide, we set off at 5 AM to
 _Eravikulam National Park_ to climb the second highest mountain in the Ghats. It
 wasn't a particularly challenging climb as the mountain was only about 2000m
 high and some locals were even doing it in crocs! Nevertheless, it was worth the
-early wake-up as the views were simply spectacular. It was still dusk as we
+early wake-up as the views were simply spectacular. It was still shortly before dawn as we
 reached the peak and we were surrounded by dark and ominous cloud cover in every
-direction, but as the sun started to rise, it painted the clouds amber beneath us as if the whole word was
+direction, but as the sun started to rise, it painted the clouds amber beneath us as if the whole world was
 ablaze. Before long, the power of the sun started to disperse the clouds
 and we watched them melt down into the valleys, forming long, wispy trails of
 fog. A pale blue sky formed and we were again able to see the
