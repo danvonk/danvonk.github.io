@@ -11,7 +11,7 @@ After having experienced the hustle and bustle of Bangalore, the next plan was
 to explore Kerala, a state which is located on the tropical south-western tip of
 the subcontinent. On its coast, it is home to vast stretches of palm tree
 adorned beaches, which are flanked by rice fields criss-crossed by small canals,
-just as in Venice, though maybe a bit less flamboyant. Going further inland, one
+just as in Venice--though maybe a bit less flamboyant. Going further inland, one
 meets the mighty _Western Ghats_ mountain range, a high-altitude rainforest,
 home to elephants and tigers, which is ideal for escaping the oppressive
 humidity on the coast. Politically, it is also well-known within India for its
@@ -77,13 +77,14 @@ Also, the backwaters (the canals) provide the ideal conditions for mosquitoes so
 the place is just teeming with them.
 
 The closest major hill station reachable from Cochin is Munnar. It's easily and
-cheaply (less than 100 rupees) accessible by coach from Ernakulum bus station, though getting a
-comfortable ride is far from guaranteed! Expect a packed bus with no ventilation
-other than the open windows.
+cheaply (less than 100 rupees) accessible by coach from Ernakulum bus station,
+though getting a comfortable ride is far from guaranteed! Expect a packed bus
+with no AC: the ventilation is provided by the lack of (glass) windows, so hope
+you don't get stuck in traffic.
 
 Munnar itself is touristy and you'll be swamped by auto drivers trying to sell
 you voyages around the tea fields as you walk through town. However, it's
-still worth doing all of this least as you get a very scenic ride through the
+still worth doing all of this as you get a very scenic ride through the
 rainforests and tea fields. Our driver also took us to a well-known spot for
 seeing elephants and we just found them hanging out by a creek, cooling
 themselves off!
@@ -102,13 +103,14 @@ reached the peak and we were surrounded by dark and ominous cloud cover in every
 direction, but as the sun started to rise, it painted the clouds amber beneath us as if the whole word was
 ablaze. Before long, the power of the sun started to disperse the clouds
 and we watched them melt down into the valleys, forming long, wispy trails of
-fog. A beautiful, pale blue sky formed and we were again able to see the
-verdant, globular tea fields clinging on to the side of the hills below our feet. A fantastic way
+fog. A pale blue sky formed and we were again able to see the
+verdant tea fields clinging on to the side of the hills below our feet. A fantastic way
 to start the day.
 
 ![Sunrise over the mountain tops](/images/DSCF8894.JPG "We caught the sun rising
 over the lesser mountains of the Ghats. As it rose over the horizon, we watched
 it disperse the fog hanging low in the valleys.")
+
 
 ![A Rhododendron on the side of a mountain](/images/DSCF8916.JPG "A Rhododendron
 (native to Nepal) hanging on to the side of the mountain.")
