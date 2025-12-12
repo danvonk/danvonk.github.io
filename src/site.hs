@@ -36,7 +36,7 @@ main = hakyllWith config $ do
         , "css/et-book/et-book-roman-line-figures/*"
         , "css/et-book/et-book-roman-old-style-figures/*"
         , "css/et-book/et-book-semi-bold-old-style-figures/*"
-        , "js/*"
+        , "js/**.js"
         , "images/**.png"
         , "images/**.svg"
         , "fonts/*"
@@ -127,11 +127,15 @@ main = hakyllWith config $ do
                 paginateRules pag $ \pageNumber pattern -> do
                     route idRoute
                     compile $ do
+                        -- get all posts and filter for the pinned header
+                        allPosts <- recentFirst =<< loadAll "posts/*"
+                        pinned <- filterM (isPinnedPost . itemIdentifier) allPosts
                         postsForPage <- recentFirst =<< loadAll pattern
                         tagCloud <- renderTagList (sortTagsBy (comparing $ Down . length . snd) tags)
                         let paginateCtx = paginateContext pag pageNumber
                         let indexCtx =
                                 listField "posts" (tagsField "tags" tags <> postCtx) (return postsForPage)
+                                    <> listField "pinned" (tagsField "tags" tags <> postCtx) (return pinned)
                                     <> constField "tagCloud" tagCloud
                                     <> constField "title" "Home"
                                     <> paginateCtx
@@ -164,4 +168,9 @@ postCtx =
 
 -- Run sortRecentFirst on ids, and then liftM (paginateEvery 10) into it
 grouper :: [Identifier] -> Rules [[Identifier]]
-grouper ids = (liftM (paginateEvery 8) . sortRecentFirst) ids
+grouper = fmap (paginateEvery 8) . sortRecentFirst
+
+isPinnedPost :: Identifier -> Compiler Bool
+isPinnedPost i = do
+    md <- getMetadata i
+    pure $ fromMaybe "" (lookupString "pinned" md) == "true"

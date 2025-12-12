@@ -1,10 +1,14 @@
 
 $if(previousPageUrl)$
 $else$
-<div class="tag-list">
-  <p><i>Or jump directly to posts tagged</i>: $tagCloud$</p>
+
+$partial("templates/pinned-posts.html")$
+
+<div class="pinned-strip-title">
+  <h3>Latest Posts</h3>
 </div>
 $endif$
+
 
 
 $partial("templates/post-list.html")$

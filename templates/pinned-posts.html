@@ -1,0 +1,51 @@
+<div class="pinned-strip">
+  <div class="pinned-strip-title">
+    <h3>Pinned Posts</h3>
+  </div>
+<div class="tag-list">
+  <i>Or jump directly to posts tagged</i>: $tagCloud$
+</div>
+
+
+
+<div class="glide pinned-glide">
+  <div class="glide__track" data-glide-el="track">
+    <ul class="glide__slides">
+      $for(pinned)$
+      <li class="glide__slide">
+        <article class="pinned-card">
+          <h2 class="pinned-card-title">
+            <a href="$url$">$title$</a>
+          </h2>
+
+          $if(image)$
+            <a class="pinned-card-image" href="$url$">
+              <img src="$image$" alt="$title$">
+            </a>
+
+          $endif$
+        </article>
+      </li>
+      $endfor$
+    </ul>
+  </div>
+
+  <div class="glide__arrows pinned-glide__arrows" data-glide-el="controls">
+    <button class="glide__arrow pinned-glide__arrow pinned-glide__arrow--left"
+            data-glide-dir="<" aria-label="Previous">
+      <span aria-hidden="true"></span>
+    </button>
+
+    <button class="glide__arrow pinned-glide__arrow pinned-glide__arrow--right"
+            data-glide-dir=">" aria-label="Next">
+      <span aria-hidden="true"></span>
+    </button>
+  </div>
+</div>
+
+ <script>
+  const glide = new Glide(".glide", { type: "carousel", perView: 3, gap: 16 }).mount()
+ </script>
+
+</div>
+<hr style="width: 100%"/>
