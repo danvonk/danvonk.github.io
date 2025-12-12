@@ -140,7 +140,7 @@ div.post-list-teaser {
   justify-content: center;
 
   /* Spacing around the break */
-  margin: 2em auto;
+  margin: 1em auto;
   width: 80%
 }
 
@@ -235,35 +235,34 @@ div.post-list-teaser {
   margin: 0.75rem 0 0;
 }
 
-/* glide.js carousel stuff */
-
 .pinned-glide {
   position: relative;
 }
-
-.pinned-glide .glide__track {
-  padding: 0 2.5rem;
-}
-
-.pinned-glide__arrows { pointer-events: none; }
 
 .pinned-glide__arrow {
   pointer-events: auto;
   position: absolute;
   top: 50%;
-  transform: translateY(-50%);
 
   width: 2.5rem;
   height: 2.5rem;
-  border-radius: 999px;
 
-  border: 2px solid currentColor;
-  background: white;
-  color: #222;
+  border: 2px solid color-mix(
+    in srgb,
+    var(--fbc-primary-text) 40%,
+    transparent
+  );
+  background: color-mix(
+    in srgb,
+    var(--fbc-primary-text) 30%,
+    transparent
+  );
+  color: var(--fbc-white);
 
   cursor: pointer;
   user-select: none;
 }
+
 
 .pinned-glide__arrow::before {
   content: "";
@@ -290,5 +289,4 @@ div.post-list-teaser {
 .pinned-glide__arrow--right { right: 0.25rem; }
 
 .pinned-glide__arrow:hover { transform: translateY(-50%) scale(1.04); }
-.pinned-glide__arrow:focus-visible { outline: 2px solid #000; outline-offset: 2px; }
 .pinned-glide__arrow:disabled { opacity: 0.35; cursor: not-allowed; }

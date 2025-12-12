@@ -2,6 +2,8 @@
 title: Barskoon Valley
 author: Dan Vonk
 tags: personal, travel
+pinned: true
+image: /images/DSCF7947.JPG
 ---
 
 ![The dirt road of Barskoon Valley](/images/DSCF7947.JPG "The smooth and fast

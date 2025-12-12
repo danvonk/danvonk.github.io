@@ -2,7 +2,6 @@
 title: The Malabar Coast
 author: Dan Vonk
 tags: personal, travel
-pinned: true
 image: /images/DSCF8806.JPG
 ---
 

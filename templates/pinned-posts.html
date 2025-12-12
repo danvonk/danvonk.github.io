@@ -44,7 +44,17 @@
 </div>
 
  <script>
-  const glide = new Glide(".glide", { type: "carousel", perView: 3, gap: 16 }).mount()
+  new Glide(".glide", {
+      type: "carousel",
+      perView: 3,
+      gap: 16,
+      focusAt: "center",
+      peek: {
+          before: 32,
+          after: 32
+      },
+      
+  }).mount()
  </script>
 
 </div>
