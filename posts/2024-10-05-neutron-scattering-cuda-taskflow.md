@@ -2,6 +2,8 @@
 title: Neutron Scattering Simulations with CUDA
 author: Dan Vonk
 tags: CUDA, programming, physics, C++
+pinned: true
+image: /images/kws1-schema_2021-01.jpg
 ---
 
 ![Neutron scattering experiment](/images/kws1-schema_2021-01.jpg "Small angle

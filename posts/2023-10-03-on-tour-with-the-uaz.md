@@ -1,6 +1,8 @@
 ---
 title: On Tour with the UAZ
 tags: travel, personal
+pinned: true
+image: /images/DSCF7923.JPG
 ---
 
 ![Side view of the UAZ-452](/images/DSCF7923.JPG "Our UAZ parked in front of

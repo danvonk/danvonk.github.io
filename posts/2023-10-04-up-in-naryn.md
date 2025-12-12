@@ -14,7 +14,7 @@ being able to drive around essentially anywhere unrestricted or meeting
 much sign of human life remains a priceless experience for me.
 
 The aim of the journey was to see Kol'su lake, an alpine lake hidden
-between the peaks of the central Tian Shan mountain range, which separate
+between the peaks of the central Tian Shan mountain range, which separates
 Kyrgyzstan from China. The lake itself sits at an elevation of 3514 metres.
 The lake itself has an air of mystical quality about it: Kol'su was formed by a
 seismic event in the 1970s and has no proper outflow. Nevertheless water
@@ -70,7 +70,7 @@ formed by the run-off from the Tian Shan mountains and they become a popular
 spot for the local wildlife.")
 
 Towards the afternoon of the second day on the road, we crossed into the
-controlled area along the chinese border (permit required) and that marked our
+controlled area along the Chinese border (permit required) and that marked our
 ascent into the Tian Shan mountains proper.
 
 ![Tian Shan mountains](/images/DSCF7880.JPG "The Tian Shan mountains come

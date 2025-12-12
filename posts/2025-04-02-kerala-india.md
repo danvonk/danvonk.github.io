@@ -1,7 +1,9 @@
 ---
-title: "Kerala: The Malabar Coast"
+title: The Malabar Coast
 author: Dan Vonk
 tags: personal, travel
+pinned: true
+image: /images/DSCF8806.JPG
 ---
 
 ![View of the tea fields in Munnar](/images/DSCF8806.JPG "A view of the tea
