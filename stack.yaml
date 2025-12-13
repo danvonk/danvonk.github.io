@@ -22,7 +22,7 @@ resolver:
   lts-23.25
 nix:
   enable: true
-
+notify-if-nix-on-path: false
 # User packages to be built.
 # Various formats can be used as shown in the example below.
 #
