@@ -49,7 +49,7 @@ main = hakyllWith config $ do
             -- Compress images
             forM_ ["images/**.JPG", "images/**.jpg"] $ \f -> match f $ do
                 route idRoute
-                compile $ loadImage >>= compressJpgCompiler 95
+                compile $ loadImage >>= compressJpgCompiler 65
 
             create ["css/code-style-light.css"] $ do
                 route idRoute
