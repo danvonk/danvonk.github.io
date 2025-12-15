@@ -41,7 +41,7 @@ sometimes them leading you astray into residential cul-de-sacs so narrow that
 you can't even open your umbrella.
 
 ![View across the lagoon from St. Mark's Square](/images/DSCF8495.JPG "View
-across the lagoon from St. Mark's Square")
+across the lagoon from St. Mark's Square.")
 
 Most of the signs in Venice lead to St. Mark's Square and after some fruitful
 accidental circumnavigation of the districts, so did I. This was another
@@ -50,5 +50,5 @@ history on display in the museums and palaces around the square captivating.
 There was even some Empress Sisi intrigue (yuck).
 
 ![Another picture of the Grand Canal](/images/DSCF8523.JPG "Another shot of the
-Grand Canal")
+Grand Canal.")
 
