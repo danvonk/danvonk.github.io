@@ -2,7 +2,6 @@
 title: Barskoon Valley
 author: Dan Vonk
 tags: personal, travel
-pinned: true
 image: /images/DSCF7947.JPG
 ---
 
@@ -36,7 +35,6 @@ soon.
 from the famous waterfall and favourite spot of Yuri Gagarin.")
 
 Also noteworthy of the valley is that after Yuri Gagarin became the first man in
-space, he was presumably pretty worn out and vacationed in this valley when he
-came back. There is a statue here dedicated to him but I don't have a picture of
-it!
-
+space, he was presumably pretty worn out and hence vacationed in this valley when he
+came back. There is a statue here dedicated to him on the side of the valley
+with a picturesque waterfall not far from it.

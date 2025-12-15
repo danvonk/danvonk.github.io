@@ -2,6 +2,8 @@
 title: Stratocaster Body Swap
 author: Dan Vonk
 tags: music
+pinned: true
+image: /images/guitar/IMG_20240911_184740.jpg
 ---
 
 ![Palm trees amongst a castle](/images/guitar/IMG_20240911_184740.jpg "The new Alder
