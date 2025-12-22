@@ -16,6 +16,7 @@ can get myself to read more...
 | Title                                                         | Author                     |
 |---------------------------------------------------------------|----------------------------|
 | _2025_                                                        |                            |
+| Fantômas                                                      | M. Allain, P. Souvestre    |
 | Kim                                                           | R. Kipling                 |
 | The Bonfire of the Vanities                                   | T. Wolfe                   |
 | The God of Small Things                                       | A. Roy                     |
