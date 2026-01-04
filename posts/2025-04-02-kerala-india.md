@@ -102,7 +102,13 @@ money-maker for the local town: one can't just enter the national park by
 himself, one needs a guide. So with our guide, we set off at 5 AM to
 _Eravikulam National Park_ to climb the second highest mountain in the Ghats. It
 wasn't a particularly challenging climb as the mountain was only about 2000m
-high and some locals were even doing it in crocs! Nevertheless, it was worth the
+high and some locals were even doing it in crocs! 
+
+![Sunrise over the mountain tops](/images/DSCF8894.JPG "We caught the sun rising
+over the lesser mountains of the Ghats. As it rose over the horizon, we watched
+it disperse the fog hanging low in the valleys.")
+
+Nevertheless, it was worth the
 early wake-up as the views were simply spectacular. It was still shortly before dawn as we
 reached the peak and we were surrounded by dark and ominous cloud cover in every
 direction, but as the sun started to rise, it painted the clouds amber beneath us as if the whole world was
@@ -112,14 +118,5 @@ fog. A pale blue sky formed and we were again able to see the
 verdant tea fields clinging on to the side of the hills below our feet. A fantastic way
 to start the day.
 
-![Sunrise over the mountain tops](/images/DSCF8894.JPG "We caught the sun rising
-over the lesser mountains of the Ghats. As it rose over the horizon, we watched
-it disperse the fog hanging low in the valleys.")
-
-
 ![A Rhododendron on the side of a mountain](/images/DSCF8916.JPG "A Rhododendron
-(native to Nepal) hanging on to the side of the mountain.")
-
-
-
-
+(native to Nepal) hanging on to the side of the mountain as seen on the descent.")

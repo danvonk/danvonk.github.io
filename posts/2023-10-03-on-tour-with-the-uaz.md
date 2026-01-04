@@ -2,7 +2,7 @@
 title: On Tour with the UAZ
 tags: travel, personal
 pinned: true
-image: /images/DSCF7923.JPG
+image: /images/DSCF7859.JPG
 ---
 
 ![Side view of the UAZ-452](/images/DSCF7923.JPG "Our UAZ parked in front of
@@ -11,8 +11,6 @@ some laundry.")
 You are cruising the pacific coast of California in your Mustang, the wind flows through
 your hair and the engine purrs as you thread the car through the gentle turns along the
 coastal highway. What could be better? How about trundling along in a UAZ!
-
-
 
 <!--more-->
 
