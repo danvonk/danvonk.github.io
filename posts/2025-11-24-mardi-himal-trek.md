@@ -6,7 +6,7 @@ tags: travel, personal
 
 ![Steps up to the Australian camp](/images/mardi/DSCF9523.JPG "The first morning of the trek, up to Australian Camp, started with many stairs.")
 
-One of the items on my todo list in Nepal was to go trekking in the Annapurna
+One of the items on my TODO list in Nepal was to go trekking in the Annapurna
 region. The most famous option is the _Annapurna Base Camp_ (ABC) trek, which is
 a breathtaking trek right through the valley of Annapurna and up to the base
 camp at about 4500m. However, that takes about a week and I was rather looking
@@ -72,7 +72,7 @@ camps, a plate cost around 350 rupees though it gets progressively more
 expensive (around 550) at the higher camps. This is definitely the best deal as
 it includes unlimited refills but it can get boring quite quickly. The other
 options were fried rice or noodles (chow mein) as well as some western options
-to placate the picky eaters, like chips and spaghetti. Regeardless of the main,
+to placate the picky eaters, like chips and spaghetti. Regardless of the main,
 I highly recommend the lemon tea to wash it down!
 
 ![Dal bhat](/images/mardi/IMG_20251110_133309.jpg "All guesthouses have the
@@ -126,7 +126,7 @@ from the immense views.
 
 It was about mid-day by the time I got back to high camp and I decided to make
 my way back down to civilisation. The descent was surprisingly novel as I had
-been distracted by the views of the Annapurna range for the entire climb, that I
+been so distracted by the views of the Annapurna range for the entire climb, that I
 completely forgot to soak in the other views around! One memorable moment was
 right after high-camp, where I could see nothing but the dirt track in front of
 me and everything else was hidden by thick white clouds, as if one was literally on
