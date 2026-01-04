@@ -157,7 +157,7 @@ main = hakyllWith config $ do
 
 pageCtx :: Context String
 pageCtx =
-    constField "copyright" "© 2025 Dan Vonk"
+    constField "copyright" "© 2026 Dan Vonk"
         <> defaultContext
 
 postCtx :: Context String
