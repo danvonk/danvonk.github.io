@@ -15,6 +15,8 @@ can get myself to read more...
 
 | Title                                                         | Author                     |
 |---------------------------------------------------------------|----------------------------|
+| _2026_                                                        |
+| Annihilation                                                  | M. Houellebecq             |
 | _2025_                                                        |                            |
 | Fantômas                                                      | M. Allain, P. Souvestre    |
 | Kim                                                           | R. Kipling                 |
