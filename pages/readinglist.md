@@ -15,7 +15,8 @@ can get myself to read more...
 
 | Title                                                         | Author                     |
 |---------------------------------------------------------------|----------------------------|
-| _2026_                                                        |
+| _2026_                                                        |                            |
+| Waiting for the Barbarians                                    | J.M. Coetzee               |
 | Annihilation                                                  | M. Houellebecq             |
 | _2025_                                                        |                            |
 | Fantômas                                                      | M. Allain, P. Souvestre    |
