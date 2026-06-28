@@ -39,6 +39,7 @@ main = hakyllWith config $ do
         , "js/**.js"
         , "images/**.png"
         , "images/**.svg"
+        , "images/**.gif"
         , "fonts/*"
         , "static/*"
         ]

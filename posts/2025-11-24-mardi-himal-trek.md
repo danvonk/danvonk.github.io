@@ -12,7 +12,7 @@ a breathtaking trek right through the valley of Annapurna and up to the base
 camp at about 4500m. However, that takes about a week and I was rather looking
 for something cheap and cheerful. The owner of the hotel I was staying in
 suggested the Mardi Himal trek, which is relatively new and a lot shorter (3-4
-days), so fit the bill well. Although it wasn't quite as breathtaking as ABC, it
+days), so fit the bill well. Although it ostensibly isn't quite as breathtaking as ABC, it
 definitely didn't disappoint either.
 
 <!--more-->
