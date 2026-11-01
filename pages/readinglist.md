@@ -17,6 +17,7 @@ can get myself to read more...
 |---------------------------------------------------------------|----------------------------|
 | _2026_                                                        |                            |
 | In the Shadow of Young Girls in Flower                        | M. Proust                  |
+| All Quiet on the Western Front                                | E.M. Remarque              |
 | Mr. Stone and the Knights Companions                          | V.S. Naipaul               |
 | Hard Times: For These Times                                   | C. Dickens                 |
 | Waiting for the Barbarians                                    | J.M. Coetzee               |
